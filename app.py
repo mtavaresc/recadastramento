@@ -4,7 +4,7 @@ from base import app, db
 from model import Pegaso, Trabalhador
 
 # Creating new database of model "Worker"
-db.create_all(bind="out")
+# db.create_all(bind="out")
 
 
 @app.route("/<int:matricula>", methods=["GET", "POST"])

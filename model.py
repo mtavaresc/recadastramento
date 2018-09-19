@@ -2,18 +2,19 @@ from base import db
 
 
 class Pegaso(db.Model):
-    __tablename__ = "pegaso"
-    __bind_by__ = "in"
+    __tablename__ = "zeus.tv_cadastro"
+    __bind_by__ = "get"
 
     matricula = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(70))
     cpf = db.Column(db.String(11))
     nis = db.Column(db.String(11))
     dtnascto = db.Column(db.String(11))
 
 
 class Trabalhador(db.Model):
-    __tablename__ = "trabalhador"
-    __bind_key__ = "out"
+    __tablename__ = "esocial.trabalhador"
+    __bind_key__ = "set"
 
     # Trabalhador
     cpfTrab = db.Column(db.String(11))
@@ -38,17 +39,17 @@ class Trabalhador(db.Model):
     serieCtps = db.Column(db.String(5))
     ufCtps = db.Column(db.String(2))
     # RIC
-    nrRic = db.Column(db.String(14))
-    ric_orgaoEmissor = db.Column(db.String(20))
-    ric_dtExped = db.Column(db.Date)
+    # nrRic = db.Column(db.String(14))
+    # ric_orgaoEmissor = db.Column(db.String(20))
+    # ric_dtExped = db.Column(db.Date)
     # RG
     nrRg = db.Column(db.String(14))
     rg_orgaoEmissor = db.Column(db.String(20))
     rg_dtExped = db.Column(db.Date)
     # RNE
-    nrRne = db.Column(db.String(14))
-    rne_orgaoEmissor = db.Column(db.String(20))
-    rne_dtExped = db.Column(db.Date)
+    # nrRne = db.Column(db.String(14))
+    # rne_orgaoEmissor = db.Column(db.String(20))
+    # rne_dtExped = db.Column(db.Date)
     # OC
     nrOc = db.Column(db.String(14))
     oc_orgaoEmissor = db.Column(db.String(20))
@@ -112,8 +113,7 @@ class Trabalhador(db.Model):
 
     def __init__(self, cpf_trab, nis_trab, nm_trab, sexo, raca_cor, est_civ, grau_instr, ind_pri_empr, nm_soc,
                  dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, nm_pai, nr_ctps, serie_ctps, uf_ctps,
-                 nr_ric, ric_orgao_emissor, ric_dt_exped, nr_rg, rg_orgao_emissor, rg_dt_exped, nr_rne,
-                 rne_orgao_emissor, rne_dt_exped, nr_oc, oc_orgao_emissor, oc_dt_exped, oc_dt_valid,
+                 nr_rg, rg_orgao_emissor, rg_dt_exped, nr_oc, oc_orgao_emissor, oc_dt_exped, oc_dt_valid,
                  nr_reg_cnh, cnh_dt_exped, uf_cnh, cnh_dt_valid, dt_pri_hab, categoria_cnh, tp_lograd, dsc_lograd,
                  nr_lograd, complemento, bairro, cep, end_cod_munic, end_uf, pais_resid, ext_dsc_lograd, ext_nr_lograd,
                  ext_complemento, ext_bairro, nm_cid, cod_postal, dt_chegada, class_trab_estran, casado_br, filhos_br,
@@ -143,17 +143,17 @@ class Trabalhador(db.Model):
         self.serieCtps = serie_ctps
         self.ufCtps = uf_ctps
         # RIC
-        self.nrRic = nr_ric
-        self.ric_orgaoEmissor = ric_orgao_emissor
-        self.ric_dtExped = ric_dt_exped
+        # self.nrRic = nr_ric
+        # self.ric_orgaoEmissor = ric_orgao_emissor
+        # self.ric_dtExped = ric_dt_exped
         # RG
         self.nrRg = nr_rg
         self.rg_orgaoEmissor = rg_orgao_emissor
         self.rg_dtExped = rg_dt_exped
         # RNE
-        self.nrRne = nr_rne
-        self.rne_orgaoEmissor = rne_orgao_emissor
-        self.rne_dtExped = rne_dt_exped
+        # self.nrRne = nr_rne
+        # self.rne_orgaoEmissor = rne_orgao_emissor
+        # self.rne_dtExped = rne_dt_exped
         # OC
         self.nrOc = nr_oc
         self.oc_orgaoEmissor = oc_orgao_emissor
