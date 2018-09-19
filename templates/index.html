@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/css/fontawesome-all.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="../static/js/bootstrap.js"></script>
+
+<body>
+<div class="container">
+    <div class="page-header">
+        <h2>Novo acesso</h2>
+    </div>
+    <form class="container" method="POST">
+        <div class="form-group">
+            <label for="filial">Filial</label>
+            <select id="filial" class="form-control" name="filial">
+                {% for x in filiais_lista %}
+                    <option value="{{ x }}"{% if x == acesso.filial %} SELECTED {% endif %}>{{ x }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="colaborador">Colaborador</label>
+            <input id="colaborador" name="colaborador" class="form-control" value="{{ acesso.colaborador }}" required>
+        </div>
+        <div class="form-group">
+            <label for="usuario">Usuário</label>
+            <input id="usuario" name="usuario" class="form-control" maxlength="7" value="{{ acesso.usuario }}" required>
+            <small id="usuarioHelp" class="form-text text-muted">Apenas números, sem o T.</small>
+        </div>
+        <div class="form-group">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" class="form-control" maxlength="20" value="{{ acesso.senha }}" required>
+        </div>
+        <div class="form-check">
+            <label for="mostrarsenha" class="form-check-label">
+                <input type="checkbox" class="form-check-input" id="mostrarsenha" onclick="showPass()">
+                Mostrar senha
+            </label>
+        </div>
+        <br>
+        <script>
+            function showPass() {
+                var x = document.getElementById("senha");
+                if (x.type === "password") {
+                    x.type = "text";
+                } else {
+                    x.type = "password";
+                }
+            }
+        </script>
+        <button type="submit" class="btn btn-primary">Atualizar</button>
+        <a href="{{ url_for('home') }}">
+            <button type="button" class="btn btn-secondary">Voltar</button>
+        </a>
+    </form>
+</div>
+</body>
+</html>
