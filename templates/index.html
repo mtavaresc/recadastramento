@@ -12,21 +12,74 @@
 <body>
 <div class="container">
     <div class="page-header">
-        <h2>Novo acesso</h2>
+        <h2>Recadastramento de Trabalhador</h2>
     </div>
     <form class="container" method="POST">
         <div class="form-group">
-            <label for="filial">Filial</label>
-            <select id="filial" class="form-control" name="filial">
-                {% for x in filiais_lista %}
-                    <option value="{{ x }}"{% if x == acesso.filial %} SELECTED {% endif %}>{{ x }}</option>
-                {% endfor %}
+            <label for="cpf">CPF</label>
+            <input id="cpf" name="cpf" class="form-control" value="{{ pegaso.cpf }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="nis">NIS</label>
+            <input id="nis" name="nis" class="form-control" value="{{ pegaso.nis }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="dtnascto">Data de Nascimento</label>
+            <input id="dtnascto" name="dtnascto" class="form-control" value="{{ pegaso.dtnascto }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="sexo">Sexo</label>
+            <select id="sexo" name="sexo" class="form-control">
+                <option value="M">Masculino</option>
+                <option value="F">Feminino</option>
             </select>
         </div>
         <div class="form-group">
-            <label for="colaborador">Colaborador</label>
-            <input id="colaborador" name="colaborador" class="form-control" value="{{ acesso.colaborador }}" required>
+            <label for="raca">Raça/Cor</label>
+            <select id="raca" name="raca" class="form-control">
+                <option value="1">Branca</option>
+                <option value="2">Preta</option>
+                <option value="3">Parda</option>
+                <option value="4">Amarela</option>
+                <option value="5">Indígena</option>
+                <option value="6">Não informado</option>
+            </select>
         </div>
+        <div class="form-group">
+            <label for="estciv">Estado Civil</label>
+            <select id="estciv" name="estciv" class="form-control">
+                <option value="1">Solteiro</option>
+                <option value="2">Casado</option>
+                <option value="3">Divorciado</option>
+                <option value="4">Separado</option>
+                <option value="5">Viúvo</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="grauinstr">Grau de Instrução</label>
+            <select id="grauinstr" name="grauinstr" class="form-control">
+                <option value="01">Analfabeto</option>
+                <option value="02">Até o 5º ano incompleto do Ensino Fundamental (antiga 4ª série)</option>
+                <option value="03">5o ano completo do Ensino Fundamental</option>
+                <option value="04">Do 6o ao 9o ano do Ensino Fundamental incompleto (antiga 5a a 8a série)</option>
+                <option value="05">Ensino Fundamental Completo</option>
+                <option value="06">Ensino Médio incompleto</option>
+                <option value="07">Ensino Médio completo</option>
+                <option value="08">Educação Superior incompleta</option>
+                <option value="09">Educação Superior completa</option>
+                <option value="10">Pós-Graduação completa</option>
+                <option value="11">Mestrado completo</option>
+                <option value="12">Doutorado completo</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="priemp">Primeiro emprego?</label>
+            <select id="priemp" name="priemp" class="form-control">
+                <option value="S">Sim</option>
+                <option value="N">Não</option>
+            </select>
+        </div>
+
         <div class="form-group">
             <label for="usuario">Usuário</label>
             <input id="usuario" name="usuario" class="form-control" maxlength="7" value="{{ acesso.usuario }}" required>
@@ -45,7 +98,7 @@
         <br>
         <script>
             function showPass() {
-                var x = document.getElementById("senha");
+                const x = document.getElementById("senha");
                 if (x.type === "password") {
                     x.type = "text";
                 } else {
