@@ -34,7 +34,7 @@ class Trabalhador(db.Model):
     nmMae = db.Column(db.String(70))
     nmPai = db.Column(db.String(70))
     # CTPS
-    nrCtpts = db.Column(db.String(11))
+    nrCtps = db.Column(db.String(11))
     serieCtps = db.Column(db.String(5))
     ufCtps = db.Column(db.String(2))
     # RIC
@@ -110,11 +110,105 @@ class Trabalhador(db.Model):
 
     db.PrimaryKeyConstraint(cpfTrab, nisTrab, dtNascto)
 
-    def __init__(self, cpf, nis, nome, sexo, raca, est_civ, dtnascto):
-        self.cpf = cpf
-        self.nis = nis
-        self.nome = nome
+    def __init__(self, cpf_trab, nis_trab, nm_trab, sexo, raca_cor, est_civ, grau_instr, ind_pri_empr, nm_soc,
+                 dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, nm_pai, nr_ctps, serie_ctps, uf_ctps,
+                 nr_ric, ric_orgao_emissor, ric_dt_exped, nr_rg, rg_orgao_emissor, rg_dt_exped, nr_rne,
+                 rne_orgao_emissor, rne_dt_exped, nr_oc, oc_orgao_emissor, oc_dt_exped, oc_dt_valid,
+                 nr_reg_cnh, cnh_dt_exped, uf_cnh, cnh_dt_valid, dt_pri_hab, categoria_cnh, tp_lograd, dsc_lograd,
+                 nr_lograd, complemento, bairro, cep, end_cod_munic, end_uf, pais_resid, ext_dsc_lograd, ext_nr_lograd,
+                 ext_complemento, ext_bairro, nm_cid, cod_postal, dt_chegada, class_trab_estran, casado_br, filhos_br,
+                 def_fisica, def_visual, def_auditiva, def_mental, def_intelectual, def_readap, info_cota, observacao,
+                 tp_dep, nm_dep, dep_dt_nascto, cpf_dep, dep_irrf, dep_sf, inc_trab, trab_aposent, fone_princ,
+                 fone_alternat, email_princ, email_alternat):
+        # Trabalhador
+        self.cpfTrab = cpf_trab
+        self.nisTrab = nis_trab
+        self.nmTrab = nm_trab
         self.sexo = sexo
-        self.raca = raca
-        self.est_civ = est_civ
-        self.dtNascto = dtnascto
+        self.racaCor = raca_cor
+        self.estCiv = est_civ
+        self.grauInstr = grau_instr
+        self.indPriEmpr = ind_pri_empr
+        self.nmSoc = nm_soc
+        # Nascimento
+        self.dtNascto = dt_nascto
+        self.codMunic = cod_munic
+        self.uf = uf
+        self.paisNascto = pais_nascto
+        self.paisNac = pais_nac
+        self.nmMae = nm_mae
+        self.nmPai = nm_pai
+        # CTPS
+        self.nrCtps = nr_ctps
+        self.serieCtps = serie_ctps
+        self.ufCtps = uf_ctps
+        # RIC
+        self.nrRic = nr_ric
+        self.ric_orgaoEmissor = ric_orgao_emissor
+        self.ric_dtExped = ric_dt_exped
+        # RG
+        self.nrRg = nr_rg
+        self.rg_orgaoEmissor = rg_orgao_emissor
+        self.rg_dtExped = rg_dt_exped
+        # RNE
+        self.nrRne = nr_rne
+        self.rne_orgaoEmissor = rne_orgao_emissor
+        self.rne_dtExped = rne_dt_exped
+        # OC
+        self.nrOc = nr_oc
+        self.oc_orgaoEmissor = oc_orgao_emissor
+        self.oc_dtExped = oc_dt_exped
+        self.oc_dtValid = oc_dt_valid
+        # CNH
+        self.nrRegCnh = nr_reg_cnh
+        self.cnh_dtExped = cnh_dt_exped
+        self.ufCnh = uf_cnh
+        self.cnh_dtValid = cnh_dt_valid
+        self.dtPriHab = dt_pri_hab
+        self.categoriaCnh = categoria_cnh
+        # Endereco - Brasil
+        self.tpLograd = tp_lograd
+        self.dscLograd = dsc_lograd
+        self.nrLograd = nr_lograd
+        self.complemento = complemento
+        self.bairro = bairro
+        self.cep = cep
+        self.end_codMunic = end_cod_munic
+        self.end_uf = end_uf
+        # Endereco - Exterior
+        self.paisResid = pais_resid
+        self.ext_dscLograd = ext_dsc_lograd
+        self.ext_nrLograd = ext_nr_lograd
+        self.ext_complemento = ext_complemento
+        self.ext_bairro = ext_bairro
+        self.nmCid = nm_cid
+        self.codPostal = cod_postal
+        # Estrangeiro
+        self.dtChegada = dt_chegada
+        self.classTrabEstran = class_trab_estran
+        self.casadoBr = casado_br
+        self.filhosBr = filhos_br
+        # Info Deficiencia
+        self.defFisica = def_fisica
+        self.defVisual = def_visual
+        self.defAuditiva = def_auditiva
+        self.defMental = def_mental
+        self.defIntelectual = def_intelectual
+        self.defReadap = def_readap
+        self.infoCota = info_cota
+        self.observacao = observacao
+        # Dependete
+        self.tpDep = tp_dep
+        self.nmDep = nm_dep
+        self.dep_dtNascto = dep_dt_nascto
+        self.cpfDep = cpf_dep
+        self.depIRRF = dep_irrf
+        self.depSF = dep_sf
+        self.incTrab = inc_trab
+        # Aposentadoria
+        self.trabAposent = trab_aposent
+        # Contato
+        self.fonePrinc = fone_princ
+        self.foneAlternat = fone_alternat
+        self.emailPrinc = email_princ
+        self.emailAlternat = email_alternat
