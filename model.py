@@ -80,10 +80,10 @@ class Trabalhador(db.Model):
     nmCid = db.Column(db.String(50))
     codPostal = db.Column(db.String(12))
     # Estrangeiro
-    dtChegada = db.Column(db.Date)
-    classTrabEstran = db.Column(db.Integer)
-    casadoBr = db.Column(db.String(1))
-    filhosBr = db.Column(db.String(1))
+    # dtChegada = db.Column(db.Date)
+    # classTrabEstran = db.Column(db.Integer)
+    # casadoBr = db.Column(db.String(1))
+    # filhosBr = db.Column(db.String(1))
     # Info Deficiencia
     defFisica = db.Column(db.String(1))
     defVisual = db.Column(db.String(1))
@@ -93,7 +93,7 @@ class Trabalhador(db.Model):
     defReadap = db.Column(db.String(1))
     infoCota = db.Column(db.String(1))
     observacao = db.Column(db.String(255))
-    # Dependete
+    # Dependente
     tpDep = db.Column(db.String(2))
     nmDep = db.Column(db.String(70))
     dep_dtNascto = db.Column(db.Date)
@@ -116,10 +116,9 @@ class Trabalhador(db.Model):
                  nr_rg, rg_orgao_emissor, rg_dt_exped, nr_oc, oc_orgao_emissor, oc_dt_exped, oc_dt_valid,
                  nr_reg_cnh, cnh_dt_exped, uf_cnh, cnh_dt_valid, dt_pri_hab, categoria_cnh, tp_lograd, dsc_lograd,
                  nr_lograd, complemento, bairro, cep, end_cod_munic, end_uf, pais_resid, ext_dsc_lograd, ext_nr_lograd,
-                 ext_complemento, ext_bairro, nm_cid, cod_postal, dt_chegada, class_trab_estran, casado_br, filhos_br,
-                 def_fisica, def_visual, def_auditiva, def_mental, def_intelectual, def_readap, info_cota, observacao,
-                 tp_dep, nm_dep, dep_dt_nascto, cpf_dep, dep_irrf, dep_sf, inc_trab, trab_aposent, fone_princ,
-                 fone_alternat, email_princ, email_alternat):
+                 ext_complemento, ext_bairro, nm_cid, cod_postal, def_fisica, def_visual, def_auditiva, def_mental,
+                 def_intelectual, def_readap, info_cota, observacao, tp_dep, nm_dep, dep_dt_nascto, cpf_dep, dep_irrf,
+                 dep_sf, inc_trab, trab_aposent, fone_princ, fone_alternat, email_princ, email_alternat):
         # Trabalhador
         self.cpfTrab = cpf_trab
         self.nisTrab = nis_trab
@@ -184,10 +183,10 @@ class Trabalhador(db.Model):
         self.nmCid = nm_cid
         self.codPostal = cod_postal
         # Estrangeiro
-        self.dtChegada = dt_chegada
-        self.classTrabEstran = class_trab_estran
-        self.casadoBr = casado_br
-        self.filhosBr = filhos_br
+        # self.dtChegada = dt_chegada
+        # self.classTrabEstran = class_trab_estran
+        # self.casadoBr = casado_br
+        # self.filhosBr = filhos_br
         # Info Deficiencia
         self.defFisica = def_fisica
         self.defVisual = def_visual
@@ -197,7 +196,7 @@ class Trabalhador(db.Model):
         self.defReadap = def_readap
         self.infoCota = info_cota
         self.observacao = observacao
-        # Dependete
+        # Dependente
         self.tpDep = tp_dep
         self.nmDep = nm_dep
         self.dep_dtNascto = dep_dt_nascto

@@ -3,6 +3,7 @@ from flask import render_template, request
 from base import app, db
 from model import Pegaso, Trabalhador
 
+
 # Creating new database of model "Worker"
 # db.create_all(bind="out")
 
@@ -35,17 +36,17 @@ def recadastrar(matricula):
         serie_ctps = request.form.get("")
         uf_ctps = request.form.get("")
         # RIC
-        nr_ric = request.form.get("")
-        ric_orgao_emissor = request.form.get("")
-        ric_dt_exped = request.form.get("")
+        # nr_ric = request.form.get("")
+        # ric_orgao_emissor = request.form.get("")
+        # ric_dt_exped = request.form.get("")
         # RG
         nr_rg = request.form.get("")
         rg_orgao_emissor = request.form.get("")
         rg_dt_exped = request.form.get("")
         # RNE
-        nr_rne = request.form.get("")
-        rne_orgao_emissor = request.form.get("")
-        rne_dt_exped = request.form.get("")
+        # nr_rne = request.form.get("")
+        # rne_orgao_emissor = request.form.get("")
+        # rne_dt_exped = request.form.get("")
         # OC
         nr_oc = request.form.get("")
         oc_orgao_emissor = request.form.get("")
@@ -76,10 +77,10 @@ def recadastrar(matricula):
         nm_cid = request.form.get("")
         cod_postal = request.form.get("")
         # Estrangeiro
-        dt_chegada = request.form.get("")
-        class_trab_estran = request.form.get("")
-        casado_br = request.form.get("")
-        filhos_br = request.form.get("")
+        # dt_chegada = request.form.get("")
+        # class_trab_estran = request.form.get("")
+        # casado_br = request.form.get("")
+        # filhos_br = request.form.get("")
         # Info Deficiencia
         def_fisica = request.form.get("")
         def_visual = request.form.get("")
@@ -107,15 +108,13 @@ def recadastrar(matricula):
 
         c = Trabalhador(cpf_trab, nis_trab, nm_trab, sexo, raca_cor, est_civ, grau_instr, ind_pri_empr, nm_soc,
                         dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, nm_pai, nr_ctps, serie_ctps, uf_ctps,
-                        nr_ric, ric_orgao_emissor, ric_dt_exped, nr_rg, rg_orgao_emissor, rg_dt_exped, nr_rne,
-                        rne_orgao_emissor, rne_dt_exped, nr_oc, oc_orgao_emissor, oc_dt_exped, oc_dt_valid,
+                        nr_rg, rg_orgao_emissor, rg_dt_exped, nr_oc, oc_orgao_emissor, oc_dt_exped, oc_dt_valid,
                         nr_reg_cnh, cnh_dt_exped, uf_cnh, cnh_dt_valid, dt_pri_hab, categoria_cnh, tp_lograd,
                         dsc_lograd, nr_lograd, complemento, bairro, cep, end_cod_munic, end_uf, pais_resid,
-                        ext_dsc_lograd, ext_nr_lograd, ext_complemento, ext_bairro, nm_cid, cod_postal, dt_chegada,
-                        class_trab_estran, casado_br, filhos_br, def_fisica, def_visual, def_auditiva, def_mental,
-                        def_intelectual, def_readap, info_cota, observacao, tp_dep, nm_dep, dep_dt_nascto, cpf_dep,
-                        dep_irrf, dep_sf, inc_trab, trab_aposent, fone_princ, fone_alternat, email_princ,
-                        email_alternat)
+                        ext_dsc_lograd, ext_nr_lograd, ext_complemento, ext_bairro, nm_cid, cod_postal, def_fisica,
+                        def_visual, def_auditiva, def_mental, def_intelectual, def_readap, info_cota, observacao,
+                        tp_dep, nm_dep, dep_dt_nascto, cpf_dep, dep_irrf, dep_sf, inc_trab, trab_aposent, fone_princ,
+                        fone_alternat, email_princ, email_alternat)
         db.session.merge(c)
         db.session.commit()
 
