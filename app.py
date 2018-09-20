@@ -4,21 +4,18 @@ from base import app, db
 from model import Pegaso, Trabalhador
 
 # Create all schemas
-db.create_all()
+# db.create_all()
 
 
 @app.route("/", methods=["GET"])
 def hello_world():
-    pegaso = Pegaso.query.all()
-    for p in pegaso:
-        print(p.matricula)
-
     return "Hello World!"
 
 
 @app.route("/<int:matricula>", methods=["GET", "POST"])
 def recadastrar(matricula):
-    pegaso = Pegaso.query.filter_by(matricula=matricula).first()
+    pegaso = db.session.execute("SELECT * FROM zeus.tv_cadastro WHERE matr = '{}'".format(matricula)).first()
+    print(pegaso.nome)
 
     if request.method == "POST":
         # Trabalhador

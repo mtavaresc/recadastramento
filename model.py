@@ -2,18 +2,18 @@ from base import db
 
 
 class Pegaso(db.Model):
-    __tablename__ = "tv_cadastro"
+    __tablename__ = "zeus.tv_cadastro"
 
-    matricula = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    matricula = db.Column("matr", db.CHAR(6), primary_key=True)
     nome = db.Column(db.String(70))
     cpf = db.Column(db.String(11))
-    nis = db.Column(db.String(11))
-    dtnascto = db.Column(db.Date)
+    nis = db.Column("pispasep", db.String(11))
+    dtnascto = db.Column("dtnasc", db.Date)
 
 
 class Trabalhador(db.Model):
-    __tablename__ = "trabalhador"
-    __bind_key__ = "new_db"
+    __tablename__ = "esocial.trabalhador"
+    # __bind_key__ = "new_db"
 
     # Trabalhador
     cpfTrab = db.Column(db.String(11))
@@ -213,8 +213,8 @@ class Trabalhador(db.Model):
 
 
 class Paises(db.Model):
-    __tablename__ = "paises"
-    __bind_key__ = "new_db"
+    __tablename__ = "esocial.paises"
+    # __bind_key__ = "new_db"
 
     codigo = db.Column(db.String(3), primary_key=True)
     nome = db.Column(db.String(100))
