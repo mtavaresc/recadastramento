@@ -12,7 +12,7 @@
 <body>
 <div class="container">
     <div class="page-header">
-        <h3>Informações do Trabalhador</h3>
+        <h2>Recadastramento</h2>
     </div>
     <form class="container" method="POST">
         <div class="form-group">
@@ -88,27 +88,22 @@
             <input id="nmSoc" name="nmSoc" class="form-control" maxlength="70">
             <small id="nmSocHelp" class="form-text text-muted">Nome social para travesti ou transexual.</small>
         </div>
-        {#        <div class="form-group">#}
-        {#            <label for="senha">Senha</label>#}
-        {#            <input type="password" id="senha" name="senha" class="form-control" maxlength="20" value="{{ acesso.senha }}" required>#}
-        {#        </div>#}
-        {#        <div class="form-check">#}
-        {#            <label for="mostrarsenha" class="form-check-label">#}
-        {#                <input type="checkbox" class="form-check-input" id="mostrarsenha" onclick="showPass()">#}
-        {#                Mostrar senha#}
-        {#            </label>#}
-        {#        </div>#}
+        {# Origem tabela "paises" #}
+        <div class="form-group">
+            <label for="paisNascto">País Nascimento</label>
+            <select id="paisNascto" name="paisNascto" class="form-control">
+
+            </select>
+        </div>
+        {# Se pais "Brasil" #}
+        <div class="form-group">
+            <label for="paisNascto">País Nascimento</label>
+            <select id="paisNascto" name="paisNascto" class="form-control">
+
+            </select>
+        </div>
+
         <br>
-        <script>
-            function showPass() {
-                const x = document.getElementById("senha");
-                if (x.type === "password") {
-                    x.type = "text";
-                } else {
-                    x.type = "password";
-                }
-            }
-        </script>
         <button type="submit" class="btn btn-primary">Atualizar</button>
     </form>
 </div>

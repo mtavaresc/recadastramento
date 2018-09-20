@@ -10,12 +10,6 @@ class Pegaso(db.Model):
     nis = db.Column(db.String(11))
     dtnascto = db.Column(db.Date)
 
-    def __init__(self, nome, cpf, nis, dtnascto):
-        self.nome = nome
-        self.cpf = cpf
-        self.nis = nis
-        self.dtnascto = dtnascto
-
 
 class Trabalhador(db.Model):
     __tablename__ = "trabalhador"
@@ -216,3 +210,11 @@ class Trabalhador(db.Model):
         self.foneAlternat = fone_alternat
         self.emailPrinc = email_princ
         self.emailAlternat = email_alternat
+
+
+class Paises(db.Model):
+    __tablename__ = "paises"
+    __bind_key__ = "new_db"
+
+    codigo = db.Column(db.String(3), primary_key=True)
+    nome = db.Column(db.String(100))

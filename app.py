@@ -1,6 +1,5 @@
 # -*- coding: UTF-8 -*-
 from flask import render_template, request
-from datetime import date
 from base import app, db
 from model import Pegaso, Trabalhador
 
@@ -10,6 +9,10 @@ db.create_all()
 
 @app.route("/", methods=["GET"])
 def hello_world():
+    pegaso = Pegaso.query.all()
+    for p in pegaso:
+        print(p.matricula)
+
     return "Hello World!"
 
 
