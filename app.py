@@ -3,6 +3,7 @@ from flask import render_template, request
 from base import app, db
 from model import Pegaso, Trabalhador
 
+
 # Create all schemas
 # db.create_all()
 
@@ -12,10 +13,10 @@ def hello_world():
     return "Hello World!"
 
 
-@app.route("/<int:matricula>", methods=["GET", "POST"])
+@app.route("/<matricula>", methods=["GET", "POST"])
 def recadastrar(matricula):
-    pegaso = db.session.execute("SELECT * FROM zeus.tv_cadastro WHERE matr = '{}'".format(matricula)).first()
-    print(pegaso.nome)
+    pegaso = db.session.execute(
+        "SELECT nome, cpf, pispasep, TO_CHAR(dtnasc, 'YYYY-MM-DD') as dtnasc FROM zeus.tv_cadastro WHERE matr = '{}'".format(matricula)).first()
 
     if request.method == "POST":
         # Trabalhador
