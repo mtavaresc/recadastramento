@@ -1,11 +1,16 @@
 # -*- coding: UTF-8 -*-
 from flask import render_template, request
+from datetime import date
 from base import app, db
 from model import Pegaso, Trabalhador
 
+# Create all schemas
+db.create_all()
 
-# Creating new database of model "Worker"
-# db.create_all(bind="out")
+
+@app.route("/", methods=["GET"])
+def hello_world():
+    return "Hello World!"
 
 
 @app.route("/<int:matricula>", methods=["GET", "POST"])
@@ -119,6 +124,7 @@ def recadastrar(matricula):
         db.session.commit()
 
         return render_template("submit.html")
+
     return render_template("index.html", pegaso=pegaso)
 
 

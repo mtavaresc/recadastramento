@@ -2,19 +2,24 @@ from base import db
 
 
 class Pegaso(db.Model):
-    __tablename__ = "zeus.tv_cadastro"
-    __bind_by__ = "get"
+    __tablename__ = "tv_cadastro"
 
-    matricula = db.Column(db.Integer, primary_key=True)
+    matricula = db.Column(db.Integer, autoincrement=True, primary_key=True)
     nome = db.Column(db.String(70))
     cpf = db.Column(db.String(11))
     nis = db.Column(db.String(11))
-    dtnascto = db.Column(db.String(11))
+    dtnascto = db.Column(db.Date)
+
+    def __init__(self, nome, cpf, nis, dtnascto):
+        self.nome = nome
+        self.cpf = cpf
+        self.nis = nis
+        self.dtnascto = dtnascto
 
 
 class Trabalhador(db.Model):
-    __tablename__ = "esocial.trabalhador"
-    __bind_key__ = "set"
+    __tablename__ = "trabalhador"
+    __bind_key__ = "new_db"
 
     # Trabalhador
     cpfTrab = db.Column(db.String(11))

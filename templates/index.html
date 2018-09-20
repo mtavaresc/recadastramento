@@ -12,35 +12,35 @@
 <body>
 <div class="container">
     <div class="page-header">
-        <h2>Recadastramento de Trabalhador</h2>
+        <h3>Informações do Trabalhador</h3>
     </div>
     <form class="container" method="POST">
         <div class="form-group">
-            <label for="cpf">CPF</label>
-            <input id="cpf" name="cpf" class="form-control" value="{{ pegaso.cpf }}" readonly>
+            <label for="cpfTrab">**CPF</label>
+            <input id="cpfTrab" name="cpfTrab" class="form-control" value="{{ pegaso.cpf }}" readonly>
         </div>
         <div class="form-group">
-            <label for="nis">NIS</label>
-            <input id="nis" name="nis" class="form-control" value="{{ pegaso.nis }}" readonly>
+            <label for="nisTrab">**NIS</label>
+            <input id="nisTrab" name="nisTrab" class="form-control" value="{{ pegaso.nis }}" readonly>
         </div>
         <div class="form-group">
-            <label for="nmTrab">Nome Completo</label>
+            <label for="nmTrab">**Nome Completo</label>
             <input id="nmTrab" name="nmTrab" class="form-control" value="{{ pegaso.nome }}" readonly>
         </div>
         <div class="form-group">
-            <label for="dtnascto">Data de Nascimento</label>
-            <input id="dtnascto" name="dtnascto" class="form-control" value="{{ pegaso.dtnascto }}" readonly>
+            <label for="dtNascto">**Data de Nascimento</label>
+            <input type="date" id="dtNascto" name="dtNascto" class="form-control" value="{{ pegaso.dtnascto }}" readonly>
         </div>
         <div class="form-group">
-            <label for="sexo">Sexo</label>
+            <label for="sexo">*Sexo</label>
             <select id="sexo" name="sexo" class="form-control">
                 <option value="M">Masculino</option>
                 <option value="F">Feminino</option>
             </select>
         </div>
         <div class="form-group">
-            <label for="raca">Raça/Cor</label>
-            <select id="raca" name="raca" class="form-control">
+            <label for="racaCor">*Raça/Cor</label>
+            <select id="racaCor" name="racaCor" class="form-control">
                 <option value="1">Branca</option>
                 <option value="2">Preta</option>
                 <option value="3">Parda</option>
@@ -50,8 +50,8 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="estciv">Estado Civil</label>
-            <select id="estciv" name="estciv" class="form-control">
+            <label for="estCiv">*Estado Civil</label>
+            <select id="estCiv" name="estCiv" class="form-control">
                 <option value="1">Solteiro</option>
                 <option value="2">Casado</option>
                 <option value="3">Divorciado</option>
@@ -60,8 +60,8 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="grauinstr">Grau de Instrução</label>
-            <select id="grauinstr" name="grauinstr" class="form-control">
+            <label for="grauInstr">*Grau de Instrução</label>
+            <select id="grauInstr" name="grauInstr" class="form-control">
                 <option value="01">Analfabeto</option>
                 <option value="02">Até o 5º ano incompleto do Ensino Fundamental (antiga 4ª série)</option>
                 <option value="03">5o ano completo do Ensino Fundamental</option>
@@ -77,28 +77,27 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="priemp">Primeiro emprego?</label>
-            <select id="priemp" name="priemp" class="form-control">
+            <label for="indPriEmpr">*Primeiro emprego?</label>
+            <select id="indPriEmpr" name="indPriEmpr" class="form-control">
                 <option value="S">Sim</option>
                 <option value="N">Não</option>
             </select>
         </div>
-
         <div class="form-group">
-            <label for="usuario">Usuário</label>
-            <input id="usuario" name="usuario" class="form-control" maxlength="7" value="{{ acesso.usuario }}" required>
-            <small id="usuarioHelp" class="form-text text-muted">Apenas números, sem o T.</small>
+            <label for="nmSoc">Nome Social</label>
+            <input id="nmSoc" name="nmSoc" class="form-control" maxlength="70">
+            <small id="nmSocHelp" class="form-text text-muted">Nome social para travesti ou transexual.</small>
         </div>
-        <div class="form-group">
-            <label for="senha">Senha</label>
-            <input type="password" id="senha" name="senha" class="form-control" maxlength="20" value="{{ acesso.senha }}" required>
-        </div>
-        <div class="form-check">
-            <label for="mostrarsenha" class="form-check-label">
-                <input type="checkbox" class="form-check-input" id="mostrarsenha" onclick="showPass()">
-                Mostrar senha
-            </label>
-        </div>
+        {#        <div class="form-group">#}
+        {#            <label for="senha">Senha</label>#}
+        {#            <input type="password" id="senha" name="senha" class="form-control" maxlength="20" value="{{ acesso.senha }}" required>#}
+        {#        </div>#}
+        {#        <div class="form-check">#}
+        {#            <label for="mostrarsenha" class="form-check-label">#}
+        {#                <input type="checkbox" class="form-check-input" id="mostrarsenha" onclick="showPass()">#}
+        {#                Mostrar senha#}
+        {#            </label>#}
+        {#        </div>#}
         <br>
         <script>
             function showPass() {
@@ -111,9 +110,6 @@
             }
         </script>
         <button type="submit" class="btn btn-primary">Atualizar</button>
-        <a href="{{ url_for('home') }}">
-            <button type="button" class="btn btn-secondary">Voltar</button>
-        </a>
     </form>
 </div>
 </body>
