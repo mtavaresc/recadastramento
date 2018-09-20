@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 from flask import render_template, request
 from base import app, db
-from model import Pegaso, Trabalhador
+from model import Trabalhador
 
 
 # Create all schemas
@@ -16,7 +16,8 @@ def hello_world():
 @app.route("/<matricula>", methods=["GET", "POST"])
 def recadastrar(matricula):
     pegaso = db.session.execute(
-        "SELECT nome, cpf, pispasep, TO_CHAR(dtnasc, 'YYYY-MM-DD') as dtnasc FROM zeus.tv_cadastro WHERE matr = '{}'".format(matricula)).first()
+        "SELECT nome, cpf, pispasep, TO_CHAR(dtnasc, 'YYYY-MM-DD') as dtnasc "
+        "FROM zeus.tv_cadastro WHERE matr = '{}'".format(matricula)).first()
 
     if request.method == "POST":
         # Trabalhador
