@@ -1,18 +1,18 @@
-from base import db
+from _base import db
 
 
 class Pegaso(db.Model):
-    __tablename__ = "zeus.tv_cadastro"
+    __tablename__ = "tv_cadastro"
 
-    matricula = db.Column("matr", db.CHAR(6), primary_key=True)
+    matricula = db.Column(db.CHAR(6), primary_key=True)
     nome = db.Column(db.String(70))
     cpf = db.Column(db.String(11))
-    nis = db.Column("pispasep", db.String(11))
-    dtnascto = db.Column("dtnasc", db.Date)
+    pispasep = db.Column(db.String(11))
+    dtnasc = db.Column(db.Date)
 
 
 class Trabalhador(db.Model):
-    __tablename__ = "esocial.trabalhador"
+    __tablename__ = "trabalhador"
 
     # Trabalhador
     cpfTrab = db.Column(db.String(11))
@@ -139,18 +139,10 @@ class Trabalhador(db.Model):
         self.nrCtps = nr_ctps
         self.serieCtps = serie_ctps
         self.ufCtps = uf_ctps
-        # RIC
-        # self.nrRic = nr_ric
-        # self.ric_orgaoEmissor = ric_orgao_emissor
-        # self.ric_dtExped = ric_dt_exped
         # RG
         self.nrRg = nr_rg
         self.rg_orgaoEmissor = rg_orgao_emissor
         self.rg_dtExped = rg_dt_exped
-        # RNE
-        # self.nrRne = nr_rne
-        # self.rne_orgaoEmissor = rne_orgao_emissor
-        # self.rne_dtExped = rne_dt_exped
         # OC
         self.nrOc = nr_oc
         self.oc_orgaoEmissor = oc_orgao_emissor
@@ -180,11 +172,6 @@ class Trabalhador(db.Model):
         self.ext_bairro = ext_bairro
         self.nmCid = nm_cid
         self.codPostal = cod_postal
-        # Estrangeiro
-        # self.dtChegada = dt_chegada
-        # self.classTrabEstran = class_trab_estran
-        # self.casadoBr = casado_br
-        # self.filhosBr = filhos_br
         # Info Deficiencia
         self.defFisica = def_fisica
         self.defVisual = def_visual
@@ -212,7 +199,22 @@ class Trabalhador(db.Model):
 
 
 class Paises(db.Model):
-    __tablename__ = "esocial.paises"
+    __tablename__ = "paises"
 
     codigo = db.Column(db.String(3), primary_key=True)
     nome = db.Column(db.String(100))
+
+
+class Estados(db.Model):
+    __tablename__ = "estados"
+
+    uf = db.Column(db.CHAR(2), primary_key=True)
+    nome = db.Column(db.String(50))
+
+
+class Municipios(db.Model):
+    __tablename__ = "municipios"
+
+    codigo = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(255))
+    uf = db.Column(db.CHAR(2))

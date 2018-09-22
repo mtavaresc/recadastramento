@@ -15,6 +15,7 @@
         <h2>Recadastramento</h2>
     </div>
     <form class="container" method="POST">
+        {# Trabalhador #}
         <div class="form-group">
             <label for="cpfTrab">**CPF</label>
             <input id="cpfTrab" name="cpfTrab" class="form-control" value="{{ pegaso.cpf }}" readonly>
@@ -88,19 +89,80 @@
             <input id="nmSoc" name="nmSoc" class="form-control" maxlength="70">
             <small id="nmSocHelp" class="form-text text-muted">Nome social para travesti ou transexual.</small>
         </div>
+        {# Nascimento #}
+        {# Origem tabela "paises" #}
+        <div class="form-group">
+            <label for="paisNac">Nacionalidade</label>
+            <select id="paisNac" name="paisNac" class="form-control">
+                {% for x in paises %}
+                    <option value="{{ x }}">{{ paises[x] }}</option>
+                {% endfor %}
+            </select>
+        </div>
         {# Origem tabela "paises" #}
         <div class="form-group">
             <label for="paisNascto">País Nascimento</label>
             <select id="paisNascto" name="paisNascto" class="form-control">
-
+                {% for x in paises %}
+                    <option value="{{ x }}">{{ paises[x] }}</option>
+                {% endfor %}
             </select>
         </div>
-        {# Se pais "Brasil" #}
+        {# Se pais nascimento selecionado = "Brasil" #}
         <div class="form-group">
-            <label for="paisNascto">País Nascimento</label>
-            <select id="paisNascto" name="paisNascto" class="form-control">
-
+            <label for="uf">Estado</label>
+            <select id="uf" name="uf" class="form-control">
+                {% for x in estados %}
+                    <option value="{{ x }}">{{ estados[x] }}</option>
+                {% endfor %}
             </select>
+        </div>
+        <div class="form-group">
+            <label for="codMunic">Município</label>
+            <select id="codMunic" name="codMunic" class="form-control">
+                {% for x in municipios %}
+                    <option value="{{ x }}">{{ municipios[x] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="nmMae">Nome Mãe</label>
+            <input id="nmMae" name="nmMae" class="form-control" maxlength="70" required>
+        </div>
+        <div class="form-group">
+            <label for="nmPai">Nome Pai</label>
+            <input id="nmPai" name="nmPai" class="form-control" maxlength="70" required>
+        </div>
+        {# CTPS #}
+        <div class="form-group">
+            <label for="nrCtps">Nº CTPS</label>
+            <input id="nrCtps" name="nrCtps" class="form-control" maxlength="11" required>
+        </div>
+        <div class="form-group">
+            <label for="serieCtps">Série CTPS</label>
+            <input id="serieCtps" name="serieCtps" class="form-control" maxlength="5" required>
+        </div>
+        <div class="form-group">
+            <label for="ufCtps">UF CTPS</label>
+            <select id="ufCtps" name="ufCtps" class="form-control">
+                {% for x in estados %}
+                    <option value="{{ x }}">{{ x }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {# RG #}
+        <div class="form-group">
+            <label for="nrRg">Nº RG</label>
+            <input id="nrRg" name="nrRg" class="form-control" maxlength="14" required>
+        </div>
+        <div class="form-group">
+            <label for="rg_orgaoEmissor">Órgão Emissor</label>
+            <input id="rg_orgaoEmissor" name="rg_orgaoEmissor" class="form-control" maxlength="20" required>
+            <small id="rg_orgaoEmissorHelp" class="form-text text-muted">Órgão e UF de emissão.</small>
+        </div>
+        <div class="form-group">
+            <label for="rg_dtExped">Data de Expedição</label>
+            <input type="date" id="rg_dtExped" name="rg_dtExped" class="form-control" required>
         </div>
 
         <br>
