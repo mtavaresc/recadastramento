@@ -11,36 +11,45 @@
 
 <body>
 <div class="container">
+    <br>
     <div class="page-header">
-        <h2>Recadastramento</h2>
+        <h1>#Recadastramento</h1>
     </div>
+
     <form class="container" method="POST">
         {# Trabalhador #}
+        <br>
+        <div class="page-header">
+            <h3>Informações do Trabalhador</h3>
+        </div>
+        <br>
         <div class="form-group">
-            <label for="cpfTrab">**CPF</label>
-            <input id="cpfTrab" name="cpfTrab" class="form-control" value="{{ pegaso.cpf }}" readonly>
+            <label for="cpfTrab">*CPF: </label>
+            <input id="cpfTrab" name="cpfTrab" class="form-form-control-plaintext" value="{{ pegaso.cpf }}" readonly>
         </div>
         <div class="form-group">
-            <label for="nisTrab">**NIS</label>
-            <input id="nisTrab" name="nisTrab" class="form-control" value="{{ pegaso.pispasep }}" readonly>
+            <label for="nisTrab">*NIS: </label>
+            <input id="nisTrab" name="nisTrab" class="form-form-control-plaintext" value="{{ pegaso.pispasep }}"
+                   readonly>
         </div>
         <div class="form-group">
-            <label for="nmTrab">**Nome Completo</label>
-            <input id="nmTrab" name="nmTrab" class="form-control" value="{{ pegaso.nome }}" readonly>
+            <label for="nmTrab">*Nome Completo: </label>
+            <input id="nmTrab" name="nmTrab" class="form-form-control-plaintext" value="{{ pegaso.nome }}" readonly>
         </div>
         <div class="form-group">
-            <label for="dtNascto">**Data de Nascimento</label>
-            <input type="date" id="dtNascto" name="dtNascto" class="form-control" value="{{ pegaso.dtnasc }}" readonly>
+            <label for="dtNascto">*Data de Nascimento: </label>
+            <input type="date" id="dtNascto" name="dtNascto" class="form-form-control-plaintext"
+                   value="{{ pegaso.dtnasc }}" readonly>
         </div>
         <div class="form-group">
-            <label for="sexo">*Sexo</label>
+            <label for="sexo">Sexo:</label>
             <select id="sexo" name="sexo" class="form-control">
                 <option value="M">Masculino</option>
                 <option value="F">Feminino</option>
             </select>
         </div>
         <div class="form-group">
-            <label for="racaCor">*Raça/Cor</label>
+            <label for="racaCor">Raça/Cor:</label>
             <select id="racaCor" name="racaCor" class="form-control">
                 <option value="1">Branca</option>
                 <option value="2">Preta</option>
@@ -51,7 +60,7 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="estCiv">*Estado Civil</label>
+            <label for="estCiv">Estado Civil:</label>
             <select id="estCiv" name="estCiv" class="form-control">
                 <option value="1">Solteiro</option>
                 <option value="2">Casado</option>
@@ -61,7 +70,7 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="grauInstr">*Grau de Instrução</label>
+            <label for="grauInstr">Grau de Instrução:</label>
             <select id="grauInstr" name="grauInstr" class="form-control">
                 <option value="01">Analfabeto</option>
                 <option value="02">Até o 5º ano incompleto do Ensino Fundamental (antiga 4ª série)</option>
@@ -78,21 +87,26 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="indPriEmpr">*Primeiro emprego?</label>
+            <label for="indPriEmpr">Primeiro emprego?</label>
             <select id="indPriEmpr" name="indPriEmpr" class="form-control">
                 <option value="S">Sim</option>
                 <option value="N">Não</option>
             </select>
         </div>
         <div class="form-group">
-            <label for="nmSoc">Nome Social</label>
+            <label for="nmSoc">Nome Social:</label>
             <input id="nmSoc" name="nmSoc" class="form-control" maxlength="70">
             <small id="nmSocHelp" class="form-text text-muted">Nome social para travesti ou transexual.</small>
         </div>
         {# Nascimento #}
+        <br>
+        <div class="page-header">
+            <h3>Informações de Nascimento</h3>
+        </div>
+        <br>
         {# Origem tabela "paises" #}
         <div class="form-group">
-            <label for="paisNac">Nacionalidade</label>
+            <label for="paisNac">País Nacionalidade:</label>
             <select id="paisNac" name="paisNac" class="form-control">
                 {% for x in paises %}
                     <option value="{{ x }}">{{ paises[x] }}</option>
@@ -101,7 +115,7 @@
         </div>
         {# Origem tabela "paises" #}
         <div class="form-group">
-            <label for="paisNascto">País Nascimento</label>
+            <label for="paisNascto">País Nascimento:</label>
             <select id="paisNascto" name="paisNascto" class="form-control">
                 {% for x in paises %}
                     <option value="{{ x }}">{{ paises[x] }}</option>
@@ -110,7 +124,7 @@
         </div>
         {# Se pais nascimento selecionado = "Brasil" #}
         <div class="form-group">
-            <label for="uf">Estado</label>
+            <label for="uf">Estado:</label>
             <select id="uf" name="uf" class="form-control">
                 {% for x in estados %}
                     <option value="{{ x }}">{{ estados[x] }}</option>
@@ -118,7 +132,7 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="codMunic">Município</label>
+            <label for="codMunic">Município:</label>
             <select id="codMunic" name="codMunic" class="form-control">
                 {% for x in municipios %}
                     <option value="{{ x }}">{{ municipios[x] }}</option>
@@ -126,24 +140,29 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="nmMae">Nome Mãe</label>
+            <label for="nmMae">Nome Mãe:</label>
             <input id="nmMae" name="nmMae" class="form-control" maxlength="70" required>
         </div>
         <div class="form-group">
-            <label for="nmPai">Nome Pai</label>
+            <label for="nmPai">Nome Pai:</label>
             <input id="nmPai" name="nmPai" class="form-control" maxlength="70" required>
         </div>
         {# CTPS #}
+        <br>
+        <div class="page-header">
+            <h3>Informações de CTPS</h3>
+        </div>
+        <br>
         <div class="form-group">
-            <label for="nrCtps">Nº CTPS</label>
+            <label for="nrCtps">Nº CTPS:</label>
             <input id="nrCtps" name="nrCtps" class="form-control" maxlength="11" required>
         </div>
         <div class="form-group">
-            <label for="serieCtps">Série CTPS</label>
+            <label for="serieCtps">Série CTPS:</label>
             <input id="serieCtps" name="serieCtps" class="form-control" maxlength="5" required>
         </div>
         <div class="form-group">
-            <label for="ufCtps">UF CTPS</label>
+            <label for="ufCtps">UF CTPS:</label>
             <select id="ufCtps" name="ufCtps" class="form-control">
                 {% for x in estados %}
                     <option value="{{ x }}">{{ x }}</option>
@@ -151,22 +170,159 @@
             </select>
         </div>
         {# RG #}
+        <br>
+        <div class="page-header">
+            <h3>Informações do RG</h3>
+        </div>
+        <br>
         <div class="form-group">
-            <label for="nrRg">Nº RG</label>
+            <label for="nrRg">Nº RG:</label>
             <input id="nrRg" name="nrRg" class="form-control" maxlength="14" required>
         </div>
         <div class="form-group">
-            <label for="rg_orgaoEmissor">Órgão Emissor</label>
+            <label for="rg_orgaoEmissor">Órgão Emissor:</label>
             <input id="rg_orgaoEmissor" name="rg_orgaoEmissor" class="form-control" maxlength="20" required>
             <small id="rg_orgaoEmissorHelp" class="form-text text-muted">Órgão e UF de emissão.</small>
         </div>
         <div class="form-group">
-            <label for="rg_dtExped">Data de Expedição</label>
+            <label for="rg_dtExped">Data de Expedição:</label>
             <input type="date" id="rg_dtExped" name="rg_dtExped" class="form-control" required>
+        </div>
+        {# OC #}
+        <br>
+        <div class="page-header">
+            <h3>Informações do Órgão de Classe</h3>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="nrOc">Nº OC:</label>
+            <input id="nrOc" name="nrOc" class="form-control" maxlength="14" required>
+        </div>
+        <div class="form-group">
+            <label for="oc_orgaoEmissor">Órgão Emissor:</label>
+            <input id="oc_orgaoEmissor" name="oc_orgaoEmissor" class="form-control" maxlength="20" required>
+            <small id="oc_orgaoEmissorHelp" class="form-text text-muted">Órgão e UF de emissão.</small>
+        </div>
+        <div class="form-group">
+            <label for="oc_dtExped">Data de Expedição:</label>
+            <input type="date" id="oc_dtExped" name="oc_dtExped" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="oc_dtValid">Data de Validade:</label>
+            <input type="date" id="oc_dtValid" name="oc_dtValid" class="form-control" required>
+        </div>
+        {# CNH * Caso possua, incluir checkbox! #}
+        <br>
+        <div class="page-header">
+            <h3>Informações de CNH</h3>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="nrRegCnh">Nº do Registro CNH:</label>
+            <input id="nrRegCnh" name="nrRegCnh" class="form-control" maxlength="14" required>
+        </div>
+        <div class="form-group">
+            <label for="cnh_dtExped">Data de Expedição:</label>
+            <input type="date" id="cnh_dtExped" name="cnh_dtExped" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="ufCnh">UF CNH:</label>
+            <select id="ufCnh" name="ufCnh" class="form-control">
+                {% for x in estados %}
+                    <option value="{{ x }}">{{ x }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="cnh_dtValid">Data de Validade:</label>
+            <input type="date" id="cnh_dtValid" name="cnh_dtValid" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="dtPriHab">Data da Primeira Habilitação:</label>
+            <input type="date" id="dtPriHab" name="dtPriHab" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="categoriaCnh">Categoria CNH:</label>
+            <select id="categoriaCnh" name="categoriaCnh" class="form-control">
+                <option>A</option>
+                <option>B</option>
+                <option>C</option>
+                <option>D</option>
+                <option>E</option>
+                <option>AB</option>
+                <option>AC</option>
+                <option>AD</option>
+                <option>AE</option>
+            </select>
+        </div>
+        {# Endereco - Brasil #}
+        <br>
+        <div class="page-header">
+            <h3>Informações de Endereço Residencial</h3>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="paisResid">País Residência:</label>
+            <select id="paisResid" name="paisResid" class="form-control">
+                {% for x in paises %}
+                    <option value="{{ x }}">{{ paises[x] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {# Se pais residencia selecionado = "Brasil" #}
+        <div class="form-group">
+            <label for="end_uf">Estado:</label>
+            <select id="end_uf" name="end_uf" class="form-control">
+                {% for x in estados %}
+                    <option value="{{ x }}">{{ estados[x] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="end_codMunic">Município:</label>
+            <select id="end_codMunic" name="codMunic" class="form-control">
+                {% for x in municipios %}
+                    <option value="{{ x }}">{{ municipios[x] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="cep">CEP:</label>
+            <input id="cep" name="cep" class="form-control" maxlength="14" required>
+        </div>
+        <div class="form-group">
+            <label for="tpLograd">Tipo Logradouro:</label>
+            <select id="tpLograd" name="tpLograd" class="form-control">
+                {% for x in tl %}
+                    <option value="{{ x }}">{{ tl[x] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="dscLograd">Logradouro:</label>
+            <input id="dscLograd" name="dscLograd" class="form-control" maxlength="14" required>
+        </div>
+        <div class="form-group">
+            <label for="nrLograd">Nº Logradouro:</label>
+            <input id="nrLograd" name="nrLograd" class="form-control" maxlength="14" required>
+        </div>
+        <div class="form-group">
+            <label for="complemento">Complemento:</label>
+            <input id="complemento" name="complemento" class="form-control" maxlength="14" required>
+        </div>
+
+        <div class="form-group">
+            <label for="bairro">Bairro:</label>
+            <select id="bairro" name="bairro" class="form-control">
+                {% for x in bairros %}
+                    <option value="{{ x }}">{{ x }}</option>
+                {% endfor %}
+            </select>
         </div>
 
         <br>
         <button type="submit" class="btn btn-primary">Atualizar</button>
+        <br><br>
     </form>
 </div>
 </body>

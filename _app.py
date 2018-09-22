@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 from flask import render_template, request
-from _base import app, db
-from _model import Trabalhador, Pegaso, Paises, Estados, Municipios
+from _base import app
+from _model import *
 
 # Create all schemas
 db.create_all()
@@ -28,6 +28,12 @@ def recadastrar(matricula):
     cod_municipio = [row.codigo for row in Municipios.query.all()]
     nome_municipio = [row.nome for row in Municipios.query.order_by(Municipios.nome).all()]
     municipios = dict(zip(cod_municipio, nome_municipio))
+    # Selecionando tipos logradouro
+    cod_tl = [row.codigo for row in TiposLogradouro.query.all()]
+    nome_tl = [row.nome for row in TiposLogradouro.query.order_by(TiposLogradouro.nome).all()]
+    tipos_logradouro = dict(zip(cod_tl, nome_tl))
+    # Selecionando bairros
+    bairros = [row.nome for row in db.session.query(Bairros.nome).distinct().order_by(Bairros.nome).all()]
 
     if request.method == "POST":
         # Trabalhador
@@ -137,7 +143,8 @@ def recadastrar(matricula):
 
         return render_template("submit.html")
 
-    return render_template("index.html", pegaso=pegaso, paises=paises, estados=estados, municipios=municipios)
+    return render_template("index.html", pegaso=pegaso, paises=paises, estados=estados, municipios=municipios,
+                           tl=tipos_logradouro, bairros=bairros)
 
 
 if __name__ == "__main__":

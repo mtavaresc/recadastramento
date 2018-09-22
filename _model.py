@@ -36,18 +36,10 @@ class Trabalhador(db.Model):
     nrCtps = db.Column(db.String(11))
     serieCtps = db.Column(db.String(5))
     ufCtps = db.Column(db.String(2))
-    # RIC
-    # nrRic = db.Column(db.String(14))
-    # ric_orgaoEmissor = db.Column(db.String(20))
-    # ric_dtExped = db.Column(db.Date)
     # RG
     nrRg = db.Column(db.String(14))
     rg_orgaoEmissor = db.Column(db.String(20))
     rg_dtExped = db.Column(db.Date)
-    # RNE
-    # nrRne = db.Column(db.String(14))
-    # rne_orgaoEmissor = db.Column(db.String(20))
-    # rne_dtExped = db.Column(db.Date)
     # OC
     nrOc = db.Column(db.String(14))
     oc_orgaoEmissor = db.Column(db.String(20))
@@ -77,11 +69,6 @@ class Trabalhador(db.Model):
     ext_bairro = db.Column(db.String(60))
     nmCid = db.Column(db.String(50))
     codPostal = db.Column(db.String(12))
-    # Estrangeiro
-    # dtChegada = db.Column(db.Date)
-    # classTrabEstran = db.Column(db.Integer)
-    # casadoBr = db.Column(db.String(1))
-    # filhosBr = db.Column(db.String(1))
     # Info Deficiencia
     defFisica = db.Column(db.String(1))
     defVisual = db.Column(db.String(1))
@@ -217,4 +204,20 @@ class Municipios(db.Model):
 
     codigo = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(255))
+    uf = db.Column(db.CHAR(2))
+
+
+class TiposLogradouro(db.Model):
+    __tablename__ = "tipos_logradouro"
+
+    codigo = db.Column(db.CHAR(4), primary_key=True)
+    nome = db.Column(db.String(30))
+
+
+class Bairros(db.Model):
+    __tablename__ = "bairros"
+
+    codigo = db.Column(db.CHAR(10), primary_key=True)
+    nome = db.Column(db.String(70))
+    municipio = db.Column(db.String(70))
     uf = db.Column(db.CHAR(2))
