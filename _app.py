@@ -9,7 +9,8 @@ db.create_all()
 
 @app.route("/", methods=["GET"])
 def hello_world():
-    return "Hello World!"
+    return render_template("submit.html")
+    # return "Hello World!"
 
 
 @app.route("/<matricula>", methods=["GET", "POST"])

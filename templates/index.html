@@ -2,29 +2,48 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="../static/css/bootstrap.css">
+    {#    <link rel="stylesheet" href="../static/css/bootstrap.min.css">#}
     <link rel="stylesheet" href="../static/css/fontawesome-all.css">
 
     <!-- Latest compiled and minified JavaScript -->
-    <script src="../static/js/bootstrap.js"></script>
+    {#    <script src="../static/js/bootstrap.min.js"></script>#}
     <script src="../static/js/jquery-3.3.1.min.js"></script>
     <script src="../static/js/jquery.mask.min.js"></script>
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    {#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>#}
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+        jQuery(function () {
+            $('#cep').mask('00000-000');
+            $('#fonePrinc').mask('(00) 00000-0000');
+            $('#foneAlternat').mask('(00) 00000-0000');
+            $('#cpfTrab').mask('000.000.000-00');
+            $('#cpfDep').mask('000.000.000-00');
+            $('#nisTrab').mask('000.0000.000-0')
+        });
+
+        jQuery(function () {
+            $()
+        });
+
+    </script>
 <body>
 <div class="container">
-    <br>
     <div class="page-header">
-        <h1>#Recadastramento</h1>
+        <h1>Recadastramento</h1>
     </div>
 
     <form class="container" method="POST">
+
         {# Trabalhador #}
-        <br>
         <div class="page-header">
             <h3>Informações do Trabalhador</h3>
         </div>
-        <br>
         <div class="form-group">
             <label for="cpfTrab">*CPF: </label>
             <input id="cpfTrab" name="cpfTrab" class="form-form-control-plaintext" value="{{ pegaso.cpf }}" readonly>
@@ -100,12 +119,11 @@
             <input id="nmSoc" name="nmSoc" class="form-control" maxlength="70">
             <small id="nmSocHelp" class="form-text text-muted">Nome social para travesti ou transexual.</small>
         </div>
+
         {# Nascimento #}
-        <br>
         <div class="page-header">
             <h3>Informações de Nascimento</h3>
         </div>
-        <br>
         {# Origem tabela "paises" #}
         <div class="form-group">
             <label for="paisNac">País Nacionalidade:</label>
@@ -149,12 +167,11 @@
             <label for="nmPai">Nome Pai:</label>
             <input id="nmPai" name="nmPai" class="form-control" maxlength="70" required>
         </div>
+
         {# CTPS #}
-        <br>
         <div class="page-header">
             <h3>Informações de CTPS</h3>
         </div>
-        <br>
         <div class="form-group">
             <label for="nrCtps">Nº CTPS:</label>
             <input id="nrCtps" name="nrCtps" class="form-control" maxlength="11" required>
@@ -171,12 +188,11 @@
                 {% endfor %}
             </select>
         </div>
+
         {# RG #}
-        <br>
         <div class="page-header">
             <h3>Informações do RG</h3>
         </div>
-        <br>
         <div class="form-group">
             <label for="nrRg">Nº RG:</label>
             <input id="nrRg" name="nrRg" class="form-control" maxlength="14" required>
@@ -190,12 +206,11 @@
             <label for="rg_dtExped">Data de Expedição:</label>
             <input type="date" id="rg_dtExped" name="rg_dtExped" class="form-control" required>
         </div>
+
         {# OC #}
-        <br>
         <div class="page-header">
             <h3>Informações do Órgão de Classe</h3>
         </div>
-        <br>
         <div class="form-group">
             <label for="nrOc">Nº OC:</label>
             <input id="nrOc" name="nrOc" class="form-control" maxlength="14" required>
@@ -213,58 +228,66 @@
             <label for="oc_dtValid">Data de Validade:</label>
             <input type="date" id="oc_dtValid" name="oc_dtValid" class="form-control" required>
         </div>
-        {# CNH * Caso possua, incluir checkbox! #}
-        <div id="cnh">
+
+        {# CNH #}
+        <div class="page-header">
+            <h3>Informações de CNH</h3>
+        </div>
+        <div class="form-check">
+            <label for="showCnh" data-toggle="collapse" data-target="#collapseOne">
+                <input id="showCnh" type="checkbox" class="form-check-input">
+                Eu tenho CNH
+            </label>
+        </div>
+
+        <div id="collapseOne" class="collapse">
             <br>
-            <div class="page-header">
-                <h3>Informações de CNH</h3>
-            </div>
-            <br>
-            <div class="form-group">
-                <label for="nrRegCnh">Nº do Registro CNH:</label>
-                <input id="nrRegCnh" name="nrRegCnh" class="form-control" maxlength="14" required>
-            </div>
-            <div class="form-group">
-                <label for="cnh_dtExped">Data de Expedição:</label>
-                <input type="date" id="cnh_dtExped" name="cnh_dtExped" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="ufCnh">UF CNH:</label>
-                <select id="ufCnh" name="ufCnh" class="form-control">
-                    {% for x in estados %}
-                        <option value="{{ x }}">{{ x }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="cnh_dtValid">Data de Validade:</label>
-                <input type="date" id="cnh_dtValid" name="cnh_dtValid" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="dtPriHab">Data da Primeira Habilitação:</label>
-                <input type="date" id="dtPriHab" name="dtPriHab" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="categoriaCnh">Categoria CNH:</label>
-                <select id="categoriaCnh" name="categoriaCnh" class="form-control">
-                    <option>A</option>
-                    <option>B</option>
-                    <option>C</option>
-                    <option>D</option>
-                    <option>E</option>
-                    <option>AB</option>
-                    <option>AC</option>
-                    <option>AD</option>
-                    <option>AE</option>
-                </select>
+            <div class="well">
+                <div class="form-group">
+                    <label for="nrRegCnh">Nº do Registro CNH:</label>
+                    <input id="nrRegCnh" name="nrRegCnh" class="form-control" maxlength="12" required>
+                </div>
+                <div class="form-group">
+                    <label for="cnh_dtExped">Data de Expedição:</label>
+                    <input type="date" id="cnh_dtExped" name="cnh_dtExped" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="ufCnh">UF CNH:</label>
+                    <select id="ufCnh" name="ufCnh" class="form-control">
+                        {% for x in estados %}
+                            <option value="{{ x }}">{{ x }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="cnh_dtValid">Data de Validade:</label>
+                    <input type="date" id="cnh_dtValid" name="cnh_dtValid" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="dtPriHab">Data da Primeira Habilitação:</label>
+                    <input type="date" id="dtPriHab" name="dtPriHab" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="categoriaCnh">Categoria CNH:</label>
+                    <select id="categoriaCnh" name="categoriaCnh" class="form-control">
+                        <option>A</option>
+                        <option>B</option>
+                        <option>C</option>
+                        <option>D</option>
+                        <option>E</option>
+                        <option>AB</option>
+                        <option>AC</option>
+                        <option>AD</option>
+                        <option>AE</option>
+                    </select>
+                </div>
             </div>
         </div>
+
         {# Endereco - Brasil #}
-        <br>
         <div class="page-header">
             <h3>Informações de Endereço Residencial</h3>
         </div>
-        <br>
         <div class="form-group">
             <label for="paisResid">País Residência:</label>
             <select id="paisResid" name="paisResid" class="form-control">
@@ -292,7 +315,7 @@
         </div>
         <div class="form-group">
             <label for="cep">CEP:</label>
-            <input id="cep" name="cep" class="form-control" maxlength="14" required>
+            <input id="cep" name="cep" class="form-control" required>
         </div>
         <div class="form-group">
             <label for="tpLograd">Tipo Logradouro:</label>
@@ -304,15 +327,15 @@
         </div>
         <div class="form-group">
             <label for="dscLograd">Logradouro:</label>
-            <input id="dscLograd" name="dscLograd" class="form-control" maxlength="14" required>
+            <input id="dscLograd" name="dscLograd" class="form-control" maxlength="80" required>
         </div>
         <div class="form-group">
             <label for="nrLograd">Nº Logradouro:</label>
-            <input id="nrLograd" name="nrLograd" class="form-control" maxlength="14" required>
+            <input id="nrLograd" name="nrLograd" class="form-control" maxlength="10" required>
         </div>
         <div class="form-group">
             <label for="complemento">Complemento:</label>
-            <input id="complemento" name="complemento" class="form-control" maxlength="14" required>
+            <input id="complemento" name="complemento" class="form-control" maxlength="30" required>
         </div>
         <div class="form-group">
             <label for="bairro">Bairro:</label>
@@ -322,12 +345,11 @@
                 {% endfor %}
             </select>
         </div>
+
         {# Informações de Deficiência #}
-        <br>
         <div class="page-header">
             <h3>Informações de Deficiência</h3>
         </div>
-        <br>
         <div class="form-group">
             <label for="defFisica">Deficiência física?</label>
             <select id="defFisica" name="defFisica" class="form-control">
@@ -381,77 +403,84 @@
             <label for="observacao">Observação:</label>
             <textarea id="observacao" name="observacao" class="form-control" maxlength="255"></textarea>
         </div>
-        {# Informações de Dependentes * Caso possua, incluir checkbox! #}
-        <div id="dependete">
+
+        {# Informações de Dependentes #}
+        <div class="page-header">
+            <h3>Informações de Dependentes</h3>
+        </div>
+        <div class="form-check">
+            <label for="showDep" data-toggle="collapse" data-target="#collapseTwo">
+                <input id="showDep" type="checkbox" class="form-check-input">
+                Eu tenho Dependentes
+            </label>
+        </div>
+
+        <div id="collapseTwo" class="collapse">
             <br>
-            <div class="page-header">
-                <h3>Informações de Dependentes</h3>
-            </div>
-            <br>
-            <div class="form-group">
-                <label for="tpDep">Tipo de dependente:</label>
-                <select id="tpDep" name="tpDep" class="form-control">
-                    <option value="01">Cônjuge</option>
-                    <option value="02">Companheiro(a) com o(a) qual tenha filho ou viva há mais de 5 (cinco) anos ou
-                        possua
-                        Declaração de União Estável
-                    </option>
-                    <option value="03">Filho(a) ou enteado(a)</option>
-                    <option value="04">Filho(a) ou enteado(a) universitário(a) ou cursando escola técnica de 2o grau,
-                        até
-                        24 (vinte e quatro) anos
-                    </option>
-                    <option value="06">Irmão(ã), neto(a) ou bisneto(a) sem arrimo dos pais, do(a) qual detenha a
-                        guarda
-                        judicial
-                    </option>
-                    <option value="09">Pais, avós e bisavós</option>
-                    <option value="10">Menor pobre do qual detenha a guarda judicial</option>
-                    <option value="11">A pessoa absolutamente incapaz, da qual seja tutor ou curador</option>
-                    <option value="12">Ex-cônjuge</option>
-                    <option value="99">Agregado/Outros</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="nmDep">Nome Completo:</label>
-                <input id="nmDep" name="nmDep" class="form-control" maxlength="70" required>
-            </div>
-            <div class="form-group">
-                <label for="dep_dtNascto">Data de Nascimento:</label>
-                <input type="date" id="dep_dtNascto" name="dep_dtNascto" class="form-control" maxlength="70" required>
-            </div>
-            <div class="form-group">
-                <label for="cpfDep">CPF:</label>
-                <input id="cpfDep" name="cpfDep" class="form-control" maxlength="11" required>
-            </div>
-            <div class="form-group">
-                <label for="depIRRF">Dependente IRRF?</label>
-                <select id="depIRRF" name="depIRRF" class="form-control">
-                    <option value="S">Sim</option>
-                    <option value="N">Não</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="depSF">Dependente Salário-Família?</label>
-                <select id="depSF" name="depSF" class="form-control">
-                    <option value="S">Sim</option>
-                    <option value="N">Não</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="incTrab">Incapacidade física ou mental para o trabalho?</label>
-                <select id="incTrab" name="incTrab" class="form-control">
-                    <option value="N">Não</option>
-                    <option value="S">Sim</option>
-                </select>
+            <div class="well">
+                <div class="form-group">
+                    <label for="tpDep">Tipo de dependente:</label>
+                    <select id="tpDep" name="tpDep" class="form-control">
+                        <option value="01">Cônjuge</option>
+                        <option value="02">Companheiro(a) com o(a) qual tenha filho ou viva há mais de 5 (cinco) anos
+                            ou
+                            possua Declaração de União Estável
+                        </option>
+                        <option value="03">Filho(a) ou enteado(a)</option>
+                        <option value="04">Filho(a) ou enteado(a) universitário(a) ou cursando escola técnica de 2o
+                            grau,
+                            até 24 (vinte e quatro) anos
+                        </option>
+                        <option value="06">Irmão(ã), neto(a) ou bisneto(a) sem arrimo dos pais, do(a) qual detenha a
+                            guarda judicial
+                        </option>
+                        <option value="09">Pais, avós e bisavós</option>
+                        <option value="10">Menor pobre do qual detenha a guarda judicial</option>
+                        <option value="11">A pessoa absolutamente incapaz, da qual seja tutor ou curador</option>
+                        <option value="12">Ex-cônjuge</option>
+                        <option value="99">Agregado/Outros</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="nmDep">Nome Completo:</label>
+                    <input id="nmDep" name="nmDep" class="form-control" maxlength="70" required>
+                </div>
+                <div class="form-group">
+                    <label for="dep_dtNascto">Data de Nascimento:</label>
+                    <input type="date" id="dep_dtNascto" name="dep_dtNascto" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="cpfDep">CPF:</label>
+                    <input id="cpfDep" name="cpfDep" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="depIRRF">Dependente IRRF?</label>
+                    <select id="depIRRF" name="depIRRF" class="form-control">
+                        <option value="S">Sim</option>
+                        <option value="N">Não</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="depSF">Dependente Salário-Família?</label>
+                    <select id="depSF" name="depSF" class="form-control">
+                        <option value="S">Sim</option>
+                        <option value="N">Não</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="incTrab">Incapacidade física ou mental para o trabalho?</label>
+                    <select id="incTrab" name="incTrab" class="form-control">
+                        <option value="N">Não</option>
+                        <option value="S">Sim</option>
+                    </select>
+                </div>
             </div>
         </div>
+
         {# Informações de Aposentadoria #}
-        <br>
         <div class="page-header">
             <h3>Informações de Aposentadoria</h3>
         </div>
-        <br>
         <div class="form-group">
             <label for="trabAposent">Aposentado por tempo de contribuição ou idade?</label>
             <select id="trabAposent" name="incTrab" class="form-control">
@@ -459,12 +488,11 @@
                 <option value="S">Sim</option>
             </select>
         </div>
+
         {# Informações de Contato #}
-        <br>
         <div class="page-header">
             <h3>Informações de Contato</h3>
         </div>
-        <br>
         <div class="form-group">
             <label for="fonePrinc">Fone principal:</label>
             <input id="fonePrinc" name="fonePrinc" class="form-control" required>
@@ -472,7 +500,7 @@
         </div>
         <div class="form-group">
             <label for="foneAlternat">Fone alternativo:</label>
-            <input id="foneAlternat" name="foneAlternat" class="form-control" maxlength="13">
+            <input id="foneAlternat" name="foneAlternat" class="form-control">
         </div>
         <div class="form-group">
             <label for="emailPrinc">E-mail principal:</label>
@@ -484,17 +512,7 @@
         </div>
 
         <br>
-        <script>
-            {#$(document).ready(function () {#}
-            jQuery(function () {
-                $('#cep').mask('00000-000');
-                $('#fonePrinc').mask('(00) 00000-0000');
-                $('#foneAlternat').mask('(00) 00000-0000');
-                $('#cpfTrab').mask('000.000.000-00');
-                $('#cpfDep').mask('000.000.000-00');
-                $('#nisTrab').mask('000.0000.000-0')
-            });
-        </script>
+
         <button type="submit" class="btn btn-primary">Enviar</button>
         <br><br>
     </form>
