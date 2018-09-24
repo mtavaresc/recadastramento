@@ -310,7 +310,6 @@
             <label for="complemento">Complemento:</label>
             <input id="complemento" name="complemento" class="form-control" maxlength="14" required>
         </div>
-
         <div class="form-group">
             <label for="bairro">Bairro:</label>
             <select id="bairro" name="bairro" class="form-control">
@@ -319,9 +318,168 @@
                 {% endfor %}
             </select>
         </div>
+        {# Informações de Deficiência #}
+        <br>
+        <div class="page-header">
+            <h3>Informações de Deficiência</h3>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="defFisica">Deficiência física?</label>
+            <select id="defFisica" name="defFisica" class="form-control">
+                <option value="N">Não</option>
+                <option value="S">Sim</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="defVisual">Deficiência visual?</label>
+            <select id="defVisual" name="defVisual" class="form-control">
+                <option value="N">Não</option>
+                <option value="S">Sim</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="defAuditiva">Deficiência auditiva?</label>
+            <select id="defAuditiva" name="defAuditiva" class="form-control">
+                <option value="N">Não</option>
+                <option value="S">Sim</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="defMental">Deficiência mental?</label>
+            <select id="defMental" name="defMental" class="form-control">
+                <option value="N">Não</option>
+                <option value="S">Sim</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="defIntelectual">Deficiência intelectual?</label>
+            <select id="defIntelectual" name="defIntelectual" class="form-control">
+                <option value="N">Não</option>
+                <option value="S">Sim</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="defReadap">Readaptado/Reabilitado?</label>
+            <select id="defReadap" name="defReadap" class="form-control">
+                <option value="N">Não</option>
+                <option value="S">Sim</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="infoCota">Cota PCD?</label>
+            <select id="infoCota" name="infoCota" class="form-control">
+                <option value="N">Não</option>
+                <option value="S">Sim</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="observacao">Observação:</label>
+            <textarea id="observacao" name="observacao" class="form-control" maxlength="255"></textarea>
+        </div>
+        {# Informações de Dependentes * Caso possua, incluir checkbox! #}
+        <br>
+        <div class="page-header">
+            <h3>Informações de Dependentes</h3>
+        </div>
+        <br>
+        <div id="dependete">
+            <div class="form-group">
+                <label for="tpDep">Tipo de dependente:</label>
+                <select id="tpDep" name="tpDep" class="form-control">
+                    <option value="01">Cônjuge</option>
+                    <option value="02">Companheiro(a) com o(a) qual tenha filho ou viva há mais de 5 (cinco) anos ou
+                        possua
+                        Declaração de União Estável
+                    </option>
+                    <option value="03">Filho(a) ou enteado(a)</option>
+                    <option value="04">Filho(a) ou enteado(a) universitário(a) ou cursando escola técnica de 2o grau,
+                        até
+                        24 (vinte e quatro) anos
+                    </option>
+                    <option value="06">Irmão(ã), neto(a) ou bisneto(a) sem arrimo dos pais, do(a) qual detenha a
+                        guarda
+                        judicial
+                    </option>
+                    <option value="09">Pais, avós e bisavós</option>
+                    <option value="10">Menor pobre do qual detenha a guarda judicial</option>
+                    <option value="11">A pessoa absolutamente incapaz, da qual seja tutor ou curador</option>
+                    <option value="12">Ex-cônjuge</option>
+                    <option value="99">Agregado/Outros</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="nmDep">Nome Completo:</label>
+                <input id="nmDep" name="nmDep" class="form-control" maxlength="70" required>
+            </div>
+            <div class="form-group">
+                <label for="dep_dtNascto">Data de Nascimento:</label>
+                <input type="date" id="dep_dtNascto" name="dep_dtNascto" class="form-control" maxlength="70" required>
+            </div>
+            <div class="form-group">
+                <label for="cpfDep">CPF:</label>
+                <input id="cpfDep" name="cpfDep" class="form-control" maxlength="11" required>
+            </div>
+            <div class="form-group">
+                <label for="depIRRF">Dependente IRRF?</label>
+                <select id="depIRRF" name="depIRRF" class="form-control">
+                    <option value="S">Sim</option>
+                    <option value="N">Não</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="depSF">Dependente Salário-Família?</label>
+                <select id="depSF" name="depSF" class="form-control">
+                    <option value="S">Sim</option>
+                    <option value="N">Não</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="incTrab">Incapacidade física ou mental para o trabalho?</label>
+                <select id="incTrab" name="incTrab" class="form-control">
+                    <option value="N">Não</option>
+                    <option value="S">Sim</option>
+                </select>
+            </div>
+        </div>
+        {# Informações de Aposentadoria #}
+        <br>
+        <div class="page-header">
+            <h3>Informações de Aposentadoria</h3>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="trabAposent">Aposentado por tempo de contribuição ou idade?</label>
+            <select id="trabAposent" name="incTrab" class="form-control">
+                <option value="N">Não</option>
+                <option value="S">Sim</option>
+            </select>
+        </div>
+        {# Informações de Contato #}
+        <br>
+        <div class="page-header">
+            <h3>Informações de Contato</h3>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="fonePrinc">Fone principal:</label>
+            <input type="tel" id="fonePrinc" name="fonePrinc" class="form-control" maxlength="13" required>
+        </div>
+        <div class="form-group">
+            <label for="foneAlternat">Fone alternativo:</label>
+            <input type="tel" id="foneAlternat" name="foneAlternat" class="form-control" maxlength="13">
+        </div>
+        <div class="form-group">
+            <label for="emailPrinc">E-mail principal:</label>
+            <input type="email" id="emailPrinc" name="emailPrinc" class="form-control" maxlength="60" required>
+        </div>
+        <div class="form-group">
+            <label for="emailAlternat">E-mail alternativo:</label>
+            <input type="email" id="emailAlternat" name="emailAlternat" class="form-control" maxlength="60">
+        </div>
 
         <br>
-        <button type="submit" class="btn btn-primary">Atualizar</button>
+        <button type="submit" class="btn btn-primary">Enviar</button>
         <br><br>
     </form>
 </div>
