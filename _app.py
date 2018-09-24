@@ -117,6 +117,8 @@ def recadastrar(matricula):
         email_princ = request.form.get("emailPrinc")
         email_alternat = request.form.get("emailAlternat")
 
+        print("Submit")
+
         c = Trabalhador(cpf_trab, nis_trab, nm_trab, sexo, raca_cor, est_civ, grau_instr, ind_pri_empr, nm_soc,
                         dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, nm_pai, nr_ctps, serie_ctps, uf_ctps,
                         nr_rg, rg_orgao_emissor, rg_dt_exped, nr_oc, oc_orgao_emissor, oc_dt_exped, oc_dt_valid,

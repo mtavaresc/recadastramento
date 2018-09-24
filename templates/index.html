@@ -5,32 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Latest compiled and minified CSS -->
-    {#    <link rel="stylesheet" href="../static/css/bootstrap.min.css">#}
     <link rel="stylesheet" href="../static/css/fontawesome-all.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <!-- Latest compiled and minified JavaScript -->
-    {#    <script src="../static/js/bootstrap.min.js"></script>#}
     <script src="../static/js/jquery-3.3.1.min.js"></script>
     <script src="../static/js/jquery.mask.min.js"></script>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    {#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>#}
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../static/js/validacao.js"></script>
 
     <script>
         jQuery(function () {
+            $('#cpfTrab').mask('000.000.000-00');
+            $('#nisTrab').mask('000.0000.000-0');
             $('#cep').mask('00000-000');
+            $('#cpfDep').mask('000.000.000-00');
             $('#fonePrinc').mask('(00) 00000-0000');
             $('#foneAlternat').mask('(00) 00000-0000');
-            $('#cpfTrab').mask('000.000.000-00');
-            $('#cpfDep').mask('000.000.000-00');
-            $('#nisTrab').mask('000.0000.000-0')
         });
-
-        jQuery(function () {
-            $()
-        });
-
     </script>
 <body>
 <div class="container">
@@ -39,7 +31,6 @@
     </div>
 
     <form class="container" method="POST">
-
         {# Trabalhador #}
         <div class="page-header">
             <h3>Informações do Trabalhador</h3>
@@ -127,7 +118,8 @@
         {# Origem tabela "paises" #}
         <div class="form-group">
             <label for="paisNac">País Nacionalidade:</label>
-            <select id="paisNac" name="paisNac" class="form-control">
+            <select id="paisNac" name="paisNac" class="form-control" required>
+            <option value="">-- Selecione --</option>
                 {% for x in paises %}
                     <option value="{{ x }}">{{ paises[x] }}</option>
                 {% endfor %}
@@ -136,7 +128,8 @@
         {# Origem tabela "paises" #}
         <div class="form-group">
             <label for="paisNascto">País Nascimento:</label>
-            <select id="paisNascto" name="paisNascto" class="form-control">
+            <select id="paisNascto" name="paisNascto" class="form-control" required>
+            <option value="">-- Selecione --</option>
                 {% for x in paises %}
                     <option value="{{ x }}">{{ paises[x] }}</option>
                 {% endfor %}
@@ -145,7 +138,8 @@
         {# Se pais nascimento selecionado = "Brasil" #}
         <div class="form-group">
             <label for="uf">Estado:</label>
-            <select id="uf" name="uf" class="form-control">
+            <select id="uf" name="uf" class="form-control" required>
+            <option value="">-- Selecione --</option>
                 {% for x in estados %}
                     <option value="{{ x }}">{{ estados[x] }}</option>
                 {% endfor %}
@@ -153,7 +147,8 @@
         </div>
         <div class="form-group">
             <label for="codMunic">Município:</label>
-            <select id="codMunic" name="codMunic" class="form-control">
+            <select id="codMunic" name="codMunic" class="form-control" required>
+            <option value="">-- Selecione --</option>
                 {% for x in municipios %}
                     <option value="{{ x }}">{{ municipios[x] }}</option>
                 {% endfor %}
@@ -174,15 +169,16 @@
         </div>
         <div class="form-group">
             <label for="nrCtps">Nº CTPS:</label>
-            <input id="nrCtps" name="nrCtps" class="form-control" maxlength="11" required>
+            <input id="nrCtps" name="nrCtps" class="form-control" pattern="^[0-9]*$" maxlength="11" required>
         </div>
         <div class="form-group">
             <label for="serieCtps">Série CTPS:</label>
-            <input id="serieCtps" name="serieCtps" class="form-control" maxlength="5" required>
+            <input id="serieCtps" name="serieCtps" class="form-control" pattern="^[0-9]*$" maxlength="5" required>
         </div>
         <div class="form-group">
             <label for="ufCtps">UF CTPS:</label>
-            <select id="ufCtps" name="ufCtps" class="form-control">
+            <select id="ufCtps" name="ufCtps" class="form-control" required>
+            <option value="">-- Selecione --</option>
                 {% for x in estados %}
                     <option value="{{ x }}">{{ x }}</option>
                 {% endfor %}
@@ -195,11 +191,12 @@
         </div>
         <div class="form-group">
             <label for="nrRg">Nº RG:</label>
-            <input id="nrRg" name="nrRg" class="form-control" maxlength="14" required>
+            <input id="nrRg" name="nrRg" class="form-control" pattern="^[0-9]*$" maxlength="14" required>
         </div>
         <div class="form-group">
             <label for="rg_orgaoEmissor">Órgão Emissor:</label>
-            <input id="rg_orgaoEmissor" name="rg_orgaoEmissor" class="form-control" maxlength="20" required>
+            <input id="rg_orgaoEmissor" name="rg_orgaoEmissor" class="form-control" style="text-transform: uppercase"
+                   maxlength="20" required>
             <small id="rg_orgaoEmissorHelp" class="form-text text-muted">Órgão e UF de emissão.</small>
         </div>
         <div class="form-group">
@@ -213,7 +210,7 @@
         </div>
         <div class="form-check">
             <label for="showOc" data-toggle="collapse" data-target="#collapseOc">
-                <input id="showOc" type="checkbox" class="form-check-input">
+                <input id="showOc" type="checkbox" class="form-check-input" onclick="requiredOC()">
                 Eu tenho Órgão de Classe
             </label>
         </div>
@@ -223,20 +220,21 @@
             <div class="well">
                 <div class="form-group">
                     <label for="nrOc">Nº OC:</label>
-                    <input id="nrOc" name="nrOc" class="form-control" maxlength="14" required>
+                    <input id="nrOc" name="nrOc" class="form-control" pattern="^[0-9]*$" maxlength="14">
                 </div>
                 <div class="form-group">
                     <label for="oc_orgaoEmissor">Órgão Emissor:</label>
-                    <input id="oc_orgaoEmissor" name="oc_orgaoEmissor" class="form-control" maxlength="20" required>
+                    <input id="oc_orgaoEmissor" name="oc_orgaoEmissor" class="form-control"
+                           style="text-transform: uppercase" maxlength="20">
                     <small id="oc_orgaoEmissorHelp" class="form-text text-muted">Órgão e UF de emissão.</small>
                 </div>
                 <div class="form-group">
                     <label for="oc_dtExped">Data de Expedição:</label>
-                    <input type="date" id="oc_dtExped" name="oc_dtExped" class="form-control" required>
+                    <input type="date" id="oc_dtExped" name="oc_dtExped" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="oc_dtValid">Data de Validade:</label>
-                    <input type="date" id="oc_dtValid" name="oc_dtValid" class="form-control" required>
+                    <input type="date" id="oc_dtValid" name="oc_dtValid" class="form-control">
                 </div>
             </div>
         </div>
@@ -247,7 +245,7 @@
         </div>
         <div class="form-check">
             <label for="showCnh" data-toggle="collapse" data-target="#collapseCnh">
-                <input id="showCnh" type="checkbox" class="form-check-input">
+                <input id="showCnh" type="checkbox" class="form-check-input" onclick="requiredCNH()">
                 Eu tenho Carteira Nacional de Habilitação
             </label>
         </div>
@@ -257,15 +255,16 @@
             <div class="well">
                 <div class="form-group">
                     <label for="nrRegCnh">Nº do Registro CNH:</label>
-                    <input id="nrRegCnh" name="nrRegCnh" class="form-control" maxlength="12" required>
+                    <input id="nrRegCnh" name="nrRegCnh" class="form-control" pattern="^[0-9]*$" maxlength="12">
                 </div>
                 <div class="form-group">
                     <label for="cnh_dtExped">Data de Expedição:</label>
-                    <input type="date" id="cnh_dtExped" name="cnh_dtExped" class="form-control" required>
+                    <input type="date" id="cnh_dtExped" name="cnh_dtExped" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="ufCnh">UF CNH:</label>
                     <select id="ufCnh" name="ufCnh" class="form-control">
+                        <option value="">-- Selecione --</option>
                         {% for x in estados %}
                             <option value="{{ x }}">{{ x }}</option>
                         {% endfor %}
@@ -273,15 +272,16 @@
                 </div>
                 <div class="form-group">
                     <label for="cnh_dtValid">Data de Validade:</label>
-                    <input type="date" id="cnh_dtValid" name="cnh_dtValid" class="form-control" required>
+                    <input type="date" id="cnh_dtValid" name="cnh_dtValid" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="dtPriHab">Data da Primeira Habilitação:</label>
-                    <input type="date" id="dtPriHab" name="dtPriHab" class="form-control" required>
+                    <input type="date" id="dtPriHab" name="dtPriHab" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="categoriaCnh">Categoria CNH:</label>
                     <select id="categoriaCnh" name="categoriaCnh" class="form-control">
+                        <option value="">-- Selecione --</option>
                         <option>A</option>
                         <option>B</option>
                         <option>C</option>
@@ -310,52 +310,55 @@
         </div>
         {# Se pais residencia selecionado = "Brasil" #}
         <div class="form-group">
-            <label for="end_uf">Estado:</label>
-            <select id="end_uf" name="end_uf" class="form-control">
-                {% for x in estados %}
-                    <option value="{{ x }}">{{ estados[x] }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="end_codMunic">Município:</label>
-            <select id="end_codMunic" name="codMunic" class="form-control">
-                {% for x in municipios %}
-                    <option value="{{ x }}">{{ municipios[x] }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="form-group">
             <label for="cep">CEP:</label>
             <input id="cep" name="cep" class="form-control" required>
         </div>
-        <div class="form-group">
-            <label for="tpLograd">Tipo Logradouro:</label>
-            <select id="tpLograd" name="tpLograd" class="form-control">
-                {% for x in tl %}
-                    <option value="{{ x }}">{{ tl[x] }}</option>
-                {% endfor %}
-            </select>
-        </div>
+        <fieldset disabled>
+            <div class="form-group">
+                <label for="end_uf">Estado:</label>
+                <select id="end_uf" name="end_uf" class="form-control">
+                    {% for x in estados %}
+                        <option value="{{ x }}">{{ estados[x] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="end_codMunic">Município:</label>
+                <select id="end_codMunic" name="codMunic" class="form-control">
+                    {% for x in municipios %}
+                        <option value="{{ x }}">{{ municipios[x] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="bairro">Bairro:</label>
+                <select id="bairro" name="bairro" class="form-control">
+                    {% for x in bairros %}
+                        <option value="{{ x }}">{{ x }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="tpLograd">Tipo Logradouro:</label>
+                <select id="tpLograd" name="tpLograd" class="form-control">
+                    {% for x in tl %}
+                        <option value="{{ x }}">{{ tl[x] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </fieldset>
         <div class="form-group">
             <label for="dscLograd">Logradouro:</label>
-            <input id="dscLograd" name="dscLograd" class="form-control" maxlength="80" required>
+            <input id="dscLograd" name="dscLograd" class="form-control" maxlength="80" readonly
+                   required>
         </div>
         <div class="form-group">
             <label for="nrLograd">Nº Logradouro:</label>
-            <input id="nrLograd" name="nrLograd" class="form-control" maxlength="10" required>
+            <input id="nrLograd" name="nrLograd" class="form-control" pattern="^[0-9]*$" maxlength="10" required>
         </div>
         <div class="form-group">
             <label for="complemento">Complemento:</label>
-            <input id="complemento" name="complemento" class="form-control" maxlength="30" required>
-        </div>
-        <div class="form-group">
-            <label for="bairro">Bairro:</label>
-            <select id="bairro" name="bairro" class="form-control">
-                {% for x in bairros %}
-                    <option value="{{ x }}">{{ x }}</option>
-                {% endfor %}
-            </select>
+            <input id="complemento" name="complemento" class="form-control" maxlength="30">
         </div>
 
         {# Informações de Deficiência #}
@@ -422,7 +425,7 @@
         </div>
         <div class="form-check">
             <label for="showDep" data-toggle="collapse" data-target="#collapseDep">
-                <input id="showDep" type="checkbox" class="form-check-input">
+                <input id="showDep" type="checkbox" class="form-check-input" onclick="requiredDep()">
                 Eu tenho Dependente(s)
             </label>
         </div>
@@ -455,15 +458,15 @@
                 </div>
                 <div class="form-group">
                     <label for="nmDep">Nome Completo:</label>
-                    <input id="nmDep" name="nmDep" class="form-control" maxlength="70" required>
+                    <input id="nmDep" name="nmDep" class="form-control" maxlength="70">
                 </div>
                 <div class="form-group">
                     <label for="dep_dtNascto">Data de Nascimento:</label>
-                    <input type="date" id="dep_dtNascto" name="dep_dtNascto" class="form-control" required>
+                    <input type="date" id="dep_dtNascto" name="dep_dtNascto" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="cpfDep">CPF:</label>
-                    <input id="cpfDep" name="cpfDep" class="form-control" required>
+                    <input id="cpfDep" name="cpfDep" class="form-control" onblur="TestaCPF(this)">
                 </div>
                 <div class="form-group">
                     <label for="depIRRF">Dependente IRRF?</label>
