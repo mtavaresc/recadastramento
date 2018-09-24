@@ -119,9 +119,9 @@
         <div class="form-group">
             <label for="paisNac">País Nacionalidade:</label>
             <select id="paisNac" name="paisNac" class="form-control" required>
-            <option value="">-- Selecione --</option>
+                <option value="">-- Selecione --</option>
                 {% for x in paises %}
-                    <option value="{{ x }}">{{ paises[x] }}</option>
+                    <option value="{{ x }}" {% if paises[x] == "Brasil" %} selected {% endif %}>{{ paises[x] }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -129,9 +129,9 @@
         <div class="form-group">
             <label for="paisNascto">País Nascimento:</label>
             <select id="paisNascto" name="paisNascto" class="form-control" required>
-            <option value="">-- Selecione --</option>
+                <option value="">-- Selecione --</option>
                 {% for x in paises %}
-                    <option value="{{ x }}">{{ paises[x] }}</option>
+                    <option value="{{ x }}" {% if paises[x] == "Brasil" %} selected {% endif %}>{{ paises[x] }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -139,7 +139,7 @@
         <div class="form-group">
             <label for="uf">Estado:</label>
             <select id="uf" name="uf" class="form-control" required>
-            <option value="">-- Selecione --</option>
+                <option value="">-- Selecione --</option>
                 {% for x in estados %}
                     <option value="{{ x }}">{{ estados[x] }}</option>
                 {% endfor %}
@@ -148,7 +148,7 @@
         <div class="form-group">
             <label for="codMunic">Município:</label>
             <select id="codMunic" name="codMunic" class="form-control" required>
-            <option value="">-- Selecione --</option>
+                <option value="">-- Selecione --</option>
                 {% for x in municipios %}
                     <option value="{{ x }}">{{ municipios[x] }}</option>
                 {% endfor %}
@@ -178,7 +178,7 @@
         <div class="form-group">
             <label for="ufCtps">UF CTPS:</label>
             <select id="ufCtps" name="ufCtps" class="form-control" required>
-            <option value="">-- Selecione --</option>
+                <option value="">-- Selecione --</option>
                 {% for x in estados %}
                     <option value="{{ x }}">{{ x }}</option>
                 {% endfor %}
@@ -317,6 +317,7 @@
             <div class="form-group">
                 <label for="end_uf">Estado:</label>
                 <select id="end_uf" name="end_uf" class="form-control">
+                    <option value="">-- Selecione --</option>
                     {% for x in estados %}
                         <option value="{{ x }}">{{ estados[x] }}</option>
                     {% endfor %}
@@ -325,6 +326,7 @@
             <div class="form-group">
                 <label for="end_codMunic">Município:</label>
                 <select id="end_codMunic" name="codMunic" class="form-control">
+                    <option value="">-- Selecione --</option>
                     {% for x in municipios %}
                         <option value="{{ x }}">{{ municipios[x] }}</option>
                     {% endfor %}
@@ -333,6 +335,7 @@
             <div class="form-group">
                 <label for="bairro">Bairro:</label>
                 <select id="bairro" name="bairro" class="form-control">
+                    <option value="">-- Selecione --</option>
                     {% for x in bairros %}
                         <option value="{{ x }}">{{ x }}</option>
                     {% endfor %}
@@ -341,6 +344,7 @@
             <div class="form-group">
                 <label for="tpLograd">Tipo Logradouro:</label>
                 <select id="tpLograd" name="tpLograd" class="form-control">
+                    <option value="">-- Selecione --</option>
                     {% for x in tl %}
                         <option value="{{ x }}">{{ tl[x] }}</option>
                     {% endfor %}
@@ -436,6 +440,7 @@
                 <div class="form-group">
                     <label for="tpDep">Tipo de dependente:</label>
                     <select id="tpDep" name="tpDep" class="form-control">
+                        <option value="">-- Selecione --</option>
                         <option value="01">Cônjuge</option>
                         <option value="02">Companheiro(a) com o(a) qual tenha filho ou viva há mais de 5 (cinco) anos
                             ou
