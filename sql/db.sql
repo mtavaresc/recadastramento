@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.17)
 # Base de Dados: tester
-# Tempo de Geração: 2018-09-22 19:39:13 +0000
+# Tempo de Geração: 2018-09-24 13:17:36 +0000
 # ************************************************************
 
 
@@ -22,16 +22,6 @@
 
 # Dump da tabela bairros
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `bairros`;
-
-CREATE TABLE `bairros` (
-  `codigo` char(10) NOT NULL,
-  `nome` varchar(70) DEFAULT NULL,
-  `municipio` varchar(70) DEFAULT NULL,
-  `uf` char(2) DEFAULT NULL,
-  PRIMARY KEY (`codigo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `bairros` WRITE;
 /*!40000 ALTER TABLE `bairros` DISABLE KEYS */;
@@ -14372,14 +14362,6 @@ UNLOCK TABLES;
 # Dump da tabela estados
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `estados`;
-
-CREATE TABLE `estados` (
-  `uf` char(2) NOT NULL,
-  `nome` varchar(70) NOT NULL DEFAULT '',
-  PRIMARY KEY (`uf`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 LOCK TABLES `estados` WRITE;
 /*!40000 ALTER TABLE `estados` DISABLE KEYS */;
 
@@ -14419,15 +14401,6 @@ UNLOCK TABLES;
 
 # Dump da tabela municipios
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `municipios`;
-
-CREATE TABLE `municipios` (
-  `codigo` int(11) NOT NULL,
-  `nome` varchar(70) NOT NULL DEFAULT '',
-  `uf` char(2) NOT NULL DEFAULT '',
-  PRIMARY KEY (`codigo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `municipios` WRITE;
 /*!40000 ALTER TABLE `municipios` DISABLE KEYS */;
@@ -20012,14 +19985,6 @@ UNLOCK TABLES;
 # Dump da tabela paises
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `paises`;
-
-CREATE TABLE `paises` (
-  `codigo` varchar(3) NOT NULL,
-  `nome` varchar(70) DEFAULT NULL,
-  PRIMARY KEY (`codigo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 LOCK TABLES `paises` WRITE;
 /*!40000 ALTER TABLE `paises` DISABLE KEYS */;
 
@@ -20294,14 +20259,6 @@ UNLOCK TABLES;
 # Dump da tabela tipos_logradouro
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `tipos_logradouro`;
-
-CREATE TABLE `tipos_logradouro` (
-  `codigo` char(4) NOT NULL,
-  `nome` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`codigo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 LOCK TABLES `tipos_logradouro` WRITE;
 /*!40000 ALTER TABLE `tipos_logradouro` DISABLE KEYS */;
 
@@ -20331,109 +20288,6 @@ VALUES
 	('VL','Vila');
 
 /*!40000 ALTER TABLE `tipos_logradouro` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-# Dump da tabela trabalhador
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `trabalhador`;
-
-CREATE TABLE `trabalhador` (
-  `cpfTrab` varchar(11) NOT NULL,
-  `nisTrab` varchar(11) NOT NULL,
-  `nmTrab` varchar(70) DEFAULT NULL,
-  `sexo` varchar(1) DEFAULT NULL,
-  `racaCor` int(11) DEFAULT NULL,
-  `estCiv` int(11) DEFAULT NULL,
-  `grauInstr` varchar(2) DEFAULT NULL,
-  `indPriEmpr` varchar(1) DEFAULT NULL,
-  `nmSoc` varchar(70) DEFAULT NULL,
-  `dtNascto` date NOT NULL,
-  `codMunic` int(11) DEFAULT NULL,
-  `uf` varchar(2) DEFAULT NULL,
-  `paisNascto` varchar(3) DEFAULT NULL,
-  `paisNac` varchar(3) DEFAULT NULL,
-  `nmMae` varchar(70) DEFAULT NULL,
-  `nmPai` varchar(70) DEFAULT NULL,
-  `nrCtps` varchar(11) DEFAULT NULL,
-  `serieCtps` varchar(5) DEFAULT NULL,
-  `ufCtps` varchar(2) DEFAULT NULL,
-  `nrRg` varchar(14) DEFAULT NULL,
-  `rg_orgaoEmissor` varchar(20) DEFAULT NULL,
-  `rg_dtExped` date DEFAULT NULL,
-  `nrOc` varchar(14) DEFAULT NULL,
-  `oc_orgaoEmissor` varchar(20) DEFAULT NULL,
-  `oc_dtExped` date DEFAULT NULL,
-  `oc_dtValid` date DEFAULT NULL,
-  `nrRegCnh` varchar(12) DEFAULT NULL,
-  `cnh_dtExped` date DEFAULT NULL,
-  `ufCnh` varchar(2) DEFAULT NULL,
-  `cnh_dtValid` date DEFAULT NULL,
-  `dtPriHab` date DEFAULT NULL,
-  `categoriaCnh` varchar(2) DEFAULT NULL,
-  `tpLograd` varchar(4) DEFAULT NULL,
-  `dscLograd` varchar(80) DEFAULT NULL,
-  `nrLograd` varchar(10) DEFAULT NULL,
-  `complemento` varchar(30) DEFAULT NULL,
-  `bairro` varchar(60) DEFAULT NULL,
-  `cep` varchar(8) DEFAULT NULL,
-  `end_codMunic` int(11) DEFAULT NULL,
-  `end_uf` varchar(2) DEFAULT NULL,
-  `paisResid` varchar(3) DEFAULT NULL,
-  `ext_dscLograd` varchar(80) DEFAULT NULL,
-  `ext_nrLograd` varchar(10) DEFAULT NULL,
-  `ext_complemento` varchar(30) DEFAULT NULL,
-  `ext_bairro` varchar(60) DEFAULT NULL,
-  `nmCid` varchar(50) DEFAULT NULL,
-  `codPostal` varchar(12) DEFAULT NULL,
-  `defFisica` varchar(1) DEFAULT NULL,
-  `defVisual` varchar(1) DEFAULT NULL,
-  `defAuditiva` varchar(1) DEFAULT NULL,
-  `defMental` varchar(1) DEFAULT NULL,
-  `defIntelectual` varchar(1) DEFAULT NULL,
-  `defReadap` varchar(1) DEFAULT NULL,
-  `infoCota` varchar(1) DEFAULT NULL,
-  `observacao` varchar(255) DEFAULT NULL,
-  `tpDep` varchar(2) DEFAULT NULL,
-  `nmDep` varchar(70) DEFAULT NULL,
-  `dep_dtNascto` date DEFAULT NULL,
-  `cpfDep` varchar(11) DEFAULT NULL,
-  `depIRRF` varchar(1) DEFAULT NULL,
-  `depSF` varchar(1) DEFAULT NULL,
-  `incTrab` varchar(1) DEFAULT NULL,
-  `trabAposent` varchar(1) DEFAULT NULL,
-  `fonePrinc` varchar(13) DEFAULT NULL,
-  `foneAlternat` varchar(13) DEFAULT NULL,
-  `emailPrinc` varchar(60) DEFAULT NULL,
-  `emailAlternat` varchar(60) DEFAULT NULL,
-  PRIMARY KEY (`cpfTrab`,`nisTrab`,`dtNascto`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-
-# Dump da tabela tv_cadastro
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `tv_cadastro`;
-
-CREATE TABLE `tv_cadastro` (
-  `matricula` char(6) NOT NULL,
-  `nome` varchar(70) DEFAULT NULL,
-  `cpf` varchar(11) DEFAULT NULL,
-  `pispasep` varchar(11) DEFAULT NULL,
-  `dtnasc` date DEFAULT NULL,
-  PRIMARY KEY (`matricula`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-LOCK TABLES `tv_cadastro` WRITE;
-/*!40000 ALTER TABLE `tv_cadastro` DISABLE KEYS */;
-
-INSERT INTO `tv_cadastro` (`matricula`, `nome`, `cpf`, `pispasep`, `dtnasc`)
-VALUES
-	('1','Marcelo Tavares','03287761307','10010010','1991-11-19');
-
-/*!40000 ALTER TABLE `tv_cadastro` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
