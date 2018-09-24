@@ -209,24 +209,36 @@
 
         {# OC #}
         <div class="page-header">
-            <h3>Informações do Órgão de Classe</h3>
+            <h3>Informações de Órgão de Classe</h3>
         </div>
-        <div class="form-group">
-            <label for="nrOc">Nº OC:</label>
-            <input id="nrOc" name="nrOc" class="form-control" maxlength="14" required>
+        <div class="form-check">
+            <label for="showOc" data-toggle="collapse" data-target="#collapseOc">
+                <input id="showOc" type="checkbox" class="form-check-input">
+                Eu tenho Órgão de Classe
+            </label>
         </div>
-        <div class="form-group">
-            <label for="oc_orgaoEmissor">Órgão Emissor:</label>
-            <input id="oc_orgaoEmissor" name="oc_orgaoEmissor" class="form-control" maxlength="20" required>
-            <small id="oc_orgaoEmissorHelp" class="form-text text-muted">Órgão e UF de emissão.</small>
-        </div>
-        <div class="form-group">
-            <label for="oc_dtExped">Data de Expedição:</label>
-            <input type="date" id="oc_dtExped" name="oc_dtExped" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label for="oc_dtValid">Data de Validade:</label>
-            <input type="date" id="oc_dtValid" name="oc_dtValid" class="form-control" required>
+
+        <div id="collapseOc" class="collapse">
+            <br>
+            <div class="well">
+                <div class="form-group">
+                    <label for="nrOc">Nº OC:</label>
+                    <input id="nrOc" name="nrOc" class="form-control" maxlength="14" required>
+                </div>
+                <div class="form-group">
+                    <label for="oc_orgaoEmissor">Órgão Emissor:</label>
+                    <input id="oc_orgaoEmissor" name="oc_orgaoEmissor" class="form-control" maxlength="20" required>
+                    <small id="oc_orgaoEmissorHelp" class="form-text text-muted">Órgão e UF de emissão.</small>
+                </div>
+                <div class="form-group">
+                    <label for="oc_dtExped">Data de Expedição:</label>
+                    <input type="date" id="oc_dtExped" name="oc_dtExped" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="oc_dtValid">Data de Validade:</label>
+                    <input type="date" id="oc_dtValid" name="oc_dtValid" class="form-control" required>
+                </div>
+            </div>
         </div>
 
         {# CNH #}
@@ -234,13 +246,13 @@
             <h3>Informações de CNH</h3>
         </div>
         <div class="form-check">
-            <label for="showCnh" data-toggle="collapse" data-target="#collapseOne">
+            <label for="showCnh" data-toggle="collapse" data-target="#collapseCnh">
                 <input id="showCnh" type="checkbox" class="form-check-input">
-                Eu tenho CNH
+                Eu tenho Carteira Nacional de Habilitação
             </label>
         </div>
 
-        <div id="collapseOne" class="collapse">
+        <div id="collapseCnh" class="collapse">
             <br>
             <div class="well">
                 <div class="form-group">
@@ -409,13 +421,13 @@
             <h3>Informações de Dependentes</h3>
         </div>
         <div class="form-check">
-            <label for="showDep" data-toggle="collapse" data-target="#collapseTwo">
+            <label for="showDep" data-toggle="collapse" data-target="#collapseDep">
                 <input id="showDep" type="checkbox" class="form-check-input">
-                Eu tenho Dependentes
+                Eu tenho Dependente(s)
             </label>
         </div>
 
-        <div id="collapseTwo" class="collapse">
+        <div id="collapseDep" class="collapse">
             <br>
             <div class="well">
                 <div class="form-group">
