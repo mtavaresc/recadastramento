@@ -304,7 +304,7 @@
             <label for="paisResid">País Residência:</label>
             <select id="paisResid" name="paisResid" class="form-control">
                 {% for x in paises %}
-                    <option value="{{ x }}">{{ paises[x] }}</option>
+                    <option value="{{ x }}" {% if paises[x] == "Brasil" %} selected {% endif %}>{{ paises[x] }}</option>
                 {% endfor %}
             </select>
         </div>
