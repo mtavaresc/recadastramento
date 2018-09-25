@@ -175,6 +175,7 @@ function requiredCNH() {
 }
 
 function requiredDep() {
+    const qtdDep = document.getElementById("qtdDep");
     const tpDep = document.getElementById("tpDep");
     const nmDep = document.getElementById("nmDep");
     const dtNascto = document.getElementById("dep_dtNascto");
@@ -182,6 +183,11 @@ function requiredDep() {
     const depIRRF = document.getElementById("depIRRF");
     const depSF = document.getElementById("depSF");
     const incTrab = document.getElementById("incTrab");
+
+    if (!qtdDep.required)
+        jQuery(qtdDep).attr('required', '');
+    else
+        jQuery(qtdDep).removeAttr('required');
 
     if (!tpDep.required)
         jQuery(tpDep).attr('required', '');
