@@ -7,8 +7,8 @@ class Pegaso(db.Model):
     matricula = db.Column("matr", db.CHAR(6), primary_key=True)
     nome = db.Column(db.String(70))
     cpf = db.Column(db.String(11))
-    nis = db.Column("pispasep", db.String(11))
-    dtnascto = db.Column("dtnasc", db.Date)
+    pispasep = db.Column(db.String(11))
+    dtnasc = db.Column(db.Date)
 
 
 class Trabalhador(db.Model):
@@ -36,18 +36,10 @@ class Trabalhador(db.Model):
     nrCtps = db.Column(db.String(11))
     serieCtps = db.Column(db.String(5))
     ufCtps = db.Column(db.String(2))
-    # RIC
-    # nrRic = db.Column(db.String(14))
-    # ric_orgaoEmissor = db.Column(db.String(20))
-    # ric_dtExped = db.Column(db.Date)
     # RG
     nrRg = db.Column(db.String(14))
     rg_orgaoEmissor = db.Column(db.String(20))
     rg_dtExped = db.Column(db.Date)
-    # RNE
-    # nrRne = db.Column(db.String(14))
-    # rne_orgaoEmissor = db.Column(db.String(20))
-    # rne_dtExped = db.Column(db.Date)
     # OC
     nrOc = db.Column(db.String(14))
     oc_orgaoEmissor = db.Column(db.String(20))
@@ -77,11 +69,6 @@ class Trabalhador(db.Model):
     ext_bairro = db.Column(db.String(60))
     nmCid = db.Column(db.String(50))
     codPostal = db.Column(db.String(12))
-    # Estrangeiro
-    # dtChegada = db.Column(db.Date)
-    # classTrabEstran = db.Column(db.Integer)
-    # casadoBr = db.Column(db.String(1))
-    # filhosBr = db.Column(db.String(1))
     # Info Deficiencia
     defFisica = db.Column(db.String(1))
     defVisual = db.Column(db.String(1))
@@ -139,18 +126,10 @@ class Trabalhador(db.Model):
         self.nrCtps = nr_ctps
         self.serieCtps = serie_ctps
         self.ufCtps = uf_ctps
-        # RIC
-        # self.nrRic = nr_ric
-        # self.ric_orgaoEmissor = ric_orgao_emissor
-        # self.ric_dtExped = ric_dt_exped
         # RG
         self.nrRg = nr_rg
         self.rg_orgaoEmissor = rg_orgao_emissor
         self.rg_dtExped = rg_dt_exped
-        # RNE
-        # self.nrRne = nr_rne
-        # self.rne_orgaoEmissor = rne_orgao_emissor
-        # self.rne_dtExped = rne_dt_exped
         # OC
         self.nrOc = nr_oc
         self.oc_orgaoEmissor = oc_orgao_emissor
@@ -180,11 +159,6 @@ class Trabalhador(db.Model):
         self.ext_bairro = ext_bairro
         self.nmCid = nm_cid
         self.codPostal = cod_postal
-        # Estrangeiro
-        # self.dtChegada = dt_chegada
-        # self.classTrabEstran = class_trab_estran
-        # self.casadoBr = casado_br
-        # self.filhosBr = filhos_br
         # Info Deficiencia
         self.defFisica = def_fisica
         self.defVisual = def_visual
@@ -212,7 +186,38 @@ class Trabalhador(db.Model):
 
 
 class Paises(db.Model):
-    __tablename__ = "esocial.paises"
+    __tablename__ = "paises"
 
     codigo = db.Column(db.String(3), primary_key=True)
     nome = db.Column(db.String(100))
+
+
+class Estados(db.Model):
+    __tablename__ = "estados"
+
+    uf = db.Column(db.CHAR(2), primary_key=True)
+    nome = db.Column(db.String(50))
+
+
+class Municipios(db.Model):
+    __tablename__ = "municipios"
+
+    codigo = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(255))
+    uf = db.Column(db.CHAR(2))
+
+
+class TiposLogradouro(db.Model):
+    __tablename__ = "tipos_logradouro"
+
+    codigo = db.Column(db.CHAR(4), primary_key=True)
+    nome = db.Column(db.String(30))
+
+
+class Bairros(db.Model):
+    __tablename__ = "bairros"
+
+    codigo = db.Column(db.CHAR(10), primary_key=True)
+    nome = db.Column(db.String(70))
+    municipio = db.Column(db.String(70))
+    uf = db.Column(db.CHAR(2))
