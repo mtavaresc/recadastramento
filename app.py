@@ -15,7 +15,7 @@ def hello_world():
         senha = request.form.get("senha")
 
         pegaso = db.session.execute(
-            "SELECT * FROM zeus.tv_cadastro WHERE matr = '{}' AND senha = '{}'".format(matricula, senha))
+            "SELECT * FROM esocial. WHERE matricula = '{}' AND senha = '{}'".format(matricula, senha))
 
         if pegaso.count() > 0:
             recadastrar(matricula)
