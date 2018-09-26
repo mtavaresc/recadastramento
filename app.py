@@ -8,20 +8,27 @@ from model import *
 # db.create_all()
 
 
-@app.route("/", methods=["GET"])
+@app.route("/", methods=["GET", "POST"])
 def hello_world():
+    if request.method == "POST":
+        matricula = request.form.get("matricula")
+        senha = request.form.get("senha")
+
+        pegaso = db.session.execute(
+            "SELECT * FROM zeus.tv_cadastro WHERE matr = '{}' AND senha = '{}'".format(matricula, senha))
+
+        if pegaso.count() > 0:
+            recadastrar(matricula)
+
     return render_template("auth.html")
 
 
 @app.route("/<matricula>", methods=["GET", "POST"])
 def recadastrar(matricula):
     # Campos preenchidos através da matricula do Pegaso
-    # pegaso = db.session.execute(
-    #     "SELECT nome, cpf, pispasep, TO_CHAR(dtnasc, 'YYYY-MM-DD') as dtnasc "
-    #     "FROM zeus.tv_cadastro WHERE matr = '{}'".format(matricula)).first()
-
-    pegaso = Pegaso.query.filter_by(matricula=matricula).first()
-
+    pegaso = db.session.execute(
+        "SELECT nome, cpf, pispasep, TO_CHAR(dtnasc, 'YYYY-MM-DD') as dtnasc "
+        "FROM zeus.tv_cadastro WHERE matr = '{}'".format(matricula)).first()
 
     # Selecionando paises
     # cod_paises = [row.codigo for row in Paises.query.all()]
