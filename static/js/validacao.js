@@ -37,7 +37,7 @@ function TestaCPF(elemento) {
         rev = 0;
     if (rev !== parseInt(cpf.charAt(10)))
         return elemento.style.borderColor = "red";
-    return elemento.style.borderColor = "blue";
+    return elemento.style.borderColor = "green";
 }
 
 // API Find CEP

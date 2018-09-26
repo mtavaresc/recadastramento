@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 from flask import render_template, request
 from base import app, db
-from model import Trabalhador
+from model import *
 
 
 # Create all schemas
@@ -10,15 +10,18 @@ from model import Trabalhador
 
 @app.route("/", methods=["GET"])
 def hello_world():
-    return "Hello World!"
+    return render_template("auth.html")
 
 
 @app.route("/<matricula>", methods=["GET", "POST"])
 def recadastrar(matricula):
     # Campos preenchidos através da matricula do Pegaso
-    pegaso = db.session.execute(
-        "SELECT nome, cpf, pispasep, TO_CHAR(dtnasc, 'YYYY-MM-DD') as dtnasc "
-        "FROM zeus.tv_cadastro WHERE matr = '{}'".format(matricula)).first()
+    # pegaso = db.session.execute(
+    #     "SELECT nome, cpf, pispasep, TO_CHAR(dtnasc, 'YYYY-MM-DD') as dtnasc "
+    #     "FROM zeus.tv_cadastro WHERE matr = '{}'".format(matricula)).first()
+
+    pegaso = Pegaso.query.filter_by(matricula=matricula).first()
+
 
     # Selecionando paises
     # cod_paises = [row.codigo for row in Paises.query.all()]
@@ -139,6 +142,8 @@ def recadastrar(matricula):
         db.session.commit()
 
         return render_template("submit.html")
+
+    return render_template("index.html", pegaso=pegaso)
 
     # return render_template("index.html", pegaso=pegaso, paises=paises, estados=estados, municipios=municipios,
     #                        tl=tipos_logradouro, bairros=bairros)
