@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
 from base import app, db
 from model import *
 
@@ -9,16 +9,17 @@ from model import *
 
 
 @app.route("/", methods=["GET", "POST"])
-def hello_world():
+def auth():
     if request.method == "POST":
         matricula = request.form.get("matricula")
         senha = request.form.get("senha")
 
         pegaso = db.session.execute(
-            "SELECT * FROM esocial. WHERE matricula = '{}' AND senha = '{}'".format(matricula, senha))
-
-        if pegaso.count() > 0:
-            recadastrar(matricula)
+            "SELECT nome FROM esocial.form_login WHERE matricula = '{}' AND senha = '{}'".format(matricula,
+                                                                                                     senha)).first()
+        for p in pegaso:
+            if len(p) > 0:
+                return redirect(url_for('recadastrar',matricula=matricula))
 
     return render_template("auth.html")
 
@@ -31,23 +32,27 @@ def recadastrar(matricula):
         "FROM zeus.tv_cadastro WHERE matr = '{}'".format(matricula)).first()
 
     # Selecionando paises
-    # cod_paises = [row.codigo for row in Paises.query.all()]
-    # nome_paises = [row.nome for row in Paises.query.all()]
-    # paises = dict(zip(cod_paises, nome_paises))
+    cod_paises = [row[0] for row in db.session.execute("SELECT codigo FROM esocial.paises")]
+    nome_paises = [row[0] for row in db.session.execute("SELECT nome FROM esocial.paises")]
+    paises = dict(zip(cod_paises, nome_paises))
+
     # Selecionando estados
-    # uf_estados = [row.uf for row in Estados.query.all()]
-    # nome_estados = [row.nome for row in Estados.query.order_by(Estados.nome).all()]
-    # estados = dict(zip(uf_estados, nome_estados))
+    uf_estados = [row[0] for row in db.session.execute("SELECT uf FROM esocial.estados")]
+    nome_estados = [row[0] for row in db.session.execute("SELECT nome FROM esocial.estados")]
+    estados = dict(zip(uf_estados, nome_estados))
+
     # Selecionando municipios
-    # cod_municipio = [row.codigo for row in Municipios.query.all()]
-    # nome_municipio = [row.nome for row in Municipios.query.order_by(Municipios.nome).all()]
-    # municipios = dict(zip(cod_municipio, nome_municipio))
+    cod_municipio = [row[0] for row in db.session.execute("SELECT codigo FROM esocial.municipios")]
+    nome_municipio = [row[0] for row in db.session.execute("SELECT nome FROM esocial.municipios")]
+    municipios = dict(zip(cod_municipio, nome_municipio))
+
     # Selecionando tipos logradouro
-    # cod_tl = [row.codigo for row in TiposLogradouro.query.all()]
-    # nome_tl = [row.nome for row in TiposLogradouro.query.order_by(TiposLogradouro.nome).all()]
-    # tipos_logradouro = dict(zip(cod_tl, nome_tl))
+    cod_tl = [row[0] for row in db.session.execute("SELECT codigo FROM esocial.tipos_logradouro")]
+    nome_tl = [row[0] for row in db.session.execute("SELECT nome FROM esocial.tipos_logradouro ORDER BY nome")]
+    tipos_logradouro = dict(zip(cod_tl, nome_tl))
+
     # Selecionando bairros
-    # bairros = [row.nome for row in db.session.query(Bairros.nome).distinct().order_by(Bairros.nome).all()]
+    bairros = [row[0] for row in db.session.execute("SELECT DISTINCT nome FROM esocial.bairros ORDER BY nome")]
 
     if request.method == "POST":
         # Trabalhador
@@ -150,10 +155,8 @@ def recadastrar(matricula):
 
         return render_template("submit.html")
 
-    return render_template("index.html", pegaso=pegaso)
-
-    # return render_template("index.html", pegaso=pegaso, paises=paises, estados=estados, municipios=municipios,
-    #                        tl=tipos_logradouro, bairros=bairros)
+    return render_template("index.html", pegaso=pegaso, paises=paises, estados=estados, municipios=municipios,
+                           tl=tipos_logradouro, bairros=bairros)
 
 
 if __name__ == "__main__":
