@@ -84,7 +84,7 @@ $(document).ready(function () {
                         }).attr('selected', true);
 
                         $("#dscLograd").val((dados.logradouro).replace((dados.logradouro).split(" ")[0], ''));
-                        $("#nrLograd").val(dados.complemento);
+                        // $("#nrLograd").val(dados.complemento);
                         $("#bairro").val(dados.bairro);
                     } //end if.
                     else {
