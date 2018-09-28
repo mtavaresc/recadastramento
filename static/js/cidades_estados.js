@@ -108,7 +108,7 @@ dgCidadesEstados.prototype = {
         let opts = this.cidade;
         while (opts.childNodes.length) opts.removeChild(opts.firstChild); // limpa a lista atual
 
-        this.addOption(opts, '', 'Selecione uma cidade');
+        this.addOption(opts, '', '-- Selecione --');
         for (let i = 0; i < itens_total; i++) this.addOption(opts, itens[i][0], itens[i][1]); // vai adicionando as cidades correspondentes
     },
     addOption: function (elm, val, text) {
