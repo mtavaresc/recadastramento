@@ -6,6 +6,7 @@
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="../static/css/fontawesome-all.css">
+    <link rel="stylesheet" href="../static/css/sticky-footer-navbar.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <!-- Latest compiled and minified JavaScript -->
@@ -13,6 +14,7 @@
     <script src="../static/js/jquery.mask.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="../static/js/validacao.js"></script>
+    <script src="../static/js/cidades_estados.js"></script>
 
     <script>
         jQuery(function () {
@@ -30,7 +32,7 @@
         <h1>Recadastramento</h1>
     </div>
 
-    <form class="container" method="POST">
+    <form id="form" class="container" method="POST">
         {# Trabalhador #}
         <div class="page-header">
             <h3>Informações do Trabalhador</h3>
@@ -136,22 +138,20 @@
         {# Se pais nascimento selecionado = "Brasil" #}
         <div class="form-group">
             <label for="uf">Estado:</label>
-            <select id="uf" name="uf" class="form-control" required>
-                <option value="">-- Selecione --</option>
-                {% for x in estados %}
-                    <option value="{{ x }}">{{ estados[x] }}</option>
-                {% endfor %}
+            <select id="uf" name="uf" class="form-control" value="CE" required>
             </select>
         </div>
         <div class="form-group">
             <label for="codMunic">Município:</label>
             <select id="codMunic" name="codMunic" class="form-control" required>
-                <option value="">-- Selecione --</option>
-                {% for x in municipios %}
-                    <option value="{{ x }}">{{ municipios[x] }}</option>
-                {% endfor %}
             </select>
         </div>
+        <script language="JavaScript" type="text/javascript" charset="utf-8">
+            new dgCidadesEstados({
+                cidade: document.getElementById('codMunic'),
+                estado: document.getElementById('uf')
+            })
+        </script>
         <div class="form-group">
             <label for="nmMae">Nome Mãe:</label>
             <input id="nmMae" name="nmMae" class="form-control" maxlength="70" required>
@@ -539,8 +539,14 @@
         <br>
 
         <button type="submit" class="btn btn-primary">Enviar</button>
-        <br><br>
+        <br><br><br><br><br><br><br><br>
     </form>
 </div>
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">Designed by
+            <a href="http://solucoescati.com.br" target="_blank">CATI - Soluções em Tecnologia</a></p>
+    </div>
+</footer>
 </body>
 </html>

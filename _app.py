@@ -3,14 +3,14 @@ from flask import render_template, request
 from _base import app
 from _model import *
 
+
 # Create all schemas
 db.create_all()
 
 
 @app.route("/", methods=["GET"])
-def hello_world():
-    return render_template("submit.html")
-    # return "Hello World!"
+def auth():
+    return render_template("auth.html")
 
 
 @app.route("/<matricula>", methods=["GET", "POST"])
