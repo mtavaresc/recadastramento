@@ -24,7 +24,7 @@ def auth():
 def recadastrar(matricula):
     # Campos preenchidos através da matricula do Pegaso
     pegaso = db.session.execute(
-        "SELECT nome, cpf, pispasep, TO_CHAR(dtnasc, 'YYYY-MM-DD') as dtnasc "
+        "SELECT matr, nome, cpf, pispasep, TO_CHAR(dtnasc, 'YYYY-MM-DD') as dtnasc "
         "FROM zeus.tv_cadastro WHERE matr = '{}'".format(matricula)).first()
 
     # Selecionando paises
@@ -51,6 +51,7 @@ def recadastrar(matricula):
     bairros = [row[0] for row in db.session.execute("SELECT DISTINCT nome FROM esocial.bairros ORDER BY nome")]
 
     if request.method == "POST":
+        matr = request.form.get("matr")
         # Trabalhador
         cpf_trab = request.form.get("cpfTrab")
         cpf_trab = "".join(c for c in str(cpf_trab) if c not in ".-")
@@ -82,14 +83,20 @@ def recadastrar(matricula):
         # OC
         nr_oc = request.form.get("nrOc")
         oc_orgao_emissor = request.form.get("oc_orgaoEmissor")
-        oc_dt_exped = None if request.form.get("oc_dtExped") is "" else request.form.get("oc_dtExped")
-        oc_dt_valid = None if request.form.get("oc_dtValid") is "" else request.form.get("oc_dtValid")
+        oc_orgao_emissor = oc_orgao_emissor.upper()
+        oc_dt_exped = "" if request.form.get("oc_dtExped") is "" or request.form.get(
+            "oc_dtExped") is None else request.form.get("oc_dtExped")
+        oc_dt_valid = "" if request.form.get("oc_dtValid") is "" or request.form.get(
+            "oc_dtValid") is None else request.form.get("oc_dtValid")
         # CNH
         nr_reg_cnh = request.form.get("nrRegCnh")
-        cnh_dt_exped = None if request.form.get("cnh_dtExped") is "" else request.form.get("cnh_dtExped")
+        cnh_dt_exped = "" if request.form.get("cnh_dtExped") is "" or request.form.get(
+            "cnh_dtExped") is None else request.form.get("cnh_dtExped")
         uf_cnh = request.form.get("ufCnh")
-        cnh_dt_valid = None if request.form.get("cnh_dtValid") is "" else request.form.get("cnh_dtValid")
-        dt_pri_hab = None if request.form.get("dtPriHab") is "" else request.form.get("dtPriHab")
+        cnh_dt_valid = "" if request.form.get("cnh_dtValid") is "" or request.form.get(
+            "cnh_dtValid") is None else request.form.get("cnh_dtValid")
+        dt_pri_hab = "" if request.form.get("dtPriHab") is "" or request.form.get(
+            "dtPriHab") is None else request.form.get("dtPriHab")
         categoria_cnh = request.form.get("categoriaCnh")
         # Endereco - Brasil
         tp_lograd = request.form.get("tpLograd")
@@ -121,7 +128,8 @@ def recadastrar(matricula):
         # Dependete
         tp_dep = request.form.get("tpDep")
         nm_dep = request.form.get("nmDep")
-        dep_dt_nascto = None if request.form.get("dep_dtNascto") is "" else request.form.get("dep_dtNascto")
+        dep_dt_nascto = "" if request.form.get("dep_dtNascto") is "" or request.form.get(
+            "dep_dtNascto") is None else request.form.get("dep_dtNascto")
         cpf_dep = request.form.get("cpfDep")
         cpf_dep = "".join(c for c in str(cpf_dep) if c not in ".-")
         dep_irrf = request.form.get("depIRRF")
@@ -138,15 +146,21 @@ def recadastrar(matricula):
         email_alternat = request.form.get("emailAlternat")
 
         db.session.execute(
-            "INSERT INTO esocial.trabalhador "
-            "VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}',"
+            "INSERT INTO esocial.trabalhador (matricula, cpfTrab, nisTrab, nmTrab, sexo, racaCor, estCiv, grauInstr, "
+            "indPriEmpr, nmSoc, dtNascto, codMunic, uf, paisNascto, paisNac, nmMae, nmPai, nrCtps, serieCtps, ufCtps, "
+            "nrRg, rg_orgaoEmissor, rg_dtExped, nrOc, oc_orgaoEmissor, oc_dtExped, oc_dtValid, nrRegCnh, cnh_dtExped, ufCnh, "
+            "cnh_dtValid, dtPriHab, categoriaCnh, tpLograd, dscLograd, nrLograd, complemento, bairro, cep, end_codMunic, "
+            "end_uf, paisResid, ext_dscLograd, ext_nrLograd, ext_complemento, ext_bairro, nmCid, codPostal, defFisica, "
+            "defVisual, defAuditiva, defMental, defIntelectual, defReadap, infoCota, observacao, tpDep, nmDep, dep_dtNascto, "
+            "cpfDep, depIRRF, depSF, incTrab, trabAposent, fonePrinc, foneAlternat, emailPrinc, emailAlternat) "
+            "VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}',"
             "'{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}',"
             "'{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}',"
             "'{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}',"
             "'{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}',"
             "'{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}',"
             "'{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(
-                cpf_trab, nis_trab, nm_trab, sexo, raca_cor, est_civ, grau_instr, ind_pri_empr, nm_soc,
+                matr, cpf_trab, nis_trab, nm_trab, sexo, raca_cor, est_civ, grau_instr, ind_pri_empr, nm_soc,
                 dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, nm_pai, nr_ctps, serie_ctps, uf_ctps,
                 nr_rg, rg_orgao_emissor, rg_dt_exped, nr_oc, oc_orgao_emissor, oc_dt_exped, oc_dt_valid,
                 nr_reg_cnh, cnh_dt_exped, uf_cnh, cnh_dt_valid, dt_pri_hab, categoria_cnh, tp_lograd,

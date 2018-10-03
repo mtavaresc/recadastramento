@@ -33,6 +33,7 @@
     </div>
 
     <form id="form" class="container" method="POST">
+        <input name="matr" type="hidden" value="{{ pegaso.matr }}">
         {# Trabalhador #}
         <div class="page-header">
             <h3>Informações do Trabalhador</h3>
@@ -107,7 +108,7 @@
         </div>
         <div class="form-group">
             <label for="nmSoc">Nome Social:</label>
-            <input id="nmSoc" name="nmSoc" class="form-control" maxlength="70">
+            <input id="nmSoc" name="nmSoc" class="form-control" maxlength="70" style="text-transform: uppercase">
             <small id="nmSocHelp" class="form-text text-muted">Nome social para travesti ou transexual.</small>
         </div>
 
@@ -118,7 +119,7 @@
         {# Origem tabela "paises" #}
         <div class="form-group">
             <label for="paisNac">País Nacionalidade:</label>
-            <select id="paisNac" name="paisNac" class="form-control" required>
+            <select id="paisNac" name="paisNac" class="form-control">
                 <option value="">-- Selecione --</option>
                 {% for x in paises %}
                     <option value="{{ x }}" {% if paises[x] == "Brasil" %} selected {% endif %}>{{ paises[x] }}</option>
@@ -128,7 +129,7 @@
         {# Origem tabela "paises" #}
         <div class="form-group">
             <label for="paisNascto">País Nascimento:</label>
-            <select id="paisNascto" name="paisNascto" class="form-control" required>
+            <select id="paisNascto" name="paisNascto" class="form-control">
                 <option value="">-- Selecione --</option>
                 {% for x in paises %}
                     <option value="{{ x }}" {% if paises[x] == "Brasil" %} selected {% endif %}>{{ paises[x] }}</option>
@@ -138,12 +139,12 @@
         {# Se pais nascimento selecionado = "Brasil" #}
         <div class="form-group">
             <label for="uf">Estado:</label>
-            <select id="uf" name="uf" class="form-control" value="CE" required>
+            <select id="uf" name="uf" class="form-control" value="CE">
             </select>
         </div>
         <div class="form-group">
             <label for="codMunic">Município:</label>
-            <select id="codMunic" name="codMunic" class="form-control" required>
+            <select id="codMunic" name="codMunic" class="form-control" value="Fortaleza">
             </select>
         </div>
         <script charset="utf-8">
@@ -154,11 +155,14 @@
         </script>
         <div class="form-group">
             <label for="nmMae">Nome Mãe:</label>
-            <input id="nmMae" name="nmMae" class="form-control" maxlength="70" required>
+            <input id="nmMae" name="nmMae" class="form-control" pattern="^[a-zA-Z\s]*$" maxlength="70"
+                   title="Preencher somente com Letras." style="text-transform: uppercase">
+
         </div>
         <div class="form-group">
             <label for="nmPai">Nome Pai:</label>
-            <input id="nmPai" name="nmPai" class="form-control" maxlength="70" required>
+            <input id="nmPai" name="nmPai" class="form-control" pattern="^[a-zA-Z\s]*$" maxlength="70"
+                   title="Preencher somente com Letras." style="text-transform: uppercase">
         </div>
 
         {# CTPS #}
@@ -167,11 +171,13 @@
         </div>
         <div class="form-group">
             <label for="nrCtps">Nº CTPS:</label>
-            <input id="nrCtps" name="nrCtps" class="form-control" pattern="^[0-9]*$" maxlength="11" required>
+            <input id="nrCtps" name="nrCtps" class="form-control" pattern="^[0-9]*$"
+                   title="Preencher somente com Números" maxlength="11">
         </div>
         <div class="form-group">
             <label for="serieCtps">Série CTPS:</label>
-            <input id="serieCtps" name="serieCtps" class="form-control" pattern="^[0-9]*$" maxlength="5" required>
+            <input id="serieCtps" name="serieCtps" class="form-control" pattern="^[0-9]*$"
+                   title="Preencher somente com Números" maxlength="5">
         </div>
         <div class="form-group">
             <label for="ufCtps">UF CTPS:</label>
@@ -189,17 +195,18 @@
         </div>
         <div class="form-group">
             <label for="nrRg">Nº RG:</label>
-            <input id="nrRg" name="nrRg" class="form-control" pattern="^[0-9]*$" maxlength="14" required>
+            <input id="nrRg" name="nrRg" class="form-control" pattern="^[0-9]*$"
+                   title="Preencher somente com Números" maxlength="14">
         </div>
         <div class="form-group">
             <label for="rg_orgaoEmissor">Órgão Emissor:</label>
-            <input id="rg_orgaoEmissor" name="rg_orgaoEmissor" class="form-control" style="text-transform: uppercase"
-                   maxlength="20" required>
+            <input id="rg_orgaoEmissor" name="rg_orgaoEmissor" class="form-control" pattern="^[a-zA-Z\s]*$"
+                   title="Preencher somente com Letras." maxlength="20" style="text-transform: uppercase">
             <small id="rg_orgaoEmissorHelp" class="form-text text-muted">Órgão e UF de emissão.</small>
         </div>
         <div class="form-group">
             <label for="rg_dtExped">Data de Expedição:</label>
-            <input type="date" id="rg_dtExped" name="rg_dtExped" class="form-control" required>
+            <input type="date" id="rg_dtExped" name="rg_dtExped" class="form-control">
         </div>
 
         {# OC #}
@@ -218,12 +225,12 @@
             <div class="well">
                 <div class="form-group">
                     <label for="nrOc">Nº OC:</label>
-                    <input id="nrOc" name="nrOc" class="form-control" pattern="^[0-9]*$" maxlength="14">
+                    <input id="nrOc" name="nrOc" class="form-control" maxlength="14">
                 </div>
                 <div class="form-group">
                     <label for="oc_orgaoEmissor">Órgão Emissor:</label>
-                    <input id="oc_orgaoEmissor" name="oc_orgaoEmissor" class="form-control"
-                           style="text-transform: uppercase" maxlength="20">
+                    <input id="oc_orgaoEmissor" name="oc_orgaoEmissor" class="form-control" maxlength="20"
+                           style="text-transform: uppercase">
                     <small id="oc_orgaoEmissorHelp" class="form-text text-muted">Órgão e UF de emissão.</small>
                 </div>
                 <div class="form-group">
@@ -253,7 +260,7 @@
             <div class="well">
                 <div class="form-group">
                     <label for="nrRegCnh">Nº do Registro CNH:</label>
-                    <input id="nrRegCnh" name="nrRegCnh" class="form-control" pattern="^[0-9]*$" maxlength="12">
+                    <input id="nrRegCnh" name="nrRegCnh" class="form-control" maxlength="12">
                 </div>
                 <div class="form-group">
                     <label for="cnh_dtExped">Data de Expedição:</label>
@@ -351,16 +358,18 @@
         </fieldset>
         <div class="form-group">
             <label for="dscLograd">Logradouro:</label>
-            <input id="dscLograd" name="dscLograd" class="form-control" maxlength="80" readonly
-                   required>
+            <input id="dscLograd" name="dscLograd" class="form-control" maxlength="80" style="text-transform: uppercase"
+                   readonly>
         </div>
         <div class="form-group">
             <label for="nrLograd">Nº Logradouro:</label>
-            <input id="nrLograd" name="nrLograd" class="form-control" pattern="^[0-9]*$" maxlength="10" required>
+            <input id="nrLograd" name="nrLograd" class="form-control" pattern="^[0-9]*$"
+                   title="Preencher apenas com Números" maxlength="10">
         </div>
         <div class="form-group">
             <label for="complemento">Complemento:</label>
-            <input id="complemento" name="complemento" class="form-control" maxlength="30">
+            <input id="complemento" name="complemento" class="form-control" maxlength="30"
+                   style="text-transform: uppercase">
         </div>
 
         {# Informações de Deficiência #}
@@ -418,7 +427,8 @@
         </div>
         <div class="form-group">
             <label for="observacao">Observação:</label>
-            <textarea id="observacao" name="observacao" class="form-control" maxlength="255"></textarea>
+            <textarea id="observacao" name="observacao" class="form-control" maxlength="255"
+                      style="text-transform: uppercase"></textarea>
         </div>
 
         {# Informações de Dependentes #}
@@ -465,7 +475,8 @@
                 </div>
                 <div class="form-group">
                     <label for="nmDep">Nome Completo:</label>
-                    <input id="nmDep" name="nmDep" class="form-control" maxlength="70">
+                    <input id="nmDep" name="nmDep" class="form-control" maxlength="70"
+                           style="text-transform: uppercase">
                 </div>
                 <div class="form-group">
                     <label for="dep_dtNascto">Data de Nascimento:</label>
@@ -520,7 +531,8 @@
         </div>
         <div class="form-group">
             <label for="fonePrinc">Fone principal:</label>
-            <input id="fonePrinc" name="fonePrinc" class="form-control" required>
+            <input id="fonePrinc" name="fonePrinc" class="form-control"
+                   pattern="^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$">
 
         </div>
         <div class="form-group">
