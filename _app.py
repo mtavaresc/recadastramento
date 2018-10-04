@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 from flask import render_template, request, redirect, url_for
+from datetime import date
 from _base import app
 from _model import *
 
@@ -14,11 +15,11 @@ def auth():
         senha = request.form.get("senha")
 
         cauth = FormLogin.query.filter_by(matricula=matricula, senha=senha).count()
-        cform = Trabalhador.query.filter_by(matricula=matricula).count()
+        form = Trabalhador.query.filter_by(matricula=matricula)
 
         if cauth > 0:
-            if cform > 0:
-                return render_template("reject.html")
+            if form.count() > 0:
+                return render_template("reject.html", protocolo=form.first().protocolo)
             else:
                 return redirect(url_for("recadastrar", matricula=matricula))
 
@@ -113,6 +114,8 @@ def recadastrar(matricula):
         fone_alternat = "".join(c for c in str(fone_alternat) if c not in "()- ")
         email_princ = request.form.get("emailPrinc")
         email_alternat = request.form.get("emailAlternat")
+        # Protocolo
+        protocolo = matricula + date.today().strftime("%Y%m%d")
 
         c = Trabalhador(matricula, cpf_trab, nis_trab, nm_trab, sexo, raca_cor, est_civ, grau_instr, ind_pri_empr,
                         nm_soc, dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, nm_pai, nr_ctps, serie_ctps,
@@ -122,16 +125,16 @@ def recadastrar(matricula):
                         ext_dsc_lograd, ext_nr_lograd, ext_complemento, ext_bairro, nm_cid, cod_postal, def_fisica,
                         def_visual, def_auditiva, def_mental, def_intelectual, def_readap, info_cota, observacao,
                         tp_dep, nm_dep, dep_dt_nascto, cpf_dep, dep_irrf, dep_sf, inc_trab, trab_aposent, fone_princ,
-                        fone_alternat, email_princ, email_alternat)
+                        fone_alternat, email_princ, email_alternat, protocolo)
         db.session.merge(c)
         db.session.commit()
 
-        return render_template("submit.html")
+        return render_template("submit.html", protocolo=protocolo)
     else:
-        cform = Trabalhador.query.filter_by(matricula=matricula).count()
+        form = Trabalhador.query.filter_by(matricula=matricula)
 
-        if cform > 0:
-            return render_template("reject.html")
+        if form.count() > 0:
+            return render_template("reject.html", protocolo=form.first().protocolo)
         else:
             # Campos preenchidos através da matricula do Pegaso
             pegaso = Pegaso.query.filter_by(matricula=matricula).first()
