@@ -11,10 +11,18 @@ class Pegaso(db.Model):
     dtnasc = db.Column(db.Date)
 
 
+class FormLogin(db.Model):
+    __tablename__ = "form_login"
+
+    matricula = db.Column(db.CHAR(6), primary_key=True)
+    nome = db.Column(db.String(70))
+    senha = db.Column(db.String(7))
+
+
 class Trabalhador(db.Model):
     __tablename__ = "trabalhador"
 
-    matricula = db.Column(db.String(6), primary_key=True)
+    matricula = db.Column(db.CHAR(6), primary_key=True)
     # Trabalhador
     cpfTrab = db.Column(db.String(11))
     nisTrab = db.Column(db.String(11))

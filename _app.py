@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
 from _base import app
 from _model import *
 
@@ -7,34 +7,26 @@ from _model import *
 db.create_all()
 
 
-@app.route("/", methods=["GET"])
+@app.route("/", methods=["GET", "POST"])
 def auth():
+    if request.method == "POST":
+        matricula = request.form.get("matricula")
+        senha = request.form.get("senha")
+
+        cauth = FormLogin.query.filter_by(matricula=matricula, senha=senha).count()
+        cform = Trabalhador.query.filter_by(matricula=matricula).count()
+
+        if cauth > 0:
+            if cform > 0:
+                return render_template("reject.html")
+            else:
+                return redirect(url_for("recadastrar", matricula=matricula))
+
     return render_template("auth.html")
 
 
 @app.route("/<matricula>", methods=["GET", "POST"])
 def recadastrar(matricula):
-    # Campos preenchidos através da matricula do Pegaso
-    pegaso = Pegaso.query.filter_by(matricula=matricula).first()
-    # Selecionando paises
-    cod_paises = [row.codigo for row in Paises.query.all()]
-    nome_paises = [row.nome for row in Paises.query.all()]
-    paises = dict(zip(cod_paises, nome_paises))
-    # Selecionando estados
-    uf_estados = [row.uf for row in Estados.query.all()]
-    nome_estados = [row.nome for row in Estados.query.all()]
-    estados = dict(zip(uf_estados, nome_estados))
-    # Selecionando municipios
-    cod_municipio = [row.codigo for row in Municipios.query.all()]
-    nome_municipio = [row.nome for row in Municipios.query.all()]
-    municipios = dict(zip(cod_municipio, nome_municipio))
-    # Selecionando tipos logradouro
-    cod_tl = [row.codigo for row in TiposLogradouro.query.all()]
-    nome_tl = [row.nome for row in TiposLogradouro.query.all()]
-    tipos_logradouro = dict(zip(cod_tl, nome_tl))
-    # Selecionando bairros
-    bairros = [row.nome for row in db.session.query(Bairros.nome).distinct().order_by(Bairros.nome).all()]
-
     if request.method == "POST":
         # Trabalhador
         cpf_trab = request.form.get("cpfTrab")
@@ -135,9 +127,35 @@ def recadastrar(matricula):
         db.session.commit()
 
         return render_template("submit.html")
+    else:
+        cform = Trabalhador.query.filter_by(matricula=matricula).count()
 
-    return render_template("index.html", pegaso=pegaso, paises=paises, estados=estados, municipios=municipios,
-                           tl=tipos_logradouro, bairros=bairros)
+        if cform > 0:
+            return render_template("reject.html")
+        else:
+            # Campos preenchidos através da matricula do Pegaso
+            pegaso = Pegaso.query.filter_by(matricula=matricula).first()
+            # Selecionando paises
+            cod_paises = [row.codigo for row in Paises.query.all()]
+            nome_paises = [row.nome for row in Paises.query.all()]
+            paises = dict(zip(cod_paises, nome_paises))
+            # Selecionando estados
+            uf_estados = [row.uf for row in Estados.query.all()]
+            nome_estados = [row.nome for row in Estados.query.all()]
+            estados = dict(zip(uf_estados, nome_estados))
+            # Selecionando municipios
+            cod_municipio = [row.codigo for row in Municipios.query.all()]
+            nome_municipio = [row.nome for row in Municipios.query.all()]
+            municipios = dict(zip(cod_municipio, nome_municipio))
+            # Selecionando tipos logradouro
+            cod_tl = [row.codigo for row in TiposLogradouro.query.all()]
+            nome_tl = [row.nome for row in TiposLogradouro.query.all()]
+            tipos_logradouro = dict(zip(cod_tl, nome_tl))
+            # Selecionando bairros
+            bairros = [row.nome for row in db.session.query(Bairros.nome).distinct().order_by(Bairros.nome).all()]
+
+            return render_template("index.html", pegaso=pegaso, paises=paises, estados=estados, municipios=municipios,
+                                   tl=tipos_logradouro, bairros=bairros)
 
 
 if __name__ == "__main__":

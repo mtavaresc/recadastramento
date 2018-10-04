@@ -13,43 +13,22 @@ def auth():
         pegaso = db.session.execute(
             "SELECT nome FROM esocial.form_login WHERE matricula = '{}' AND senha = '{}'".format(matricula,
                                                                                                  senha)).first()
+        form = db.session.execute(
+            "SELECT nome FROM esocial.trabalhador WHERE matricula = '{}'".format(matricula)).first()
+
         for p in pegaso:
             if len(p) > 0:
-                return redirect(url_for('recadastrar', matricula=matricula))
+                for f in form:
+                    if len(f) > 0:
+                        return render_template("reject.html")
+                    else:
+                        return redirect(url_for("recadastrar", matricula=matricula))
 
     return render_template("auth.html")
 
 
 @app.route("/<matricula>", methods=["GET", "POST"])
 def recadastrar(matricula):
-    # Campos preenchidos através da matricula do Pegaso
-    pegaso = db.session.execute(
-        "SELECT matr, nome, cpf, pispasep, TO_CHAR(dtnasc, 'YYYY-MM-DD') as dtnasc "
-        "FROM zeus.tv_cadastro WHERE matr = '{}'".format(matricula)).first()
-
-    # Selecionando paises
-    cod_paises = [row[0] for row in db.session.execute("SELECT codigo FROM esocial.paises")]
-    nome_paises = [row[0] for row in db.session.execute("SELECT nome FROM esocial.paises")]
-    paises = dict(zip(cod_paises, nome_paises))
-
-    # Selecionando estados
-    uf_estados = [row[0] for row in db.session.execute("SELECT uf FROM esocial.estados")]
-    nome_estados = [row[0] for row in db.session.execute("SELECT nome FROM esocial.estados")]
-    estados = dict(zip(uf_estados, nome_estados))
-
-    # Selecionando municipios
-    cod_municipio = [row[0] for row in db.session.execute("SELECT codigo FROM esocial.municipios")]
-    nome_municipio = [row[0] for row in db.session.execute("SELECT nome FROM esocial.municipios")]
-    municipios = dict(zip(cod_municipio, nome_municipio))
-
-    # Selecionando tipos logradouro
-    cod_tl = [row[0] for row in db.session.execute("SELECT codigo FROM esocial.tipos_logradouro")]
-    nome_tl = [row[0] for row in db.session.execute("SELECT nome FROM esocial.tipos_logradouro")]
-    tipos_logradouro = dict(zip(cod_tl, nome_tl))
-
-    # Selecionando bairros
-    bairros = [row[0] for row in db.session.execute("SELECT DISTINCT nome FROM esocial.bairros")]
-
     if request.method == "POST":
         # Trabalhador
         cpf_trab = request.form.get("cpfTrab")
@@ -171,9 +150,43 @@ def recadastrar(matricula):
         db.session.commit()
 
         return render_template("submit.html")
+    else:
+        form = db.session.execute(
+            "SELECT nome FROM esocial.trabalhador WHERE matricula = '{}'".format(matricula)).first()
+        for f in form:
+            if len(f) > 0:
+                return render_template("reject.html")
+            else:
+                # Campos preenchidos através da matricula do Pegaso
+                pegaso = db.session.execute(
+                    "SELECT matr, nome, cpf, pispasep, TO_CHAR(dtnasc, 'YYYY-MM-DD') as dtnasc "
+                    "FROM zeus.tv_cadastro WHERE matr = '{}'".format(matricula)).first()
 
-    return render_template("index.html", pegaso=pegaso, paises=paises, estados=estados, municipios=municipios,
-                           tl=tipos_logradouro, bairros=bairros)
+                # Selecionando paises
+                cod_paises = [row[0] for row in db.session.execute("SELECT codigo FROM esocial.paises")]
+                nome_paises = [row[0] for row in db.session.execute("SELECT nome FROM esocial.paises")]
+                paises = dict(zip(cod_paises, nome_paises))
+
+                # Selecionando estados
+                uf_estados = [row[0] for row in db.session.execute("SELECT uf FROM esocial.estados")]
+                nome_estados = [row[0] for row in db.session.execute("SELECT nome FROM esocial.estados")]
+                estados = dict(zip(uf_estados, nome_estados))
+
+                # Selecionando municipios
+                cod_municipio = [row[0] for row in db.session.execute("SELECT codigo FROM esocial.municipios")]
+                nome_municipio = [row[0] for row in db.session.execute("SELECT nome FROM esocial.municipios")]
+                municipios = dict(zip(cod_municipio, nome_municipio))
+
+                # Selecionando tipos logradouro
+                cod_tl = [row[0] for row in db.session.execute("SELECT codigo FROM esocial.tipos_logradouro")]
+                nome_tl = [row[0] for row in db.session.execute("SELECT nome FROM esocial.tipos_logradouro")]
+                tipos_logradouro = dict(zip(cod_tl, nome_tl))
+
+                # Selecionando bairros
+                bairros = [row[0] for row in db.session.execute("SELECT DISTINCT nome FROM esocial.bairros")]
+
+                return render_template("index.html", pegaso=pegaso, paises=paises, estados=estados, municipios=municipios,
+                                       tl=tipos_logradouro, bairros=bairros)
 
 
 if __name__ == "__main__":
