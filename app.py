@@ -51,7 +51,6 @@ def recadastrar(matricula):
     bairros = [row[0] for row in db.session.execute("SELECT DISTINCT nome FROM esocial.bairros")]
 
     if request.method == "POST":
-        matr = request.form.get("matr")
         # Trabalhador
         cpf_trab = request.form.get("cpfTrab")
         cpf_trab = "".join(c for c in str(cpf_trab) if c not in ".-")
@@ -160,7 +159,7 @@ def recadastrar(matricula):
             "'{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}',"
             "'{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}',"
             "'{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(
-                matr, cpf_trab, nis_trab, nm_trab, sexo, raca_cor, est_civ, grau_instr, ind_pri_empr, nm_soc,
+                matricula, cpf_trab, nis_trab, nm_trab, sexo, raca_cor, est_civ, grau_instr, ind_pri_empr, nm_soc,
                 dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, nm_pai, nr_ctps, serie_ctps, uf_ctps,
                 nr_rg, rg_orgao_emissor, rg_dt_exped, nr_oc, oc_orgao_emissor, oc_dt_exped, oc_dt_valid,
                 nr_reg_cnh, cnh_dt_exped, uf_cnh, cnh_dt_valid, dt_pri_hab, categoria_cnh, tp_lograd,

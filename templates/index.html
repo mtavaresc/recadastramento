@@ -33,7 +33,6 @@
     </div>
 
     <form id="form" class="container" method="POST">
-        <input name="matr" type="hidden" value="{{ pegaso.matr }}">
         {# Trabalhador #}
         <div class="page-header">
             <h3>Informações do Trabalhador</h3>
@@ -363,6 +362,7 @@
             <label for="nrLograd">Nº Logradouro:</label>
             <input id="nrLograd" name="nrLograd" class="form-control" pattern="^[0-9]*$"
                    title="Preencher apenas com Números" maxlength="10">
+            <small id="nrLogradHelp" class="form-text text-muted">Em caso de sem número, colocar 0.</small>
         </div>
         <div class="form-group">
             <label for="complemento">Complemento:</label>

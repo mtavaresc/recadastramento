@@ -3,7 +3,6 @@ from flask import render_template, request
 from _base import app
 from _model import *
 
-
 # Create all schemas
 db.create_all()
 
@@ -31,7 +30,7 @@ def recadastrar(matricula):
     municipios = dict(zip(cod_municipio, nome_municipio))
     # Selecionando tipos logradouro
     cod_tl = [row.codigo for row in TiposLogradouro.query.all()]
-    nome_tl = [row.nome for row in TiposLogradouro.all()]
+    nome_tl = [row.nome for row in TiposLogradouro.query.all()]
     tipos_logradouro = dict(zip(cod_tl, nome_tl))
     # Selecionando bairros
     bairros = [row.nome for row in db.session.query(Bairros.nome).distinct().order_by(Bairros.nome).all()]
@@ -123,11 +122,11 @@ def recadastrar(matricula):
         email_princ = request.form.get("emailPrinc")
         email_alternat = request.form.get("emailAlternat")
 
-        c = Trabalhador(cpf_trab, nis_trab, nm_trab, sexo, raca_cor, est_civ, grau_instr, ind_pri_empr, nm_soc,
-                        dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, nm_pai, nr_ctps, serie_ctps, uf_ctps,
-                        nr_rg, rg_orgao_emissor, rg_dt_exped, nr_oc, oc_orgao_emissor, oc_dt_exped, oc_dt_valid,
-                        nr_reg_cnh, cnh_dt_exped, uf_cnh, cnh_dt_valid, dt_pri_hab, categoria_cnh, tp_lograd,
-                        dsc_lograd, nr_lograd, complemento, bairro, cep, end_cod_munic, end_uf, pais_resid,
+        c = Trabalhador(matricula, cpf_trab, nis_trab, nm_trab, sexo, raca_cor, est_civ, grau_instr, ind_pri_empr,
+                        nm_soc, dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, nm_pai, nr_ctps, serie_ctps,
+                        uf_ctps, nr_rg, rg_orgao_emissor, rg_dt_exped, nr_oc, oc_orgao_emissor, oc_dt_exped,
+                        oc_dt_valid, nr_reg_cnh, cnh_dt_exped, uf_cnh, cnh_dt_valid, dt_pri_hab, categoria_cnh,
+                        tp_lograd, dsc_lograd, nr_lograd, complemento, bairro, cep, end_cod_munic, end_uf, pais_resid,
                         ext_dsc_lograd, ext_nr_lograd, ext_complemento, ext_bairro, nm_cid, cod_postal, def_fisica,
                         def_visual, def_auditiva, def_mental, def_intelectual, def_readap, info_cota, observacao,
                         tp_dep, nm_dep, dep_dt_nascto, cpf_dep, dep_irrf, dep_sf, inc_trab, trab_aposent, fone_princ,

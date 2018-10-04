@@ -14,6 +14,7 @@ class Pegaso(db.Model):
 class Trabalhador(db.Model):
     __tablename__ = "trabalhador"
 
+    matricula = db.Column(db.String(6), primary_key=True)
     # Trabalhador
     cpfTrab = db.Column(db.String(11))
     nisTrab = db.Column(db.String(11))
@@ -94,16 +95,15 @@ class Trabalhador(db.Model):
     emailPrinc = db.Column(db.String(60))
     emailAlternat = db.Column(db.String(60))
 
-    db.PrimaryKeyConstraint(cpfTrab, nisTrab, dtNascto)
-
-    def __init__(self, cpf_trab, nis_trab, nm_trab, sexo, raca_cor, est_civ, grau_instr, ind_pri_empr, nm_soc,
-                 dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, nm_pai, nr_ctps, serie_ctps, uf_ctps,
-                 nr_rg, rg_orgao_emissor, rg_dt_exped, nr_oc, oc_orgao_emissor, oc_dt_exped, oc_dt_valid,
-                 nr_reg_cnh, cnh_dt_exped, uf_cnh, cnh_dt_valid, dt_pri_hab, categoria_cnh, tp_lograd, dsc_lograd,
-                 nr_lograd, complemento, bairro, cep, end_cod_munic, end_uf, pais_resid, ext_dsc_lograd, ext_nr_lograd,
+    def __init__(self, matricula, cpf_trab, nis_trab, nm_trab, sexo, raca_cor, est_civ, grau_instr, ind_pri_empr,
+                 nm_soc, dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, nm_pai, nr_ctps, serie_ctps, uf_ctps,
+                 nr_rg, rg_orgao_emissor, rg_dt_exped, nr_oc, oc_orgao_emissor, oc_dt_exped, oc_dt_valid, nr_reg_cnh,
+                 cnh_dt_exped, uf_cnh, cnh_dt_valid, dt_pri_hab, categoria_cnh, tp_lograd, dsc_lograd, nr_lograd,
+                 complemento, bairro, cep, end_cod_munic, end_uf, pais_resid, ext_dsc_lograd, ext_nr_lograd,
                  ext_complemento, ext_bairro, nm_cid, cod_postal, def_fisica, def_visual, def_auditiva, def_mental,
                  def_intelectual, def_readap, info_cota, observacao, tp_dep, nm_dep, dep_dt_nascto, cpf_dep, dep_irrf,
                  dep_sf, inc_trab, trab_aposent, fone_princ, fone_alternat, email_princ, email_alternat):
+        self.matricula = matricula
         # Trabalhador
         self.cpfTrab = cpf_trab
         self.nisTrab = nis_trab
