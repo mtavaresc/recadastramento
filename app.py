@@ -44,11 +44,11 @@ def recadastrar(matricula):
 
     # Selecionando tipos logradouro
     cod_tl = [row[0] for row in db.session.execute("SELECT codigo FROM esocial.tipos_logradouro")]
-    nome_tl = [row[0] for row in db.session.execute("SELECT nome FROM esocial.tipos_logradouro ORDER BY nome")]
+    nome_tl = [row[0] for row in db.session.execute("SELECT nome FROM esocial.tipos_logradouro")]
     tipos_logradouro = dict(zip(cod_tl, nome_tl))
 
     # Selecionando bairros
-    bairros = [row[0] for row in db.session.execute("SELECT DISTINCT nome FROM esocial.bairros ORDER BY nome")]
+    bairros = [row[0] for row in db.session.execute("SELECT DISTINCT nome FROM esocial.bairros")]
 
     if request.method == "POST":
         matr = request.form.get("matr")
@@ -169,6 +169,7 @@ def recadastrar(matricula):
                 def_visual, def_auditiva, def_mental, def_intelectual, def_readap, info_cota, observacao,
                 tp_dep, nm_dep, dep_dt_nascto, cpf_dep, dep_irrf, dep_sf, inc_trab, trab_aposent, fone_princ,
                 fone_alternat, email_princ, email_alternat))
+        db.session.commit()
 
         return render_template("submit.html")
 

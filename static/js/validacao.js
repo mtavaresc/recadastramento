@@ -83,7 +83,7 @@ $(document).ready(function () {
                             return this.text === (dados.logradouro).split(" ")[0];
                         }).attr('selected', true);
 
-                        $("#dscLograd").val((dados.logradouro).replace((dados.logradouro).split(" ")[0], ''));
+                        $("#dscLograd").val((dados.logradouro).replace((dados.logradouro).split(" ")[0], "").trim());
                         // $("#nrLograd").val(dados.complemento);
                         $("#bairro").val(dados.bairro);
                     } //end if.
@@ -115,14 +115,14 @@ function requiredOC() {
     const dtValid = document.getElementById("oc_dtValid");
 
     if (!nrOc.required)
-        jQuery(nrOc).attr('required', '');
+        jQuery(nrOc).attr('pattern', '^[0-9]*$');
     else
-        jQuery(nrOc).removeAttr('required');
+        jQuery(nrOc).removeAttr('pattern');
 
     if (!orgaoEmissor.required)
-        jQuery(orgaoEmissor).attr('required', '');
+        jQuery(orgaoEmissor).attr('pattern', '^[a-zA-Z\\s]*$');
     else
-        jQuery(orgaoEmissor).removeAttr('required');
+        jQuery(orgaoEmissor).removeAttr('pattern');
 
     if (!dtExped.required)
         jQuery(dtExped).attr('required', '');
@@ -144,9 +144,9 @@ function requiredCNH() {
     const categoriaCnh = document.getElementById("categoriaCnh");
 
     if (!nrRegCnh.required)
-        jQuery(nrRegCnh).attr('required', '');
+        jQuery(nrRegCnh).attr('pattern', '^[0-9]*$');
     else
-        jQuery(nrRegCnh).removeAttr('required');
+        jQuery(nrRegCnh).removeAttr('pattern');
 
     if (!dtExped.required)
         jQuery(dtExped).attr('required', '');
@@ -185,9 +185,9 @@ function requiredDep() {
     const incTrab = document.getElementById("incTrab");
 
     if (!qtdDep.required)
-        jQuery(qtdDep).attr('required', '');
+        jQuery(qtdDep).attr('pattern', '^[0-9]*$');
     else
-        jQuery(qtdDep).removeAttr('required');
+        jQuery(qtdDep).removeAttr('pattern');
 
     if (!tpDep.required)
         jQuery(tpDep).attr('required', '');
@@ -195,9 +195,9 @@ function requiredDep() {
         jQuery(tpDep).removeAttr('required');
 
     if (!nmDep.required)
-        jQuery(nmDep).attr('required', '');
+        jQuery(nmDep).attr('pattern', '^[a-zA-Z\\s]*$');
     else
-        jQuery(nmDep).removeAttr('required');
+        jQuery(nmDep).removeAttr('pattern');
 
     if (!dtNascto.required)
         jQuery(dtNascto).attr('required', '');
@@ -205,9 +205,9 @@ function requiredDep() {
         jQuery(dtNascto).removeAttr('required');
 
     if (!cpfDep.required)
-        jQuery(cpfDep).attr('required', '');
+        jQuery(cpfDep).attr('pattern', '^([0-9]{2}[\\.]?[0-9]{3}[\\.]?[0-9]{3}[\\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\\.]?[0-9]{3}[\\.]?[0-9]{3}[-]?[0-9]{2})$');
     else
-        jQuery(cpfDep).removeAttr('required');
+        jQuery(cpfDep).removeAttr('pattern');
 
     if (!depIRRF.required)
         jQuery(depIRRF).attr('required', '');

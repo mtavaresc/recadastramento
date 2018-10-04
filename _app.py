@@ -23,15 +23,15 @@ def recadastrar(matricula):
     paises = dict(zip(cod_paises, nome_paises))
     # Selecionando estados
     uf_estados = [row.uf for row in Estados.query.all()]
-    nome_estados = [row.nome for row in Estados.query.order_by(Estados.nome).all()]
+    nome_estados = [row.nome for row in Estados.query.all()]
     estados = dict(zip(uf_estados, nome_estados))
     # Selecionando municipios
     cod_municipio = [row.codigo for row in Municipios.query.all()]
-    nome_municipio = [row.nome for row in Municipios.query.order_by(Municipios.nome).all()]
+    nome_municipio = [row.nome for row in Municipios.query.all()]
     municipios = dict(zip(cod_municipio, nome_municipio))
     # Selecionando tipos logradouro
     cod_tl = [row.codigo for row in TiposLogradouro.query.all()]
-    nome_tl = [row.nome for row in TiposLogradouro.query.order_by(TiposLogradouro.nome).all()]
+    nome_tl = [row.nome for row in TiposLogradouro.all()]
     tipos_logradouro = dict(zip(cod_tl, nome_tl))
     # Selecionando bairros
     bairros = [row.nome for row in db.session.query(Bairros.nome).distinct().order_by(Bairros.nome).all()]

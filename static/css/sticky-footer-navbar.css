@@ -39,3 +39,9 @@ body > .container {
 code {
     font-size: 80%;
 }
+
+select[readonly] {
+  background: #eee; /* Simular campo inativo */
+  pointer-events: none;
+  touch-action: none;
+}
