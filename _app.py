@@ -22,6 +22,8 @@ def auth():
                 return render_template("reject.html", protocolo=form.first().protocolo)
             else:
                 return redirect(url_for("recadastrar", matricula=matricula))
+        else:
+            return render_template("noauth.html")
 
     return render_template("auth.html")
 
