@@ -139,28 +139,32 @@ def recadastrar(matricula):
             return render_template("reject.html", protocolo=form.first().protocolo)
         else:
             # Campos preenchidos através da matricula do Pegaso
-            pegaso = Pegaso.query.filter_by(matricula=matricula).first()
-            # Selecionando paises
-            cod_paises = [row.codigo for row in Paises.query.all()]
-            nome_paises = [row.nome for row in Paises.query.all()]
-            paises = dict(zip(cod_paises, nome_paises))
-            # Selecionando estados
-            uf_estados = [row.uf for row in Estados.query.all()]
-            nome_estados = [row.nome for row in Estados.query.all()]
-            estados = dict(zip(uf_estados, nome_estados))
-            # Selecionando municipios
-            cod_municipio = [row.codigo for row in Municipios.query.all()]
-            nome_municipio = [row.nome for row in Municipios.query.all()]
-            municipios = dict(zip(cod_municipio, nome_municipio))
-            # Selecionando tipos logradouro
-            cod_tl = [row.codigo for row in TiposLogradouro.query.all()]
-            nome_tl = [row.nome for row in TiposLogradouro.query.all()]
-            tipos_logradouro = dict(zip(cod_tl, nome_tl))
-            # Selecionando bairros
-            bairros = [row.nome for row in db.session.query(Bairros.nome).distinct().order_by(Bairros.nome).all()]
+            pegaso = Pegaso.query.filter_by(matricula=matricula)
 
-            return render_template("index.html", pegaso=pegaso, paises=paises, estados=estados, municipios=municipios,
-                                   tl=tipos_logradouro, bairros=bairros)
+            if pegaso.count() > 0:
+                # Selecionando paises
+                cod_paises = [row.codigo for row in Paises.query.all()]
+                nome_paises = [row.nome for row in Paises.query.all()]
+                paises = dict(zip(cod_paises, nome_paises))
+                # Selecionando estados
+                uf_estados = [row.uf for row in Estados.query.all()]
+                nome_estados = [row.nome for row in Estados.query.all()]
+                estados = dict(zip(uf_estados, nome_estados))
+                # Selecionando municipios
+                cod_municipio = [row.codigo for row in Municipios.query.all()]
+                nome_municipio = [row.nome for row in Municipios.query.all()]
+                municipios = dict(zip(cod_municipio, nome_municipio))
+                # Selecionando tipos logradouro
+                cod_tl = [row.codigo for row in TiposLogradouro.query.all()]
+                nome_tl = [row.nome for row in TiposLogradouro.query.all()]
+                tipos_logradouro = dict(zip(cod_tl, nome_tl))
+                # Selecionando bairros
+                bairros = [row.nome for row in db.session.query(Bairros.nome).distinct().order_by(Bairros.nome).all()]
+
+                return render_template("index.html", pegaso=pegaso.first(), paises=paises, estados=estados,
+                                       municipios=municipios, tl=tipos_logradouro, bairros=bairros)
+            else:
+                return render_template("noauth.html")
 
 
 if __name__ == "__main__":
