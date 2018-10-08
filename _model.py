@@ -70,14 +70,6 @@ class Trabalhador(db.Model):
     cep = db.Column(db.String(8))
     end_codMunic = db.Column(db.Integer)
     end_uf = db.Column(db.String(2))
-    # Endereco - Exterior
-    paisResid = db.Column(db.String(3))
-    ext_dscLograd = db.Column(db.String(80))
-    ext_nrLograd = db.Column(db.String(10))
-    ext_complemento = db.Column(db.String(30))
-    ext_bairro = db.Column(db.String(60))
-    nmCid = db.Column(db.String(50))
-    codPostal = db.Column(db.String(12))
     # Info Deficiencia
     defFisica = db.Column(db.String(1))
     defVisual = db.Column(db.String(1))
@@ -88,13 +80,7 @@ class Trabalhador(db.Model):
     infoCota = db.Column(db.String(1))
     observacao = db.Column(db.String(255))
     # Dependente
-    tpDep = db.Column(db.String(2))
-    nmDep = db.Column(db.String(70))
-    dep_dtNascto = db.Column(db.Date)
-    cpfDep = db.Column(db.String(11))
-    depIRRF = db.Column(db.String(1))
-    depSF = db.Column(db.String(1))
-    incTrab = db.Column(db.String(1))
+    qtdDep = db.Column(db.Integer)
     # Aposentadoria
     trabAposent = db.Column(db.String(1))
     # Contato
@@ -109,10 +95,9 @@ class Trabalhador(db.Model):
                  nm_soc, dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, nm_pai, nr_ctps, serie_ctps, uf_ctps,
                  nr_rg, rg_orgao_emissor, rg_dt_exped, nr_oc, oc_orgao_emissor, oc_dt_exped, oc_dt_valid, nr_reg_cnh,
                  cnh_dt_exped, uf_cnh, cnh_dt_valid, dt_pri_hab, categoria_cnh, tp_lograd, dsc_lograd, nr_lograd,
-                 complemento, bairro, cep, end_cod_munic, end_uf, pais_resid, ext_dsc_lograd, ext_nr_lograd,
-                 ext_complemento, ext_bairro, nm_cid, cod_postal, def_fisica, def_visual, def_auditiva, def_mental,
-                 def_intelectual, def_readap, info_cota, observacao, tp_dep, nm_dep, dep_dt_nascto, cpf_dep, dep_irrf,
-                 dep_sf, inc_trab, trab_aposent, fone_princ, fone_alternat, email_princ, email_alternat, protocolo):
+                 complemento, bairro, cep, end_cod_munic, end_uf, def_fisica, def_visual, def_auditiva, def_mental,
+                 def_intelectual, def_readap, info_cota, observacao, qtd_dep, trab_aposent, fone_princ, fone_alternat,
+                 email_princ, email_alternat, protocolo):
         self.matricula = matricula
         # Trabalhador
         self.cpfTrab = cpf_trab
@@ -161,14 +146,6 @@ class Trabalhador(db.Model):
         self.cep = cep
         self.end_codMunic = end_cod_munic
         self.end_uf = end_uf
-        # Endereco - Exterior
-        self.paisResid = pais_resid
-        self.ext_dscLograd = ext_dsc_lograd
-        self.ext_nrLograd = ext_nr_lograd
-        self.ext_complemento = ext_complemento
-        self.ext_bairro = ext_bairro
-        self.nmCid = nm_cid
-        self.codPostal = cod_postal
         # Info Deficiencia
         self.defFisica = def_fisica
         self.defVisual = def_visual
@@ -179,13 +156,7 @@ class Trabalhador(db.Model):
         self.infoCota = info_cota
         self.observacao = observacao
         # Dependente
-        self.tpDep = tp_dep
-        self.nmDep = nm_dep
-        self.dep_dtNascto = dep_dt_nascto
-        self.cpfDep = cpf_dep
-        self.depIRRF = dep_irrf
-        self.depSF = dep_sf
-        self.incTrab = inc_trab
+        self.qtdDep = qtd_dep
         # Aposentadoria
         self.trabAposent = trab_aposent
         # Contato
@@ -197,11 +168,39 @@ class Trabalhador(db.Model):
         self.protocolo = protocolo
 
 
+class Dependentes(db.Model):
+    __tablename__ = "dependentes"
+
+    matrTab = db.Column(db.CHAR(6))
+    tpDep = db.Column(db.String(2))
+    nmDep = db.Column(db.String(70))
+    dep_dtNascto = db.Column(db.Date)
+    cpfDep = db.Column(db.String(11))
+    depIRRF = db.Column(db.String(1))
+    depSF = db.Column(db.String(1))
+    incTrab = db.Column(db.String(1))
+    db.PrimaryKeyConstraint(matrTab, cpfDep, name="dep_pk")
+
+    def __init__(self, matr_tab, tp_dep, nm_dep, dep_dt_nascto, cpf_dep, dep_irrf, dep_sf, inc_trab):
+        self.matrTab = matr_tab
+        self.tpDep = tp_dep
+        self.nmDep = nm_dep
+        self.dep_dtNascto = dep_dt_nascto
+        self.cpfDep = cpf_dep
+        self.depIRRF = dep_irrf
+        self.depSF = dep_sf
+        self.incTrab = inc_trab
+
+
 class Paises(db.Model):
     __tablename__ = "paises"
 
     codigo = db.Column(db.String(3), primary_key=True)
     nome = db.Column(db.String(100))
+
+    def __init__(self, codigo, nome):
+        self.codigo = codigo
+        self.nome = nome
 
 
 class Estados(db.Model):
@@ -209,6 +208,10 @@ class Estados(db.Model):
 
     uf = db.Column(db.CHAR(2), primary_key=True)
     nome = db.Column(db.String(50))
+
+    def __init__(self, uf, nome):
+        self.uf = uf
+        self.nome = nome
 
 
 class Municipios(db.Model):
@@ -218,12 +221,10 @@ class Municipios(db.Model):
     nome = db.Column(db.String(255))
     uf = db.Column(db.CHAR(2))
 
-
-class TiposLogradouro(db.Model):
-    __tablename__ = "tipos_logradouro"
-
-    codigo = db.Column(db.CHAR(4), primary_key=True)
-    nome = db.Column(db.String(30))
+    def __init__(self, codigo, nome, uf):
+        self.codigo = codigo
+        self.nome = nome
+        self.uf = uf
 
 
 class Bairros(db.Model):
@@ -233,3 +234,20 @@ class Bairros(db.Model):
     nome = db.Column(db.String(70))
     municipio = db.Column(db.String(70))
     uf = db.Column(db.CHAR(2))
+
+    def __init__(self, codigo, nome, municipio, uf):
+        self.codigo = codigo
+        self.nome = nome
+        self.municipio = municipio
+        self.uf = uf
+
+
+class TiposLogradouro(db.Model):
+    __tablename__ = "tipos_logradouro"
+
+    codigo = db.Column(db.CHAR(4), primary_key=True)
+    nome = db.Column(db.String(30))
+
+    def __init__(self, codigo, nome):
+        self.codigo = codigo
+        self.nome = nome
