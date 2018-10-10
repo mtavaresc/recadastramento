@@ -26,6 +26,7 @@
             $('#fonePrinc').mask('(00) 00000-0000');
             $('#foneAlternat').mask('(00) 00000-0000');
         });
+
     </script>
 <body>
 <div class="container">
@@ -442,10 +443,6 @@
         </div>
 
         <div id="collapseDep" class="collapse">
-            <div class="form-group">
-                <label for="qtdDep">Quantidade de dependentes:</label>
-                <input type="number" id="qtdDep" name="qtdDep" class="form-control" max="10">
-            </div>
             <br>
             <div class="well">
                 <div class="form-group">
@@ -510,6 +507,9 @@
                     </select>
                 </div>
             </div>
+
+            <a href="#" data-action="add">Adicionar</a>
+            <a href="#" data-action="delete">Remover</a>
         </div>
 
         {# Informações de Aposentadoria #}

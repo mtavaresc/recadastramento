@@ -41,7 +41,22 @@ code {
 }
 
 select[readonly] {
-  background: #eee; /* Simular campo inativo */
-  pointer-events: none;
-  touch-action: none;
+    background: #eee; /* Simular campo inativo */
+    pointer-events: none;
+    touch-action: none;
+}
+
+form a {
+    font-size: 12px;
+    padding: 4px 10px;
+    border: 1px solid #444444;
+    background: #555555;
+    color: #f7f7f7;
+    text-decoration: none;
+    vertical-align: middle;
+}
+
+form a:hover {
+    color: #ffffff;
+    background: #111111;
 }
