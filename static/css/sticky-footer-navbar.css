@@ -59,4 +59,5 @@ form a {
 form a:hover {
     color: #ffffff;
     background: #111111;
+    cursor: pointer;
 }

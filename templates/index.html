@@ -26,6 +26,11 @@
             $('#fonePrinc').mask('(00) 00000-0000');
             $('#foneAlternat').mask('(00) 00000-0000');
         });
+        $(document).ready(function () {
+            $(".add-more-btn").click(function () {
+                $("#multi").clone().appendTo("#collapseDep");
+            });
+        });
 
     </script>
 <body>
@@ -444,22 +449,27 @@
 
         <div id="collapseDep" class="collapse">
             <br>
-            <div class="well">
+            <a class="add-more-btn">Adicionar</a>
+            <br><br>
+            <div class="well" id="multi">
                 <div class="form-group">
                     <label for="tpDep">Tipo de dependente:</label>
-                    <select id="tpDep" name="tpDep" class="form-control">
+                    <select id="tpDep" name="tpDep[]" class="form-control">
                         <option value="">-- Selecione --</option>
                         <option value="01">Cônjuge</option>
-                        <option value="02">Companheiro(a) com o(a) qual tenha filho ou viva há mais de 5 (cinco) anos
+                        <option value="02">Companheiro(a) com o(a) qual tenha filho ou viva há mais de 5 (cinco)
+                            anos
                             ou
                             possua Declaração de União Estável
                         </option>
                         <option value="03">Filho(a) ou enteado(a)</option>
-                        <option value="04">Filho(a) ou enteado(a) universitário(a) ou cursando escola técnica de 2o
+                        <option value="04">Filho(a) ou enteado(a) universitário(a) ou cursando escola técnica de
+                            2o
                             grau,
                             até 24 (vinte e quatro) anos
                         </option>
-                        <option value="06">Irmão(ã), neto(a) ou bisneto(a) sem arrimo dos pais, do(a) qual detenha a
+                        <option value="06">Irmão(ã), neto(a) ou bisneto(a) sem arrimo dos pais, do(a) qual detenha
+                            a
                             guarda judicial
                         </option>
                         <option value="09">Pais, avós e bisavós</option>
@@ -471,20 +481,20 @@
                 </div>
                 <div class="form-group">
                     <label for="nmDep">Nome Completo:</label>
-                    <input id="nmDep" name="nmDep" class="form-control" maxlength="70"
+                    <input id="nmDep" name="nmDep[]" class="form-control" maxlength="70"
                            style="text-transform: uppercase">
                 </div>
                 <div class="form-group">
                     <label for="dep_dtNascto">Data de Nascimento:</label>
-                    <input type="date" id="dep_dtNascto" name="dep_dtNascto" class="form-control">
+                    <input type="date" id="dep_dtNascto" name="dep_dtNascto[]" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="cpfDep">CPF:</label>
-                    <input id="cpfDep" name="cpfDep" class="form-control" onblur="TestaCPF(this)">
+                    <input id="cpfDep" name="cpfDep[]" class="form-control" onblur="TestaCPF(this)">
                 </div>
                 <div class="form-group">
                     <label for="depIRRF">Dependente IRRF?</label>
-                    <select id="depIRRF" name="depIRRF" class="form-control">
+                    <select id="depIRRF" name="depIRRF[]" class="form-control">
                         <option value="">-- Selecione --</option>
                         <option value="S">Sim</option>
                         <option value="N">Não</option>
@@ -492,7 +502,7 @@
                 </div>
                 <div class="form-group">
                     <label for="depSF">Dependente Salário-Família?</label>
-                    <select id="depSF" name="depSF" class="form-control">
+                    <select id="depSF" name="depSF[]" class="form-control">
                         <option value="">-- Selecione --</option>
                         <option value="S">Sim</option>
                         <option value="N">Não</option>
@@ -500,16 +510,13 @@
                 </div>
                 <div class="form-group">
                     <label for="incTrab">Incapacidade física ou mental para o trabalho?</label>
-                    <select id="incTrab" name="incTrab" class="form-control">
+                    <select id="incTrab" name="incTrab[]" class="form-control">
                         <option value="">-- Selecione --</option>
                         <option value="N">Não</option>
                         <option value="S">Sim</option>
                     </select>
                 </div>
             </div>
-
-            <a href="#" data-action="add">Adicionar</a>
-            <a href="#" data-action="delete">Remover</a>
         </div>
 
         {# Informações de Aposentadoria #}
