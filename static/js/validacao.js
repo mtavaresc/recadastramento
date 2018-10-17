@@ -75,9 +75,9 @@ $(document).ready(function () {
                         //Atualiza os campos com os valores da consulta.
                         $("#end_uf").val(dados.uf);
 
-                        $("#end_codMunic option").filter(function () {
-                            return this.text === dados.localidade;
-                        }).attr('selected', true);
+                        // $("#end_codMunic option").filter(function () {
+                        //     return this.text === dados.localidade;
+                        // }).attr('selected', true);
 
                         $("#tpLograd option").filter(function () {
                             return this.text === (dados.logradouro).split(" ")[0];
