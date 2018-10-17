@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
 
-os.environ["NLS_LANG"] = "SPANISH_SPAIN.UTF8"
+os.environ["NLS_LANG"] = "AMERICAN_AMERICA.WE8ISO8859P1"
 
 app = Flask(__name__)
 
