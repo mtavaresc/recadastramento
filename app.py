@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 # Native
 from datetime import date
 # External
@@ -116,19 +116,22 @@ def recadastrar(matricula):
         db.session.commit()
 
         # Dependetes
-        tp_dep = request.form.get("tpDep")
-        nm_dep = request.form.get("nmDep")
-        dep_dt_nascto = None if request.form.get("dep_dtNascto") is "" else func.to_date(request.form.get("dep_dtNascto"), 'YYYY-MM-DD')
-        cpf_dep = request.form.get("cpfDep")
-        cpf_dep = "".join(c for c in str(cpf_dep) if c not in ".-")
-        dep_irrf = request.form.get("depIRRF")
-        dep_sf = request.form.get("depSF")
-        inc_trab = request.form.get("incTrab")
+        tp_dep = request.form.getlist("tpDep[]")
+        nm_dep = request.form.getlist("nmDep[]")
+        dep_dt_nascto = request.form.getlist("dep_dtNascto[]")
+        cpf_dep = request.form.getlist("cpfDep[]")
+        dep_irrf = request.form.getlist("depIRRF[]")
+        dep_sf = request.form.getlist("depSF[]")
+        inc_trab = request.form.getlist("incTrab[]")
 
-        if cpf_dep is not None:
-            d = Dependentes(matricula, tp_dep, nm_dep, dep_dt_nascto, cpf_dep, dep_irrf, dep_sf, inc_trab)
-            db.session.merge(d)
-            db.session.commit()
+        if request.form.get("showDep") == "on":
+            for i in range(len(tp_dep)):
+                dtnascimento = func.to_date(dep_dt_nascto[i], 'YYYY-MM-DD')
+                cpf = "".join(c for c in str(cpf_dep[i]) if c not in ".-")
+
+                d = Dependentes(matricula, tp_dep[i], nm_dep[i], dtnascimento, cpf, dep_irrf[i], dep_sf[i], inc_trab[i])
+                db.session.merge(d)
+                db.session.commit()
 
         return render_template("submit.html", protocolo=protocolo)
     else:

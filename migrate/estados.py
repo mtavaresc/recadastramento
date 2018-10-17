@@ -1,4 +1,5 @@
-from _model import Estados
+# coding=utf-8
+from model import Estados
 
 
 def migrate_estados(db):

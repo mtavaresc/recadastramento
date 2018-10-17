@@ -1,4 +1,5 @@
-from _model import Municipios
+# coding=utf-8
+from model import Municipios
 
 
 def migrate_municipios(db):

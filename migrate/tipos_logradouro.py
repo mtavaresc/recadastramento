@@ -1,4 +1,5 @@
-from _model import TiposLogradouro
+# coding=utf-8
+from model import TiposLogradouro
 
 
 def migrate_tipos_logradouro(db):

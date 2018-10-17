@@ -1,4 +1,5 @@
-from _model import Bairros
+# -*- coding: utf-8 -*-
+from model import Bairros
 
 
 def migrate_bairros(db):
