@@ -29,7 +29,7 @@ def auth():
     return render_template("auth.html")
 
 
-@app.route("/<matricula>", methods=["GET", "POST"])
+@app.route("/32<matricula>.8T", methods=["GET", "POST"])
 def recadastrar(matricula):
     if request.method == "POST":
         # Trabalhador
