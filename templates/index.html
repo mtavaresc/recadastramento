@@ -32,6 +32,16 @@
             });
         });
 
+        $(document).ready(function () {
+            $('[id^=nrLograd]').keypress(validateNumber);
+        });
+
+        function validateNumber(event) {
+            let key = window.event ? event.keyCode : event.which;
+            if (event.keyCode === 8 || event.keyCode === 46) {
+                return true;
+            } else return !(key < 48 || key > 57);
+        }
     </script>
 <body>
 <div class="container">
@@ -325,7 +335,7 @@
         </div>
         <div class="form-group">
             <label for="end_uf">Estado:</label>
-            <select id="end_uf" name="end_uf" class="form-control" readonly>
+            <select id="end_uf" name="end_uf" class="form-control">
                 <option value="">-- Selecione --</option>
                 {% for x in estados %}
                     <option value="{{ x }}">{{ estados[x] }}</option>
@@ -334,7 +344,7 @@
         </div>
         <div class="form-group">
             <label for="end_codMunic">Município:</label>
-            <select id="end_codMunic" name="end_codMunic" class="form-control" readonly>
+            <select id="end_codMunic" name="end_codMunic" class="form-control">
                 <option value="">-- Selecione --</option>
                 {% for x in municipios %}
                     <option value="{{ x }}">{{ municipios[x] }}</option>
@@ -343,16 +353,11 @@
         </div>
         <div class="form-group">
             <label for="bairro">Bairro:</label>
-            <select id="bairro" name="bairro" class="form-control" readonly>
-                <option value="">-- Selecione --</option>
-                {% for x in bairros %}
-                    <option value="{{ x }}">{{ x }}</option>
-                {% endfor %}
-            </select>
+            <input id="bairro" name="bairro" class="form-control" maxlength="80" style="text-transform: uppercase">
         </div>
         <div class="form-group">
             <label for="tpLograd">Tipo Logradouro:</label>
-            <select id="tpLograd" name="tpLograd" class="form-control" readonly>
+            <select id="tpLograd" name="tpLograd" class="form-control">
                 <option value="">-- Selecione --</option>
                 <option value="AL">Alameda</option>
                 <option value="AV">Avenida</option>
@@ -380,13 +385,12 @@
         </div>
         <div class="form-group">
             <label for="dscLograd">Logradouro:</label>
-            <input id="dscLograd" name="dscLograd" class="form-control" maxlength="80" style="text-transform: uppercase"
-                   readonly>
+            <input id="dscLograd" name="dscLograd" class="form-control" maxlength="80"
+                   style="text-transform: uppercase">
         </div>
         <div class="form-group">
             <label for="nrLograd">Nº Logradouro:</label>
-            <input id="nrLograd" name="nrLograd" class="form-control" pattern="^[0-9]*$"
-                   title="Preencher apenas com Números" maxlength="10">
+            <input id="nrLograd" name="nrLograd" class="form-control" maxlength="10" required>
             <small id="nrLogradHelp" class="form-text text-muted">Em caso de sem número, colocar 0.</small>
         </div>
         <div class="form-group">

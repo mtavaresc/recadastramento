@@ -75,17 +75,17 @@ $(document).ready(function () {
                         //Atualiza os campos com os valores da consulta.
                         $("#end_uf").val(dados.uf);
 
-                        // $("#end_codMunic option").filter(function () {
-                        //     return this.text === dados.localidade;
-                        // }).attr('selected', true);
+                        $("#end_codMunic option").filter(function () {
+                            return this.text === dados.localidade;
+                        }).attr('selected', true);
 
                         $("#tpLograd option").filter(function () {
                             return this.text === (dados.logradouro).split(" ")[0];
                         }).attr('selected', true);
 
-                        $("#dscLograd").val((dados.logradouro).replace((dados.logradouro).split(" ")[0], "").trim());
-                        // $("#nrLograd").val(dados.complemento);
                         $("#bairro").val(dados.bairro);
+
+                        $("#dscLograd").val((dados.logradouro).replace((dados.logradouro).split(" ")[0], "").trim());
                     } //end if.
                     else {
                         //CEP pesquisado não foi encontrado.
