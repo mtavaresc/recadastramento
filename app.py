@@ -10,7 +10,7 @@ from model import *
 
 
 @app.errorhandler(404)
-def page_not_found(e):
+def page_not_found():
     # note that we set the 404 status explicitly
     return render_template('404.html'), 404
 
@@ -32,7 +32,7 @@ def auth():
         else:
             return render_template("noauth.html")
 
-    return render_template("auth.html")
+    return render_template("login.html")
 
 
 @app.route("/32<matricula>.8T", methods=["GET", "POST"])
@@ -130,14 +130,13 @@ def recadastrar(matricula):
         dep_sf = request.form.getlist("depSF[]")
         inc_trab = request.form.getlist("incTrab[]")
 
-        if request.form.get("showDep") == "on":
-            for i in range(len(tp_dep)):
-                dtnascimento = func.to_date(dep_dt_nascto[i], 'YYYY-MM-DD')
-                cpf = "".join(c for c in str(cpf_dep[i]) if c not in ".-")
+        for i in range(len(tp_dep)):
+            dtnascimento = func.to_date(dep_dt_nascto[i], 'YYYY-MM-DD')
+            cpf = "".join(c for c in str(cpf_dep[i]) if c not in ".-")
 
-                d = Dependentes(matricula, tp_dep[i], nm_dep[i], dtnascimento, cpf, dep_irrf[i], dep_sf[i], inc_trab[i])
-                db.session.merge(d)
-                db.session.commit()
+            d = Dependentes(matricula, tp_dep[i], nm_dep[i], dtnascimento, cpf, dep_irrf[i], dep_sf[i], inc_trab[i])
+            db.session.merge(d)
+            db.session.commit()
 
         return render_template("submit.html", protocolo=protocolo)
     else:
