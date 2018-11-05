@@ -11,12 +11,24 @@ class Pegaso(db.Model):
     dtnasc = db.Column(db.Date)
 
 
-class FormLogin(db.Model):
+class User(db.Model):
     __tablename__ = "FORM_LOGIN"
 
     matricula = db.Column(db.CHAR(6), primary_key=True)
     nome = db.Column(db.String(70))
     senha = db.Column(db.String(7))
+
+    def __repr__(self):
+        return '<User %r>' % self.matricula
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
 
 
 class Trabalhador(db.Model):
