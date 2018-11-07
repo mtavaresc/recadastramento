@@ -35,7 +35,7 @@ def login():
         return render_template("401.html")
 
 
-@app.route("/logout")
+@app.route("/logout/<page>!<protocolo>")
 def logout(page, protocolo):
     session.clear()
     return render_template(page + ".html", protocolo=protocolo)
@@ -44,7 +44,7 @@ def logout(page, protocolo):
 @app.route("/protected", methods=["GET", "POST"])
 def protected():
     if not session.get("logged_in"):
-        return render_template("login.html")
+        return redirect(url_for("login"))
 
     matricula = session.get("matricula")
 
