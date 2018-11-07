@@ -17,6 +17,7 @@ class User(db.Model):
     matricula = db.Column(db.CHAR(6), primary_key=True)
     nome = db.Column(db.String(70))
     senha = db.Column(db.String(7))
+    adm = db.Column(db.Integer)
 
     def __repr__(self):
         return '<User %r>' % self.matricula

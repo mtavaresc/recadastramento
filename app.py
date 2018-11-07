@@ -12,26 +12,37 @@ from model import *
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html'), 404
+    return render_template("404.html"), 404
 
 
 @app.errorhandler(401)
 def unauthorized_access(e):
-    return render_template('401.html'), 401
+    return render_template("401.html"), 401
+
+
+@app.route("/admin", methods=["GET", "POST"])
+def admin():
+    if not session.get("logged_in"):
+        return redirect(url_for("login"))
+
+    matricula = session.get("matricula")
 
 
 @app.route("/", methods=["GET", "POST"])
 def login():
     try:
-        if request.method == 'GET':
+        if request.method == "GET":
             return render_template("login.html")
-        elif request.method == 'POST':
+        elif request.method == "POST":
             data = User.query.filter_by(matricula=request.form.get("matricula"),
                                         senha=request.form.get("senha")).first()
             if data is not None:
-                session['logged_in'] = True
-                session['matricula'] = data.matricula
-                return redirect(url_for("protected"))
+                session["logged_in"] = True
+                session["matricula"] = data.matricula
+                if data.adm == 1:
+                    return redirect(url_for("admin"))
+                else:
+                    return redirect(url_for("protected"))
             else:
                 return render_template("noauth.html")
     except AttributeError:
@@ -93,7 +104,7 @@ def protected():
         ind_pri_empr = request.form.get("indPriEmpr")
         nm_soc = request.form.get("nmSoc")
         # Nascimento
-        dt_nascto = func.to_date(request.form.get("dtNascto"), 'YYYY-MM-DD')
+        dt_nascto = func.to_date(request.form.get("dtNascto"), "YYYY-MM-DD")
         cod_munic = request.form.get("codMunic")
         uf = request.form.get("uf")
         pais_nascto = request.form.get("paisNascto")
@@ -107,23 +118,23 @@ def protected():
         # RG
         nr_rg = request.form.get("nrRg")
         rg_orgao_emissor = request.form.get("rg_orgaoEmissor")
-        rg_dt_exped = func.to_date(request.form.get("rg_dtExped"), 'YYYY-MM-DD')
+        rg_dt_exped = func.to_date(request.form.get("rg_dtExped"), "YYYY-MM-DD")
         # OC
         nr_oc = request.form.get("nrOc")
         oc_orgao_emissor = request.form.get("oc_orgaoEmissor")
         oc_dt_exped = None if request.form.get("oc_dtExped") is "" else func.to_date(request.form.get("oc_dtExped"),
-                                                                                     'YYYY-MM-DD')
+                                                                                     "YYYY-MM-DD")
         oc_dt_valid = None if request.form.get("oc_dtValid") is "" else func.to_date(request.form.get("oc_dtValid"),
-                                                                                     'YYYY-MM-DD')
+                                                                                     "YYYY-MM-DD")
         # CNH
         nr_reg_cnh = request.form.get("nrRegCnh")
         cnh_dt_exped = None if request.form.get("cnh_dtExped") is "" else func.to_date(request.form.get("cnh_dtExped"),
-                                                                                       'YYYY-MM-DD')
+                                                                                       "YYYY-MM-DD")
         uf_cnh = request.form.get("ufCnh")
         cnh_dt_valid = None if request.form.get("cnh_dtValid") is "" else func.to_date(request.form.get("cnh_dtValid"),
-                                                                                       'YYYY-MM-DD')
+                                                                                       "YYYY-MM-DD")
         dt_pri_hab = None if request.form.get("dtPriHab") is "" else func.to_date(request.form.get("dtPriHab"),
-                                                                                  'YYYY-MM-DD')
+                                                                                  "YYYY-MM-DD")
         categoria_cnh = request.form.get("categoriaCnh")
         # Endereco - Brasil
         tp_lograd = request.form.get("tpLograd")
@@ -177,7 +188,7 @@ def protected():
 
         try:
             for i in range(len(tp_dep)):
-                dtnascimento = func.to_date(dep_dt_nascto[i], 'YYYY-MM-DD')
+                dtnascimento = func.to_date(dep_dt_nascto[i], "YYYY-MM-DD")
                 cpf = "".join(c for c in str(cpf_dep[i]) if c not in ".-")
 
                 d = Dependentes(matricula, tp_dep[i], nm_dep[i], dtnascimento, cpf, dep_irrf[i], dep_sf[i], inc_trab[i])
