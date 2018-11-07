@@ -25,7 +25,8 @@ def admin():
     if not session.get("logged_in"):
         return redirect(url_for("login"))
 
-    matricula = session.get("matricula")
+    # matricula = session.get("matricula")
+    return render_template("admin/index.html")
 
 
 @app.route("/", methods=["GET", "POST"])
