@@ -6,6 +6,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        window.setTimeout(function () {
+            window.location.href = "{{ url_for('login') }}";
+        }, 250000);
+
+    </script>
 </head>
 <body>
 
@@ -137,20 +143,20 @@
             {# Se pais nascimento selecionado = "Brasil" #}
             <div class="form-group">
                 <label for="uf">Estado:</label>
-                <select id="uf" name="uf" class="form-control" value="{{ t.UF }}">
+                <select id="uf" name="uf" class="form-control">
+                    {% for x in estados %}
+                        <option value="{{ x }}" {% if x == t.uf %} selected {% endif %}>{{ estados[x] }}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="form-group">
                 <label for="codMunic">Município:</label>
-                <select id="codMunic" name="codMunic" class="form-control" value="{{ t.codMunic }}">
+                <select id="codMunic" name="codMunic" class="form-control">
+                    {% for x in municipios %}
+                        <option value="{{ x }}" {% if x == t.codMunic %} selected {% endif %}>{{ municipios[x] }}</option>
+                    {% endfor %}
                 </select>
             </div>
-            <script charset="utf-8">
-                new dgCidadesEstados({
-                    cidade: document.getElementById('codMunic'),
-                    estado: document.getElementById('uf')
-                })
-            </script>
             <div class="form-group">
                 <label for="nmMae">Nome Mãe:</label>
                 <input id="nmMae" name="nmMae" class="form-control" pattern="^[a-zA-Z\s]*$" maxlength="70"
@@ -164,28 +170,30 @@
             </div>
 
             {# CTPS #}
-            <div class="page-header">
-                <h3>Informações de CTPS</h3>
-            </div>
-            <div class="form-group">
-                <label for="nrCtps">Nº CTPS:</label>
-                <input id="nrCtps" name="nrCtps" class="form-control" title="Preencher somente com Números"
-                       maxlength="11" value="{{ t.nrCtps if t.nrCtps != None }}">
-            </div>
-            <div class="form-group">
-                <label for="serieCtps">Série CTPS:</label>
-                <input id="serieCtps" name="serieCtps" class="form-control" title="Preencher somente com Números"
-                       maxlength="5" value="{{ t.serieCtps if t.serieCtps != None }}">
-            </div>
-            <div class="form-group">
-                <label for="ufCtps">UF CTPS:</label>
-                <select id="ufCtps" name="ufCtps" class="form-control">
-                    <option value="">-- Selecione --</option>
-                    {% for x in estados %}
-                        <option value="{{ x }}" {% if x == t.ufCtps %} selected {% endif %}>{{ x }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+            {% if t.nrCtps != None %}
+                <div class="page-header">
+                    <h3>Informações de CTPS</h3>
+                </div>
+                <div class="form-group">
+                    <label for="nrCtps">Nº CTPS:</label>
+                    <input id="nrCtps" name="nrCtps" class="form-control" title="Preencher somente com Números"
+                           maxlength="11" value="{{ t.nrCtps if t.nrCtps != None }}">
+                </div>
+                <div class="form-group">
+                    <label for="serieCtps">Série CTPS:</label>
+                    <input id="serieCtps" name="serieCtps" class="form-control" title="Preencher somente com Números"
+                           maxlength="5" value="{{ t.serieCtps if t.serieCtps != None }}">
+                </div>
+                <div class="form-group">
+                    <label for="ufCtps">UF CTPS:</label>
+                    <select id="ufCtps" name="ufCtps" class="form-control">
+                        <option value="">-- Selecione --</option>
+                        {% for x in estados %}
+                            <option value="{{ x }}" {% if x == t.ufCtps %} selected {% endif %}>{{ x }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endif %}
 
             {# RG #}
             <div class="page-header">
@@ -209,10 +217,11 @@
             </div>
 
             {# OC #}
-            <div class="page-header">
-                <h3>Informações de Órgão de Classe</h3>
-            </div>
             {% if t.nrOc != None %}
+
+                <div class="page-header">
+                    <h3>Informações de Órgão de Classe</h3>
+                </div>
                 <br>
                 <div class="well">
                     <div class="form-group">
@@ -241,10 +250,11 @@
             {% endif %}
 
             {# CNH #}
-            <div class="page-header">
-                <h3>Informações de CNH</h3>
-            </div>
             {% if t.nrRegCnh != None %}
+
+                <div class="page-header">
+                    <h3>Informações de CNH</h3>
+                </div>
                 <br>
                 <div class="well">
                     <div class="form-group">
@@ -302,7 +312,8 @@
                 <label for="paisResid">País Residência:</label>
                 <select id="paisResid" name="paisResid" class="form-control">
                     {% for x in paises %}
-                        <option value="{{ x }}" {% if x|int == t.paisResid|int %} selected {% endif %}>{{ paises[x] }}</option>
+                        <option value="{{ x }}" {% if paises[x] == "Brasil" %}
+                                selected {% endif %}>{{ paises[x] }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -439,84 +450,89 @@
             </div>
 
             {# Informações de Dependentes #}
-            <div class="page-header">
-                <h3>Informações de Dependentes</h3>
-            </div>
-            {% for d in dependentes %}
-                <br>
-                <div class="well" id="multi">
-                    <div class="form-group">
-                        <label for="tpDep">Tipo de dependente:</label>
-                        <select id="tpDep" name="tpDep[]" class="form-control">
-                            <option value="">-- Selecione --</option>
-                            <option value="01" {% if d.tpDep == "01" %} selected {% endif %}>Cônjuge</option>
-                            <option value="02" {% if d.tpDep == "02" %} selected {% endif %}>Companheiro(a) com o(a)
-                                qual tenha filho ou viva há mais de 5 (cinco)
-                                anos ou possua Declaração de União Estável
-                            </option>
-                            <option value="03" {% if d.tpDep == "03" %} selected {% endif %}>Filho(a) ou enteado(a)
-                            </option>
-                            <option value="04" {% if d.tpDep == "04" %} selected {% endif %}>Filho(a) ou enteado(a)
-                                universitário(a) ou cursando escola técnica de
-                                2o grau, até 24 (vinte e quatro) anos
-                            </option>
-                            <option value="06" {% if d.tpDep == "06" %} selected {% endif %}>Irmão(ã), neto(a) ou
-                                bisneto(a) sem arrimo dos pais, do(a) qual detenha
-                                a guarda judicial
-                            </option>
-                            <option value="09" {% if d.tpDep == "09" %} selected {% endif %}>Pais, avós e bisavós
-                            </option>
-                            <option value="10" {% if d.tpDep == "10" %} selected {% endif %}>Menor pobre do qual detenha
-                                a guarda judicial
-                            </option>
-                            <option value="11" {% if d.tpDep == "11" %} selected {% endif %}>A pessoa absolutamente
-                                incapaz, da qual seja tutor ou curador
-                            </option>
-                            <option value="12" {% if d.tpDep == "12" %} selected {% endif %}>Ex-cônjuge</option>
-                            <option value="99" {% if d.tpDep == "99" %} selected {% endif %}>Agregado/Outros</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="nmDep">Nome Completo:</label>
-                        <input id="nmDep" name="nmDep[]" class="form-control" maxlength="70"
-                               style="text-transform: uppercase" value="{{ d.nmDep }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="dep_dtNascto">Data de Nascimento:</label>
-                        <input type="date" id="dep_dtNascto" name="dep_dtNascto[]" class="form-control"
-                               value="{{ d.dep_dtNascto }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="cpfDep">CPF:</label>
-                        <input id="cpfDep" name="cpfDep[]" class="form-control" onblur="TestaCPF(this)"
-                               value="{{ d.cpfDep }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="depIRRF">Dependente IRRF?</label>
-                        <select id="depIRRF" name="depIRRF[]" class="form-control">
-                            <option value="">-- Selecione --</option>
-                            <option value="S" {% if d.depIRRF == "S" %} selected {% endif %}>Sim</option>
-                            <option value="N" {% if d.depIRRF == "N" %} selected {% endif %}>Não</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="depSF">Dependente Salário-Família?</label>
-                        <select id="depSF" name="depSF[]" class="form-control">
-                            <option value="">-- Selecione --</option>
-                            <option value="S" {% if d.depSF == "S" %} selected {% endif %}>Sim</option>
-                            <option value="N" {% if d.depSF == "N" %} selected {% endif %}>Não</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="incTrab">Incapacidade física ou mental para o trabalho?</label>
-                        <select id="incTrab" name="incTrab[]" class="form-control">
-                            <option value="">-- Selecione --</option>
-                            <option value="N" {% if d.incTrab == "N" %} selected {% endif %}>Não</option>
-                            <option value="S" {% if d.incTrab == "S" %} selected {% endif %}>Sim</option>
-                        </select>
-                    </div>
+            {% if dependentes != None %}
+
+                <div class="page-header">
+                    <h3>Informações de Dependentes</h3>
                 </div>
-            {% endfor %}
+                {% for d in dependentes %}
+                    <br>
+                    <div class="well" id="multi">
+                        <div class="form-group">
+                            <label for="tpDep">Tipo de dependente:</label>
+                            <select id="tpDep" name="tpDep[]" class="form-control">
+                                <option value="">-- Selecione --</option>
+                                <option value="01" {% if d.tpDep == "01" %} selected {% endif %}>Cônjuge</option>
+                                <option value="02" {% if d.tpDep == "02" %} selected {% endif %}>Companheiro(a) com o(a)
+                                    qual tenha filho ou viva há mais de 5 (cinco)
+                                    anos ou possua Declaração de União Estável
+                                </option>
+                                <option value="03" {% if d.tpDep == "03" %} selected {% endif %}>Filho(a) ou enteado(a)
+                                </option>
+                                <option value="04" {% if d.tpDep == "04" %} selected {% endif %}>Filho(a) ou enteado(a)
+                                    universitário(a) ou cursando escola técnica de
+                                    2o grau, até 24 (vinte e quatro) anos
+                                </option>
+                                <option value="06" {% if d.tpDep == "06" %} selected {% endif %}>Irmão(ã), neto(a) ou
+                                    bisneto(a) sem arrimo dos pais, do(a) qual detenha
+                                    a guarda judicial
+                                </option>
+                                <option value="09" {% if d.tpDep == "09" %} selected {% endif %}>Pais, avós e bisavós
+                                </option>
+                                <option value="10" {% if d.tpDep == "10" %} selected {% endif %}>Menor pobre do qual
+                                    detenha
+                                    a guarda judicial
+                                </option>
+                                <option value="11" {% if d.tpDep == "11" %} selected {% endif %}>A pessoa absolutamente
+                                    incapaz, da qual seja tutor ou curador
+                                </option>
+                                <option value="12" {% if d.tpDep == "12" %} selected {% endif %}>Ex-cônjuge</option>
+                                <option value="99" {% if d.tpDep == "99" %} selected {% endif %}>Agregado/Outros
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="nmDep">Nome Completo:</label>
+                            <input id="nmDep" name="nmDep[]" class="form-control" maxlength="70"
+                                   style="text-transform: uppercase" value="{{ d.nmDep }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="dep_dtNascto">Data de Nascimento:</label>
+                            <input type="date" id="dep_dtNascto" name="dep_dtNascto[]" class="form-control"
+                                   value="{{ d.dep_dtNascto }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="cpfDep">CPF:</label>
+                            <input id="cpfDep" name="cpfDep[]" class="form-control" onblur="TestaCPF(this)"
+                                   value="{{ d.cpfDep }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="depIRRF">Dependente IRRF?</label>
+                            <select id="depIRRF" name="depIRRF[]" class="form-control">
+                                <option value="">-- Selecione --</option>
+                                <option value="S" {% if d.depIRRF == "S" %} selected {% endif %}>Sim</option>
+                                <option value="N" {% if d.depIRRF == "N" %} selected {% endif %}>Não</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="depSF">Dependente Salário-Família?</label>
+                            <select id="depSF" name="depSF[]" class="form-control">
+                                <option value="">-- Selecione --</option>
+                                <option value="S" {% if d.depSF == "S" %} selected {% endif %}>Sim</option>
+                                <option value="N" {% if d.depSF == "N" %} selected {% endif %}>Não</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="incTrab">Incapacidade física ou mental para o trabalho?</label>
+                            <select id="incTrab" name="incTrab[]" class="form-control">
+                                <option value="">-- Selecione --</option>
+                                <option value="N" {% if d.incTrab == "N" %} selected {% endif %}>Não</option>
+                                <option value="S" {% if d.incTrab == "S" %} selected {% endif %}>Sim</option>
+                            </select>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
 
             {# Informações de Aposentadoria #}
             <div class="page-header">

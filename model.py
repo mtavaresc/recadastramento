@@ -21,15 +21,6 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.matricula
 
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
-
 
 class Trabalhador(db.Model):
     __tablename__ = "TRABALHADOR"
@@ -91,8 +82,6 @@ class Trabalhador(db.Model):
     defReadap = db.Column(db.String(1))
     infoCota = db.Column(db.String(1))
     observacao = db.Column(db.String(255))
-    # Dependente
-    qtdDep = db.Column(db.Integer)
     # Aposentadoria
     trabAposent = db.Column(db.String(1))
     # Contato
@@ -108,7 +97,7 @@ class Trabalhador(db.Model):
                  nr_rg, rg_orgao_emissor, rg_dt_exped, nr_oc, oc_orgao_emissor, oc_dt_exped, oc_dt_valid, nr_reg_cnh,
                  cnh_dt_exped, uf_cnh, cnh_dt_valid, dt_pri_hab, categoria_cnh, tp_lograd, dsc_lograd, nr_lograd,
                  complemento, bairro, cep, end_cod_munic, end_uf, def_fisica, def_visual, def_auditiva, def_mental,
-                 def_intelectual, def_readap, info_cota, observacao, qtd_dep, trab_aposent, fone_princ, fone_alternat,
+                 def_intelectual, def_readap, info_cota, observacao, trab_aposent, fone_princ, fone_alternat,
                  email_princ, email_alternat, protocolo):
         self.matricula = matricula
         # Trabalhador
@@ -167,8 +156,6 @@ class Trabalhador(db.Model):
         self.defReadap = def_readap
         self.infoCota = info_cota
         self.observacao = observacao
-        # Dependente
-        self.qtdDep = qtd_dep
         # Aposentadoria
         self.trabAposent = trab_aposent
         # Contato

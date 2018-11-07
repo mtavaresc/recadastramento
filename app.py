@@ -4,6 +4,7 @@ from datetime import date
 # External
 from flask import render_template, request, redirect, url_for, session
 from sqlalchemy import func
+from sqlalchemy.exc import IntegrityError
 # Owner
 from base import app
 from model import *
@@ -21,17 +22,19 @@ def unauthorized_access(e):
 
 @app.route("/", methods=["GET", "POST"])
 def login():
-    if request.method == 'GET':
-        return render_template("login.html")
-    elif request.method == 'POST':
-        data = User.query.filter_by(matricula=request.form.get("matricula"), senha=request.form.get("senha")).first()
-        if data is not None:
-            session['logged_in'] = True
-            session['matricula'] = data.matricula
-            return redirect(url_for("protected"))
-        else:
-            return render_template("noauth.html")
-    else:
+    try:
+        if request.method == 'GET':
+            return render_template("login.html")
+        elif request.method == 'POST':
+            data = User.query.filter_by(matricula=request.form.get("matricula"),
+                                        senha=request.form.get("senha")).first()
+            if data is not None:
+                session['logged_in'] = True
+                session['matricula'] = data.matricula
+                return redirect(url_for("protected"))
+            else:
+                return render_template("noauth.html")
+    except AttributeError:
         return render_template("401.html")
 
 
@@ -42,11 +45,32 @@ def logout(page, protocolo):
         if page == "reject":
             trabalhador = Trabalhador.query.filter_by(protocolo=protocolo).first()
             dependentes = Dependentes.query.filter_by(matrTab=trabalhador.matricula).all()
-            return render_template(page + "2.html", t=trabalhador, dependentes=dependentes)
+            # Selecionando paises
+            cod_paises = [row.codigo for row in Paises.query.all()]
+            nome_paises = [row.nome for row in Paises.query.all()]
+            paises = dict(zip(cod_paises, nome_paises))
+            # Selecionando estados
+            uf_estados = [row.uf for row in Estados.query.all()]
+            nome_estados = [row.nome for row in Estados.query.all()]
+            estados = dict(zip(uf_estados, nome_estados))
+            # Selecionando municipios
+            cod_municipio = [row.codigo for row in Municipios.query.all()]
+            nome_municipio = [row.nome for row in Municipios.query.all()]
+            municipios = dict(zip(cod_municipio, nome_municipio))
+            # Selecionando tipos logradouro
+            cod_tl = [row.codigo for row in TiposLogradouro.query.all()]
+            nome_tl = [row.nome for row in TiposLogradouro.query.all()]
+            tipos_logradouro = dict(zip(cod_tl, nome_tl))
+            # Selecionando bairros
+            bairros = [row.nome for row in db.session.query(Bairros.nome).distinct().order_by(Bairros.nome).all()]
+
+            return render_template(page + "2.html", t=trabalhador, dependentes=dependentes, paises=paises,
+                                   estados=estados, municipios=municipios, tl=tipos_logradouro, bairros=bairros)
         else:
             return render_template(page + ".html", protocolo=protocolo)
     except AttributeError:
         return render_template("401.html")
+
 
 @app.route("/protected", methods=["GET", "POST"])
 def protected():
@@ -120,8 +144,6 @@ def protected():
         def_readap = request.form.get("defReadap")
         info_cota = request.form.get("infoCota")
         observacao = request.form.get("observacao")
-        # Dependetes
-        qtd_dep = request.form.get("qtdDep")
         # Aposentadoria
         trab_aposent = request.form.get("trabAposent")
         # Contatos
@@ -140,7 +162,7 @@ def protected():
                         oc_dt_valid, nr_reg_cnh, cnh_dt_exped, uf_cnh, cnh_dt_valid, dt_pri_hab, categoria_cnh,
                         tp_lograd, dsc_lograd, nr_lograd, complemento, bairro, cep, end_cod_munic, end_uf, def_fisica,
                         def_visual, def_auditiva, def_mental, def_intelectual, def_readap, info_cota, observacao,
-                        qtd_dep, trab_aposent, fone_princ, fone_alternat, email_princ, email_alternat, protocolo)
+                        trab_aposent, fone_princ, fone_alternat, email_princ, email_alternat, protocolo)
         db.session.merge(c)
         db.session.commit()
 
@@ -153,14 +175,16 @@ def protected():
         dep_sf = request.form.getlist("depSF[]")
         inc_trab = request.form.getlist("incTrab[]")
 
-        for i in range(len(tp_dep)):
-            dtnascimento = func.to_date(dep_dt_nascto[i], 'YYYY-MM-DD')
-            cpf = "".join(c for c in str(cpf_dep[i]) if c not in ".-")
+        try:
+            for i in range(len(tp_dep)):
+                dtnascimento = func.to_date(dep_dt_nascto[i], 'YYYY-MM-DD')
+                cpf = "".join(c for c in str(cpf_dep[i]) if c not in ".-")
 
-            d = Dependentes(matricula, tp_dep[i], nm_dep[i], dtnascimento, cpf, dep_irrf[i], dep_sf[i], inc_trab[i])
-            db.session.merge(d)
-            db.session.commit()
-
+                d = Dependentes(matricula, tp_dep[i], nm_dep[i], dtnascimento, cpf, dep_irrf[i], dep_sf[i], inc_trab[i])
+                db.session.merge(d)
+                db.session.commit()
+        except IntegrityError:
+            pass
         # Logout!
         return redirect(url_for("logout", page="submit", protocolo=protocolo))
     else:
