@@ -38,13 +38,15 @@ def login():
 @app.route("/logout/<page>!<protocolo>")
 def logout(page, protocolo):
     session.clear()
-    if page == "reject":
-        trabalhador = Trabalhador.query.filter_by(protocolo=protocolo).first()
-        dependentes = Dependentes.query.filter_by(matrTab=trabalhador.matricula).all()
-        return render_template(page + "2.html", t=trabalhador, dependentes=dependentes)
-    else:
-        return render_template(page + ".html", protocolo=protocolo)
-
+    try:
+        if page == "reject":
+            trabalhador = Trabalhador.query.filter_by(protocolo=protocolo).first()
+            dependentes = Dependentes.query.filter_by(matrTab=trabalhador.matricula).all()
+            return render_template(page + "2.html", t=trabalhador, dependentes=dependentes)
+        else:
+            return render_template(page + ".html", protocolo=protocolo)
+    except AttributeError:
+        return render_template("401.html")
 
 @app.route("/protected", methods=["GET", "POST"])
 def protected():

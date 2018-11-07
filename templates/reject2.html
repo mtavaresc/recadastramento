@@ -118,7 +118,7 @@
             <div class="form-group">
                 <label for="paisNac">País Nacionalidade:</label>
                 <select id="paisNac" name="paisNac" class="form-control">
-                    
+                    <option value="">-- Selecione --</option>
                     {% for x in paises %}
                         <option value="{{ x }}" {% if x == t.paisNac %} selected {% endif %}>{{ paises[x] }}</option>
                     {% endfor %}
@@ -128,7 +128,7 @@
             <div class="form-group">
                 <label for="paisNascto">País Nascimento:</label>
                 <select id="paisNascto" name="paisNascto" class="form-control">
-                    
+                    <option value="">-- Selecione --</option>
                     {% for x in paises %}
                         <option value="{{ x }}" {% if x == t.paisNascto %} selected {% endif %}>{{ paises[x] }}</option>
                     {% endfor %}
@@ -180,7 +180,7 @@
             <div class="form-group">
                 <label for="ufCtps">UF CTPS:</label>
                 <select id="ufCtps" name="ufCtps" class="form-control">
-                    
+                    <option value="">-- Selecione --</option>
                     {% for x in estados %}
                         <option value="{{ x }}" {% if x == t.ufCtps %} selected {% endif %}>{{ x }}</option>
                     {% endfor %}
@@ -260,7 +260,7 @@
                     <div class="form-group">
                         <label for="ufCnh">UF CNH:</label>
                         <select id="ufCnh" name="ufCnh" class="form-control">
-                            
+                            <option value="">-- Selecione --</option>
                             {% for x in estados %}
                                 <option value="{{ x }}" {% if x == t.ufCnh %} selected {% endif %}>{{ x }}</option>
                             {% endfor %}
@@ -279,7 +279,7 @@
                     <div class="form-group">
                         <label for="categoriaCnh">Categoria CNH:</label>
                         <select id="categoriaCnh" name="categoriaCnh" class="form-control">
-                            
+                            <option value="">-- Selecione --</option>
                             <option {% if t.categoriaCnh == "A" %} selected {% endif %}>A</option>
                             <option {% if t.categoriaCnh == "B" %} selected {% endif %}>B</option>
                             <option {% if t.categoriaCnh == "C" %} selected {% endif %}>C</option>
@@ -314,7 +314,7 @@
             <div class="form-group">
                 <label for="end_uf">Estado:</label>
                 <select id="end_uf" name="end_uf" class="form-control">
-                    
+                    <option value="">-- Selecione --</option>
                     {% for x in estados %}
                         <option value="{{ x }}" {% if x == t.end_uf %} selected {% endif %}>{{ estados[x] }}</option>
                     {% endfor %}
@@ -323,7 +323,7 @@
             <div class="form-group">
                 <label for="end_codMunic">Município:</label>
                 <select id="end_codMunic" name="end_codMunic" class="form-control">
-                    
+                    <option value="">-- Selecione --</option>
                     {% for x in municipios %}
                         <option value="{{ x }}" {% if x == t.end_codMunic %}
                                 selected {% endif %}>{{ municipios[x] }}</option>
@@ -338,7 +338,7 @@
             <div class="form-group">
                 <label for="tpLograd">Tipo Logradouro:</label>
                 <select id="tpLograd" name="tpLograd" class="form-control">
-                    
+                    <option value="">-- Selecione --</option>
                     <option value="AL" {% if t.tpLograd == "AL" %} selected {% endif %}>Alameda</option>
                     <option value="AV" {% if t.tpLograd == "AV" %} selected {% endif %}>Avenida</option>
                     <option value="BAL" {% if t.tpLograd == "BAL" %} selected {% endif %}>Balneário</option>
@@ -448,7 +448,7 @@
                     <div class="form-group">
                         <label for="tpDep">Tipo de dependente:</label>
                         <select id="tpDep" name="tpDep[]" class="form-control">
-                            
+                            <option value="">-- Selecione --</option>
                             <option value="01" {% if d.tpDep == "01" %} selected {% endif %}>Cônjuge</option>
                             <option value="02" {% if d.tpDep == "02" %} selected {% endif %}>Companheiro(a) com o(a)
                                 qual tenha filho ou viva há mais de 5 (cinco)
@@ -494,7 +494,7 @@
                     <div class="form-group">
                         <label for="depIRRF">Dependente IRRF?</label>
                         <select id="depIRRF" name="depIRRF[]" class="form-control">
-                            
+                            <option value="">-- Selecione --</option>
                             <option value="S" {% if d.depIRRF == "S" %} selected {% endif %}>Sim</option>
                             <option value="N" {% if d.depIRRF == "N" %} selected {% endif %}>Não</option>
                         </select>
@@ -502,7 +502,7 @@
                     <div class="form-group">
                         <label for="depSF">Dependente Salário-Família?</label>
                         <select id="depSF" name="depSF[]" class="form-control">
-                            
+                            <option value="">-- Selecione --</option>
                             <option value="S" {% if d.depSF == "S" %} selected {% endif %}>Sim</option>
                             <option value="N" {% if d.depSF == "N" %} selected {% endif %}>Não</option>
                         </select>
@@ -510,7 +510,7 @@
                     <div class="form-group">
                         <label for="incTrab">Incapacidade física ou mental para o trabalho?</label>
                         <select id="incTrab" name="incTrab[]" class="form-control">
-                            
+                            <option value="">-- Selecione --</option>
                             <option value="N" {% if d.incTrab == "N" %} selected {% endif %}>Não</option>
                             <option value="S" {% if d.incTrab == "S" %} selected {% endif %}>Sim</option>
                         </select>
