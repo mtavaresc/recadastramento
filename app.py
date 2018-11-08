@@ -25,14 +25,23 @@ def admin():
     if not session.get("logged_in"):
         return redirect(url_for("login"))
 
-    # matricula = session.get("matricula")
-    return render_template("admin/index.html")
+    adm = db.session.query(User.nome, Trabalhador.protocolo).\
+        outerjoin(Trabalhador, User.matricula == Trabalhador.matricula).\
+        filter(User.matricula == session.get("matricula")).first()
+
+    # Pendente
+    p = db.session.query(Pegaso).filter(Pegaso.matricula.notin_(db.session.query(Trabalhador.matricula))).count()
+    # Realizado
+    r = Trabalhador.query
+
+    return render_template("admin/index.html", adm=adm, pendente=p, realizado=r.count(), data=r)
 
 
 @app.route("/", methods=["GET", "POST"])
 def login():
     try:
         if request.method == "GET":
+            session.clear()
             return render_template("login.html")
         elif request.method == "POST":
             data = User.query.filter_by(matricula=request.form.get("matricula"),
@@ -76,11 +85,12 @@ def logout(page, protocolo):
             # Selecionando bairros
             bairros = [row.nome for row in db.session.query(Bairros.nome).distinct().order_by(Bairros.nome).all()]
 
-            return render_template(page + "2.html", t=trabalhador, dependentes=dependentes, paises=paises,
+            return render_template("{}2.html".format(page), t=trabalhador, dependentes=dependentes, paises=paises,
                                    estados=estados, municipios=municipios, tl=tipos_logradouro, bairros=bairros)
-        else:
-            return render_template(page + ".html", protocolo=protocolo)
-    except AttributeError:
+        elif page == "submit":
+            return render_template("{}.html".format(page), protocolo=protocolo)
+    except AttributeError as e:
+        print(format(e))
         return render_template("401.html")
 
 
@@ -209,30 +219,30 @@ def protected():
             # Campos preenchidos através da matricula do Pegaso
             pegaso = Pegaso.query.filter_by(matricula=matricula)
 
-            if pegaso.count() > 0:
-                # Selecionando paises
-                cod_paises = [row.codigo for row in Paises.query.all()]
-                nome_paises = [row.nome for row in Paises.query.all()]
-                paises = dict(zip(cod_paises, nome_paises))
-                # Selecionando estados
-                uf_estados = [row.uf for row in Estados.query.all()]
-                nome_estados = [row.nome for row in Estados.query.all()]
-                estados = dict(zip(uf_estados, nome_estados))
-                # Selecionando municipios
-                cod_municipio = [row.codigo for row in Municipios.query.all()]
-                nome_municipio = [row.nome for row in Municipios.query.all()]
-                municipios = dict(zip(cod_municipio, nome_municipio))
-                # Selecionando tipos logradouro
-                cod_tl = [row.codigo for row in TiposLogradouro.query.all()]
-                nome_tl = [row.nome for row in TiposLogradouro.query.all()]
-                tipos_logradouro = dict(zip(cod_tl, nome_tl))
-                # Selecionando bairros
-                bairros = [row.nome for row in db.session.query(Bairros.nome).distinct().order_by(Bairros.nome).all()]
+            # if pegaso.count() > 0:
+            # Selecionando paises
+            cod_paises = [row.codigo for row in Paises.query.all()]
+            nome_paises = [row.nome for row in Paises.query.all()]
+            paises = dict(zip(cod_paises, nome_paises))
+            # Selecionando estados
+            uf_estados = [row.uf for row in Estados.query.all()]
+            nome_estados = [row.nome for row in Estados.query.all()]
+            estados = dict(zip(uf_estados, nome_estados))
+            # Selecionando municipios
+            cod_municipio = [row.codigo for row in Municipios.query.all()]
+            nome_municipio = [row.nome for row in Municipios.query.all()]
+            municipios = dict(zip(cod_municipio, nome_municipio))
+            # Selecionando tipos logradouro
+            cod_tl = [row.codigo for row in TiposLogradouro.query.all()]
+            nome_tl = [row.nome for row in TiposLogradouro.query.all()]
+            tipos_logradouro = dict(zip(cod_tl, nome_tl))
+            # Selecionando bairros
+            bairros = [row.nome for row in db.session.query(Bairros.nome).distinct().order_by(Bairros.nome).all()]
 
-                return render_template("index.html", pegaso=pegaso.first(), paises=paises, estados=estados,
-                                       municipios=municipios, tl=tipos_logradouro, bairros=bairros)
-            else:
-                return render_template("noauth.html")
+            return render_template("index.html", pegaso=pegaso.first(), paises=paises, estados=estados,
+                                   municipios=municipios, tl=tipos_logradouro, bairros=bairros)
+            # else:
+            #     return render_template("noauth.html")
 
 
 if __name__ == "__main__":
