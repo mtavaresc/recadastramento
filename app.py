@@ -25,8 +25,8 @@ def admin():
     if not session.get("logged_in"):
         return redirect(url_for("login"))
 
-    adm = db.session.query(User.nome, Trabalhador.protocolo).\
-        outerjoin(Trabalhador, User.matricula == Trabalhador.matricula).\
+    adm = db.session.query(User.nome, Trabalhador.protocolo). \
+        outerjoin(Trabalhador, User.matricula == Trabalhador.matricula). \
         filter(User.matricula == session.get("matricula")).first()
 
     # Pendente
@@ -34,7 +34,27 @@ def admin():
     # Realizado
     r = Trabalhador.query
 
-    return render_template("admin/index.html", adm=adm, pendente=p, realizado=r.count(), data=r)
+    # Selecionando paises
+    cod_paises = [row.codigo for row in Paises.query.all()]
+    nome_paises = [row.nome for row in Paises.query.all()]
+    paises = dict(zip(cod_paises, nome_paises))
+    # Selecionando estados
+    uf_estados = [row.uf for row in Estados.query.all()]
+    nome_estados = [row.nome for row in Estados.query.all()]
+    estados = dict(zip(uf_estados, nome_estados))
+    # Selecionando municipios
+    cod_municipio = [row.codigo for row in Municipios.query.all()]
+    nome_municipio = [row.nome for row in Municipios.query.all()]
+    municipios = dict(zip(cod_municipio, nome_municipio))
+    # Selecionando tipos logradouro
+    cod_tl = [row.codigo for row in TiposLogradouro.query.all()]
+    nome_tl = [row.nome for row in TiposLogradouro.query.all()]
+    tipos_logradouro = dict(zip(cod_tl, nome_tl))
+    # Selecionando bairros
+    bairros = [row.nome for row in db.session.query(Bairros.nome).distinct().order_by(Bairros.nome).all()]
+
+    return render_template("admin/index.html", adm=adm, pendente=p, realizado=r.count(), data=r, paises=paises,
+                           estados=estados, municipios=municipios, tl=tipos_logradouro, bairros=bairros)
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -66,6 +86,7 @@ def logout(page, protocolo):
         if page == "reject":
             trabalhador = Trabalhador.query.filter_by(protocolo=protocolo).first()
             dependentes = Dependentes.query.filter_by(matrTab=trabalhador.matricula).all()
+
             # Selecionando paises
             cod_paises = [row.codigo for row in Paises.query.all()]
             nome_paises = [row.nome for row in Paises.query.all()]
