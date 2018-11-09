@@ -43,11 +43,20 @@
         <div class="header-menu">
             <div class="col-sm-7">
                 <div class="header-left">
-                    {% if adm.protocolo == None %}
-                        <a class="btn btn-warning btn-sm" href="{{ url_for("protected") }}">
-                            <i class="fa fa-star"></i> Recadastramento
-                        </a>
-                    {% endif %}
+                    <div class="row">
+                        <div class="col-1">
+                            <a href="http://solucoescati.com.br" target="_blank">
+                                <img src="../../static/images/cati.png" alt="Logo Cati">
+                            </a>
+                        </div>
+                        <div class="col-1">
+                            {% if adm.protocolo == None %}
+                                <a class="btn btn-warning btn-sm" href="{{ url_for("protected") }}">
+                                    <i class="fa fa-star"></i> Recadastramento
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -59,7 +68,7 @@
                     </a>
 
                     <div class="user-menu dropdown-menu">
-                        <a class="nav-link" href="{{ url_for("login") }}"><i class="fa fa-power -off"></i>Sair</a>
+                        <a class="nav-link" href="{{ url_for("login") }}"><i class="fa fa-sign-out"></i> Sair</a>
                     </div>
                 </div>
             </div>
@@ -75,7 +84,7 @@
                     <h4 class="mb-0">
                         <span class="count">{{ pendente }}</span>
                     </h4>
-                    <p class="text-light">Recadastramentos Pendentes</p>
+                    <p class="text-light">Recadastramento(s) Pendente(s)</p>
                 </div>
             </div>
         </div>
@@ -87,7 +96,7 @@
                     <h4 class="mb-0">
                         <span class="count">{{ realizado }}</span>
                     </h4>
-                    <p class="text-light">Recadastramentos Realizados</p>
+                    <p class="text-light">Recadastramento(s) Realizado(s)</p>
                 </div>
             </div>
         </div>
@@ -114,15 +123,9 @@
                 {% endfor %}
                 </tbody>
             </table>
-            <br><br><br><br>
-            <div class="text-center">
-                Designed by
-                <a class="txt2" href="http://solucoescati.com.br" target="_blank">
-                    CATI - Soluções em Tecnologia
-                </a>
-            </div>
+            <br><br>
         </div>
-   </div> <!-- .content -->
+    </div> <!-- .content -->
 </div><!-- /#right-panel -->
 <!-- Right Panel -->
 
