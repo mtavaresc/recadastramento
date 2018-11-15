@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../../static/js/jquery-3.3.1.min.js"></script>
+    <script src="../../static/js/jquery.mask.min.js"></script>
+    <script src="../../static/js/validacao.js"></script>
+    <script src="../../static/js/cidades_estados.js"></script>
+    <script>
+        jQuery(function () {
+            $('#cpfTrab').mask('000.000.000-00');
+            $('#nisTrab').mask('000.0000.000-0');
+            $('#cep').mask('00000-000');
+            $('#cpfDep').mask('000.000.000-00');
+            $('#fonePrinc').mask('(00) 00000-0000');
+            $('#foneAlternat').mask('(00) 00000-0000');
+        });
+
+        $('#add').click(function () {
+            $('#block:last').before('<div class="block"><input type="text" /><a id="remove-btn" class="btn btn-outline-danger">Remover</a></div>');
+        });
+        $('#multi').on('click', '#remove-btn', function () {
+            $(this).parent().remove();
+        });
+
+        $(document).ready(function () {
+            $('[id^=nrLograd]').keypress(validateNumber);
+        });
+
+        function validateNumber(event) {
+            let key = window.event ? event.keyCode : event.which;
+            if (event.keyCode === 8 || event.keyCode === 46) {
+                return true;
+            } else return !(key < 48 || key > 57);
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <form class="container">
+        {# Trabalhador #}
+        <div class="form-group">
+            <label for="cpfTrab">*CPF: </label>
+            <input id="cpfTrab" name="cpfTrab" class="form-control" value="{{ t.cpfTrab }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="nisTrab">*NIS: </label>
+            <input id="nisTrab" name="nisTrab" class="form-control" value="{{ t.nisTrab }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="nmTrab">*Nome Completo: </label>
+            <input id="nmTrab" name="nmTrab" class="form-control" value="{{ t.nmTrab }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="dtNascto">*Data de Nascimento: </label>
+            <input type="date" id="dtNascto" name="dtNascto" class="form-control" value="{{ t.dtNascto }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="sexo">Sexo:</label>
+            <select id="sexo" name="sexo" class="form-control">
+                <option value="M" {% if t.sexo == "M" %} selected {% endif %}>Masculino</option>
+                <option value="F" {% if t.sexo == "F" %} selected {% endif %}>Feminino</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="racaCor">Raça/Cor:</label>
+            <select id="racaCor" name="racaCor" class="form-control">
+                <option value="1" {% if t.racaCor == "1" %} selected {% endif %}>Branca</option>
+                <option value="2" {% if t.racaCor == "2" %} selected {% endif %}>Preta</option>
+                <option value="3" {% if t.racaCor == "3" %} selected {% endif %}>Parda</option>
+                <option value="4" {% if t.racaCor == "4" %} selected {% endif %}>Amarela</option>
+                <option value="5" {% if t.racaCor == "5" %} selected {% endif %}>Indígena</option>
+                <option value="6" {% if t.racaCor == "6" %} selected {% endif %}>Não informado</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="estCiv">Estado Civil:</label>
+            <select id="estCiv" name="estCiv" class="form-control">
+                <option value="1" {% if t.estCiv == "1" %} selected {% endif %}>Solteiro(a)</option>
+                <option value="2" {% if t.estCiv == "2" %} selected {% endif %}>Casado(a)</option>
+                <option value="3" {% if t.estCiv == "3" %} selected {% endif %}>Divorciado(a)</option>
+                <option value="4" {% if t.estCiv == "4" %} selected {% endif %}>Separado(a)</option>
+                <option value="5" {% if t.estCiv == "5" %} selected {% endif %}>Viúvo(a)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="grauInstr">Grau de Instrução:</label>
+            <select id="grauInstr" name="grauInstr" class="form-control">
+                <option value="01" {% if t.grauInstr == "01" %} selected {% endif %}>Analfabeto</option>
+                <option value="02" {% if t.grauInstr == "02" %} selected {% endif %}>Até o 5º ano incompleto do Ensino
+                    Fundamental (antiga 4ª série)
+                </option>
+                <option value="03" {% if t.grauInstr == "03" %} selected {% endif %}>5o ano completo do Ensino
+                    Fundamental
+                </option>
+                <option value="04" {% if t.grauInstr == "04" %} selected {% endif %}>Do 6o ao 9o ano do Ensino
+                    Fundamental incompleto (antiga 5a a 8a série)
+                </option>
+                <option value="05" {% if t.grauInstr == "05" %} selected {% endif %}>Ensino Fundamental Completo
+                </option>
+                <option value="06" {% if t.grauInstr == "06" %} selected {% endif %}>Ensino Médio incompleto</option>
+                <option value="07" {% if t.grauInstr == "07" %} selected {% endif %}>Ensino Médio completo
+                </option>
+                <option value="08" {% if t.grauInstr == "08" %} selected {% endif %}>Educação Superior incompleta
+                </option>
+                <option value="09" {% if t.grauInstr == "09" %} selected {% endif %}>Educação Superior completa
+                </option>
+                <option value="10" {% if t.grauInstr == "10" %} selected {% endif %}>Pós-Graduação completa</option>
+                <option value="11" {% if t.grauInstr == "11" %} selected {% endif %}>Mestrado completo</option>
+                <option value="12" {% if t.grauInstr == "12" %} selected {% endif %}>Doutorado completo</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="indPriEmpr">Primeiro emprego?</label>
+            <select id="indPriEmpr" name="indPriEmpr" class="form-control">
+                <option value="S" {% if t.indPriEmpr == "S" %} selected {% endif %}>Sim</option>
+                <option value="N" {% if t.indPriEmpr == "N" %} selected {% endif %}>Não</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="nmSoc">Nome Social:</label>
+            <input id="nmSoc" name="nmSoc" class="form-control" maxlength="70" style="text-transform: uppercase"
+                   value="{{ t.nmSoc if t.nmSoc != None }}">
+            <small id="nmSocHelp" class="form-text text-muted">Nome social para travesti ou transexual.</small>
+        </div>
+
+        {# Nascimento #}
+        <div class="dropdown-header">
+            <h5>Informações de Nascimento</h5>
+        </div>
+        <div class="dropdown-divider"></div>
+        {# Origem tabela "paises" #}
+        <div class="form-group">
+            <label for="paisNac">País Nacionalidade:</label>
+            <select id="paisNac" name="paisNac" class="form-control">
+                <option value="">-- Selecione --</option>
+                {% for x in paises %}
+                    <option value="{{ x }}" {% if x == t.paisNac %} selected {% endif %}>{{ paises[x] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {# Origem tabela "paises" #}
+        <div class="form-group">
+            <label for="paisNascto">País Nascimento:</label>
+            <select id="paisNascto" name="paisNascto" class="form-control">
+                <option value="">-- Selecione --</option>
+                {% for x in paises %}
+                    <option value="{{ x }}" {% if x == t.paisNascto %} selected {% endif %}>{{ paises[x] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {# Se pais nascimento selecionado = "Brasil" #}
+        <div class="form-group">
+            <label for="uf">Estado:</label>
+            <select id="uf" name="uf" class="form-control">
+                {% for x in estados %}
+                    <option value="{{ x }}" {% if x == t.uf %} selected {% endif %}>{{ estados[x] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="codMunic">Município:</label>
+            <select id="codMunic" name="codMunic" class="form-control">
+                {% for x in municipios %}
+                    <option value="{{ x }}" {% if x == t.codMunic %} selected {% endif %}>{{ municipios[x] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="nmMae">Nome Mãe:</label>
+            <input id="nmMae" name="nmMae" class="form-control" pattern="^[a-zA-Z\s]*$" maxlength="70"
+                   title="Preencher somente com Letras." style="text-transform: uppercase" value="{{ t.nmMae }}">
+        </div>
+        <div class="form-group">
+            <label for="nmPai">Nome Pai:</label>
+            <input id="nmPai" name="nmPai" class="form-control" pattern="^[a-zA-Z\s]*$" maxlength="70"
+                   title="Preencher somente com Letras." style="text-transform: uppercase" value="{{ t.nmPai }}">
+        </div>
+        {# CTPS #}
+        <div class="dropdown-header">
+            <h5>Informações de CTPS</h5>
+        </div>
+        <div class="dropdown-divider"></div>
+        <div class="well">
+            <div class="form-group">
+                <label for="nrCtps">Nº CTPS:</label>
+                <input id="nrCtps" name="nrCtps" class="form-control" title="Preencher somente com Números"
+                       maxlength="11" value="{{ t.nrCtps if t.nrCtps != None }}">
+            </div>
+            <div class="form-group">
+                <label for="serieCtps">Série CTPS:</label>
+                <input id="serieCtps" name="serieCtps" class="form-control" title="Preencher somente com Números"
+                       maxlength="5" value="{{ t.serieCtps if t.serieCtps != None }}">
+            </div>
+            <div class="form-group">
+                <label for="ufCtps">UF CTPS:</label>
+                <select id="ufCtps" name="ufCtps" class="form-control">
+                    <option value="">-- Selecione --</option>
+                    {% for x in estados %}
+                        <option value="{{ x }}" {% if x == t.ufCtps %} selected {% endif %}>{{ x }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        {# RG #}
+        <div class="dropdown-header">
+            <h5>Informações de RG</h5>
+        </div>
+        <div class="dropdown-divider"></div>
+
+        <div class="form-group">
+            <label for="nrRg">Nº RG:</label>
+            <input id="nrRg" name="nrRg" class="form-control" pattern="^[0-9]*$" title="Preencher somente com Números"
+                   maxlength="14" value="{{ t.nrRg }}">
+        </div>
+        <div class="form-group">
+            <label for="rg_orgaoEmissor">Órgão Emissor:</label>
+            <input id="rg_orgaoEmissor" name="rg_orgaoEmissor" class="form-control" pattern="^[a-zA-Z\s]*$"
+                   title="Preencher somente com Letras." maxlength="20" style="text-transform: uppercase"
+                   value="{{ t.rg_orgaoEmissor }}">
+            <small id="rg_orgaoEmissorHelp" class="form-text text-muted">Órgão e UF de emissão.</small>
+        </div>
+        <div class="form-group">
+            <label for="rg_dtExped">Data de Expedição:</label>
+            <input type="date" id="rg_dtExped" name="rg_dtExped" class="form-control" value="{{ t.rg_dtExped }}">
+        </div>
+
+        {# OC #}
+        <div class="dropdown-header">
+            <h5>Informações de Órgão de Classe</h5>
+            <div class="form-check">
+                <label for="showOc" data-toggle="collapse" data-target="#collapseOc" {% if t.nrOc != None %}
+                       aria-expanded="true" {% endif %}>
+                    <input id="showOc" type="checkbox" class="form-check-input" onclick="requiredOC()"
+                            {% if t.nrOc != None %} checked {% endif %}>
+                    Eu tenho Órgão de Classe
+                </label>
+            </div>
+            <div class="dropdown-divider"></div>
+
+            <div id="collapseOc" class="collapse {% if t.nrOc != None %} show {% endif %}">
+                <br>
+                <div class="well">
+                    <div class="form-group">
+                        <label for="nrOc">Nº OC:</label>
+                        <input id="nrOc" name="nrOc" class="form-control" maxlength="14"
+                               value="{{ t.nrOc if t.nrOc != None }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="oc_orgaoEmissor">Órgão Emissor:</label>
+                        <input id="oc_orgaoEmissor" name="oc_orgaoEmissor" class="form-control" maxlength="20"
+                               style="text-transform: uppercase"
+                               value="{{ t.oc_orgaoEmissor if t.oc_orgaoEmissor != None }}">
+                        <small id="oc_orgaoEmissorHelp" class="form-text text-muted">Órgão e UF de emissão.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="oc_dtExped">Data de Expedição:</label>
+                        <input type="date" id="oc_dtExped" name="oc_dtExped" class="form-control"
+                               value="{{ t.oc_dtExped if t.oc_dtExped != None }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="oc_dtValid">Data de Validade:</label>
+                        <input type="date" id="oc_dtValid" name="oc_dtValid" class="form-control"
+                               value="{{ t.oc_dtValid if t.oc_dtValid != None }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# CNH #}
+        <div class="dropdown-header">
+            <h5>Informações de CNH</h5>
+            <div class="form-check">
+                <label for="showCnh" data-toggle="collapse" data-target="#collapseCnh"
+                        {% if t.nrRegCnh != None %} aria-expanded="true" {% endif %}>
+                    <input id="showCnh" type="checkbox" class="form-check-input"
+                           onclick="requiredCNH()" {% if t.nrRegCnh != None %} checked {% endif %}>
+                    Eu tenho Carteira Nacional de Habilitação
+                </label>
+            </div>
+            <div class="dropdown-divider"></div>
+
+            <div id="collapseCnh" class="collapse {% if t.nrRegCnh != None %} show {% endif %}">
+                <br>
+                <div class="well">
+                    <div class="form-group">
+                        <label for="nrRegCnh">Nº do Registro CNH:</label>
+                        <input id="nrRegCnh" name="nrRegCnh" class="form-control" maxlength="12"
+                               value="{{ t.nrRegCnh if t.nrRegCnh != None }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="cnh_dtExped">Data de Expedição:</label>
+                        <input type="date" id="cnh_dtExped" name="cnh_dtExped" class="form-control"
+                               value="{{ t.cnh_dtExped if t.cnh_dtExped != None }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="ufCnh">UF CNH:</label>
+                        <select id="ufCnh" name="ufCnh" class="form-control">
+                            <option value="">-- Selecione --</option>
+                            {% for x in estados %}
+                                <option value="{{ x }}" {% if x == t.ufCnh %} selected {% endif %}>{{ x }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cnh_dtValid">Data de Validade:</label>
+                        <input type="date" id="cnh_dtValid" name="cnh_dtValid" class="form-control"
+                               value="{{ t.cnh_dtValid if t.cnh_dtValid != None }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="dtPriHab">Data da Primeira Habilitação:</label>
+                        <input type="date" id="dtPriHab" name="dtPriHab" class="form-control"
+                               value="{{ t.dtPriHab if t.dtPriHab != None }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="categoriaCnh">Categoria CNH:</label>
+                        <select id="categoriaCnh" name="categoriaCnh" class="form-control">
+                            <option value="">-- Selecione --</option>
+                            <option {% if t.categoriaCnh == "A" %} selected {% endif %}>A</option>
+                            <option {% if t.categoriaCnh == "B" %} selected {% endif %}>B</option>
+                            <option {% if t.categoriaCnh == "C" %} selected {% endif %}>C</option>
+                            <option {% if t.categoriaCnh == "D" %} selected {% endif %}>D</option>
+                            <option {% if t.categoriaCnh == "E" %} selected {% endif %}>E</option>
+                            <option {% if t.categoriaCnh == "AB" %} selected {% endif %}>AB</option>
+                            <option {% if t.categoriaCnh == "AC" %} selected {% endif %}>AC</option>
+                            <option {% if t.categoriaCnh == "AD" %} selected {% endif %}>AD</option>
+                            <option {% if t.categoriaCnh == "AE" %} selected {% endif %}>AE</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dropdown-header">
+            <h5>Informações de Endereço Residencial</h5>
+        </div>
+        <div class="dropdown-divider"></div>
+        {# Endereco - Brasil #}
+        <div class="form-group">
+            <label for="paisResid">País Residência:</label>
+            <select id="paisResid" name="paisResid" class="form-control">
+                {% for x in paises %}
+                    <option value="{{ x }}" {% if paises[x] == "Brasil" %} selected {% endif %}>{{ paises[x] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {# Se pais residencia selecionado = "Brasil" #}
+        <div class="form-group">
+            <label for="cep">CEP:</label>
+            <input id="cep" name="cep" class="form-control" value="{{ t.cep }}">
+        </div>
+        <div class="form-group">
+            <label for="end_uf">Estado:</label>
+            <select id="end_uf" name="end_uf" class="form-control">
+                <option value="">-- Selecione --</option>
+                {% for x in estados %}
+                    <option value="{{ x }}" {% if x == t.end_uf %} selected {% endif %}>{{ estados[x] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="end_codMunic">Município:</label>
+            <select id="end_codMunic" name="end_codMunic" class="form-control">
+                <option value="">-- Selecione --</option>
+                {% for x in municipios %}
+                    <option value="{{ x }}" {% if x == t.end_codMunic %}
+                            selected {% endif %}>{{ municipios[x] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="bairro">Bairro:</label>
+            <input id="bairro" name="bairro" class="form-control" maxlength="80" style="text-transform: uppercase"
+                   value="{{ t.bairro }}">
+        </div>
+        <div class="form-group">
+            <label for="tpLograd">Tipo Logradouro:</label>
+            <select id="tpLograd" name="tpLograd" class="form-control">
+                <option value="">-- Selecione --</option>
+                <option value="AL" {% if t.tpLograd == "AL" %} selected {% endif %}>Alameda</option>
+                <option value="AV" {% if t.tpLograd == "AV" %} selected {% endif %}>Avenida</option>
+                <option value="BAL" {% if t.tpLograd == "BAL" %} selected {% endif %}>Balneário</option>
+                <option value="BL" {% if t.tpLograd == "BL" %} selected {% endif %}>Bloco</option>
+                <option value="CH" {% if t.tpLograd == "CH" %} selected {% endif %}>Chácara</option>
+                <option value="CJ" {% if t.tpLograd == "CJ" %} selected {% endif %}>Conjunto</option>
+                <option value="COND" {% if t.tpLograd == "COND" %} selected {% endif %}>Condomínio</option>
+                <option value="EST" {% if t.tpLograd == "EST" %} selected {% endif %}>Estrada</option>
+                <option value="FAZ" {% if t.tpLograd == "FAZ" %} selected {% endif %}>Fazenda</option>
+                <option value="GAL" {% if t.tpLograd == "GAL" %} selected {% endif %}>Galeria</option>
+                <option value="GJA" {% if t.tpLograd == "GJA" %} selected {% endif %}>Granja</option>
+                <option value="JD" {% if t.tpLograd == "JD" %} selected {% endif %}>Jardim</option>
+                <option value="LG" {% if t.tpLograd == "LG" %} selected {% endif %}>Largo</option>
+                <option value="LOT" {% if t.tpLograd == "LOT" %} selected {% endif %}>Loteamento</option>
+                <option value="PÇ" {% if t.tpLograd == "PÇ" %} selected {% endif %}>Praça</option>
+                <option value="PR" {% if t.tpLograd == "PR" %} selected {% endif %}>Praia</option>
+                <option value="PRQ" {% if t.tpLograd == "PRQ" %} selected {% endif %}>Parque</option>
+                <option value="Q" {% if t.tpLograd == "Q" %} selected {% endif %}>Quadra</option>
+                <option value="R" {% if t.tpLograd == "R" %} selected {% endif %}>Rua</option>
+                <option value="ST" {% if t.tpLograd == "ST" %} selected {% endif %}>Setor</option>
+                <option value="TV" {% if t.tpLograd == "TV" %} selected {% endif %}>Travessa</option>
+                <option value="VL" {% if t.tpLograd == "VL" %} selected {% endif %}>Vila</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="dscLograd">Logradouro:</label>
+            <input id="dscLograd" name="dscLograd" class="form-control" maxlength="80" style="text-transform: uppercase"
+                   value="{{ t.dscLograd }}">
+        </div>
+        <div class="form-group">
+            <label for="nrLograd">Nº Logradouro:</label>
+            <input id="nrLograd" name="nrLograd" class="form-control" maxlength="10" value="{{ t.nrLograd }}">
+            <small id="nrLogradHelp" class="form-text text-muted">Em caso de sem número, colocar 0.</small>
+        </div>
+        <div class="form-group">
+            <label for="complemento">Complemento:</label>
+            <input id="complemento" name="complemento" class="form-control" maxlength="30"
+                   style="text-transform: uppercase"
+                   value="{{ t.complemento if t.complemento != None }}">
+        </div>
+
+        {# Informações de Deficiência #}
+        <div class="dropdown-header">
+            <h5>Informações de Deficiência</h5>
+        </div>
+        <div class="dropdown-divider"></div>
+        <div class="form-group">
+            <label for="defFisica">Deficiência física?</label>
+            <select id="defFisica" name="defFisica" class="form-control">
+                <option value="N" {% if t.defFisica == "N" %} selected {% endif %}>Não</option>
+                <option value="S" {% if t.defFisica == "S" %} selected {% endif %}>Sim</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="defVisual">Deficiência visual?</label>
+            <select id="defVisual" name="defVisual" class="form-control">
+                <option value="N" {% if t.defVisual == "N" %} selected {% endif %}>Não</option>
+                <option value="S" {% if t.defVisual == "S" %} selected {% endif %}>Sim</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="defAuditiva">Deficiência auditiva?</label>
+            <select id="defAuditiva" name="defAuditiva" class="form-control">
+                <option value="N" {% if t.defAuditiva == "N" %} selected {% endif %}>Não</option>
+                <option value="S" {% if t.defAuditiva == "S" %} selected {% endif %}>Sim</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="defMental">Deficiência mental?</label>
+            <select id="defMental" name="defMental" class="form-control">
+                <option value="N" {% if t.defMental == "N" %} selected {% endif %}>Não</option>
+                <option value="S" {% if t.defMental == "S" %} selected {% endif %}>Sim</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="defIntelectual">Deficiência intelectual?</label>
+            <select id="defIntelectual" name="defIntelectual" class="form-control">
+                <option value="N" {% if t.defIntelectual == "N" %} selected {% endif %}>Não</option>
+                <option value="S" {% if t.defIntelectual == "S" %} selected {% endif %}>Sim</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="defReadap">Readaptado/Reabilitado?</label>
+            <select id="defReadap" name="defReadap" class="form-control">
+                <option value="N" {% if t.defReadap == "N" %} selected {% endif %}>Não</option>
+                <option value="S" {% if t.defReadap == "S" %} selected {% endif %}>Sim</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="infoCota">Cota PCD?</label>
+            <select id="infoCota" name="infoCota" class="form-control">
+                <option value="N" {% if t.defReadap == "N" %} selected {% endif %}>Não</option>
+                <option value="S" {% if t.defReadap == "S" %} selected {% endif %}>Sim</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="observacao">Observação:</label>
+            <textarea id="observacao" name="observacao" class="form-control" maxlength="255"
+                      style="text-transform: uppercase">{{ t.observacao if t.observacao != None }}</textarea>
+        </div>
+
+        {# Informações de Dependentes #}
+        <div class="dropdown-header">
+            <h5>Informações de Dependentes</h5>
+            <div class="form-check">
+                <label for="showDep" data-toggle="collapse" data-target="#collapseDep"
+                        {% if dependentes|length > 0 %} aria-expanded="true" {% endif %}>
+                    <input id="showDep" type="checkbox" class="form-check-input"
+                           onclick="requiredDep()" {% if dependentes|length > 0 %} checked {% endif %}>
+                    Eu tenho Dependente(s)
+                </label>
+            </div>
+            <div class="dropdown-divider"></div>
+
+            <div id="collapseDep" class="collapse {% if dependentes|length > 0 %} show {% endif %}">
+                <br>
+                <a id="add" class="btn btn-outline-primary">Adicionar</a>
+                <br><br>
+                {% for d in dependentes %}
+                    <div class="well" id="multi">
+                        <div id="block">
+                            <div class="form-group">
+                                <label for="tpDep">Tipo de dependente:</label>
+                                <select id="tpDep" name="tpDep[]" class="form-control">
+                                    <option value="">-- Selecione --</option>
+                                    <option value="01" {% if d.tpDep == "01" %} selected {% endif %}>Cônjuge</option>
+                                    <option value="02" {% if d.tpDep == "02" %} selected {% endif %}>
+                                        Companheiro(a) com o(a) qual tenha filho ou viva há mais de 5 (cinco)
+                                        anos ou possua Declaração de União Estável
+                                    </option>
+                                    <option value="03" {% if d.tpDep == "03" %}selected {% endif %}>
+                                        Filho(a) ou enteado(a)
+                                    </option>
+                                    <option value="04" {% if d.tpDep == "04" %} selected {% endif %}>
+                                        Filho(a) ou enteado(a) universitário(a) ou cursando escola técnica de
+                                        2o grau, até 24 (vinte e quatro) anos
+                                    </option>
+                                    <option value="06" {% if d.tpDep == "06" %} selected {% endif %}>
+                                        Irmão(ã), neto(a) ou bisneto(a) sem arrimo dos pais, do(a) qual detenha
+                                        a guarda judicial
+                                    </option>
+                                    <option value="09" {% if d.tpDep == "09" %} selected {% endif %}>
+                                        Pais, avós e bisavós
+                                    </option>
+                                    <option value="10" {% if d.tpDep == "10" %} selected {% endif %}>
+                                        Menor pobre do qual detenha a guarda judicial
+                                    </option>
+                                    <option value="11" {% if d.tpDep == "11" %} selected {% endif %}>
+                                        A pessoa absolutamente incapaz, da qual seja tutor ou curador
+                                    </option>
+                                    <option value="12" {% if d.tpDep == "12" %} selected {% endif %}>
+                                        Ex-cônjuge
+                                    </option>
+                                    <option value="99" {% if d.tpDep == "99" %} selected {% endif %}>
+                                        Agregado/Outros
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="nmDep">Nome Completo:</label>
+                                <input id="nmDep" name="nmDep[]" class="form-control" maxlength="70"
+                                       style="text-transform: uppercase" value="{{ d.nmDep }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="dep_dtNascto">Data de Nascimento:</label>
+                                <input type="date" id="dep_dtNascto" name="dep_dtNascto[]"
+                                       class="form-control" value="{{ d.dep_dtNascto }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="cpfDep">CPF:</label>
+                                <input id="cpfDep" name="cpfDep[]" class="form-control" onblur="TestaCPF(this)"
+                                       value="{{ d.cpfDep }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="depIRRF">Dependente IRRF?</label>
+                                <select id="depIRRF" name="depIRRF[]" class="form-control">
+                                    <option value="">-- Selecione --</option>
+                                    <option value="S" {% if d.depIRRF == "S" %} selected {% endif %}>Sim</option>
+                                    <option value="N" {% if d.depIRRF == "N" %} selected {% endif %}>Não</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="depSF">Dependente Salário-Família?</label>
+                                <select id="depSF" name="depSF[]" class="form-control">
+                                    <option value="">-- Selecione --</option>
+                                    <option value="S" {% if d.depSF == "S" %} selected {% endif %}>Sim</option>
+                                    <option value="N" {% if d.depSF == "N" %} selected {% endif %}>Não</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="incTrab">Incapacidade física ou mental para o trabalho?</label>
+                                <select id="incTrab" name="incTrab[]" class="form-control">
+                                    <option value="">-- Selecione --</option>
+                                    <option value="N" {% if d.incTrab == "N" %} selected {% endif %}>Não</option>
+                                    <option value="S" {% if d.incTrab == "S" %} selected {% endif %}>Sim</option>
+                                </select>
+                            </div>
+                            <a id="remove-btn" class="btn btn-outline-danger">Remover</a>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="dropdown-divider"></div>
+                    <br>
+                {% endfor %}
+            </div>
+        </div>
+
+        {# Informações de Aposentadoria #}
+        <div class="dropdown-header">
+            <h5>Informações de Aposentadoria</h5>
+        </div>
+        <div class="dropdown-divider"></div>
+        <div class="form-group">
+            <label for="trabAposent">Aposentado por tempo de contribuição ou idade?</label>
+            <select id="trabAposent" name="trabAposent" class="form-control">
+                <option value="N" {% if t.trabAposent == "N" %} selected {% endif %}>Não</option>
+                <option value="S" {% if t.trabAposent == "S" %} selected {% endif %}>Sim</option>
+            </select>
+        </div>
+
+        {# Informações de Contato #}
+        <div class="dropdown-header">
+            <h5>Informações de Contato</h5>
+        </div>
+        <div class="dropdown-divider"></div>
+        <div class="form-group">
+            <label for="fonePrinc">Fone principal:</label>
+            <input id="fonePrinc" name="fonePrinc" class="form-control"
+                   pattern="^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$"
+                   value="{{ t.fonePrinc }}">
+        </div>
+        <div class="form-group">
+            <label for="foneAlternat">Fone alternativo:</label>
+            <input id="foneAlternat" name="foneAlternat" class="form-control"
+                   value="{{ t.foneAlternat if t.foneAlternat != None }}">
+        </div>
+        <div class="form-group">
+            <label for="emailPrinc">E-mail principal:</label>
+            <input type="email" id="emailPrinc" name="emailPrinc" class="form-control" maxlength="60"
+                   value="{{ t.emailPrinc }}">
+        </div>
+        <div class="form-group">
+            <label for="emailAlternat">E-mail alternativo:</label>
+            <input type="email" id="emailAlternat" name="emailAlternat" class="form-control" maxlength="60"
+                   value="{{ t.emailAlternat if t.emailAlternat != None }}">
+        </div>
+    </form>
+</div>
+</body>
+</html>

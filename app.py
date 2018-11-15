@@ -10,6 +10,11 @@ from base import app
 from model import *
 
 
+def check_login():
+    if not session.get("logged_in"):
+        return redirect(url_for("login"))
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html"), 404
@@ -18,43 +23,6 @@ def page_not_found(e):
 @app.errorhandler(401)
 def unauthorized_access(e):
     return render_template("401.html"), 401
-
-
-@app.route("/admin", methods=["GET", "POST"])
-def admin():
-    if not session.get("logged_in"):
-        return redirect(url_for("login"))
-
-    adm = db.session.query(User.nome, Trabalhador.protocolo). \
-        outerjoin(Trabalhador, User.matricula == Trabalhador.matricula). \
-        filter(User.matricula == session.get("matricula")).first()
-
-    # Pendente
-    p = db.session.query(Pegaso).filter(Pegaso.matricula.notin_(db.session.query(Trabalhador.matricula))).count()
-    # Realizado
-    r = Trabalhador.query
-
-    # Selecionando paises
-    cod_paises = [row.codigo for row in Paises.query.all()]
-    nome_paises = [row.nome for row in Paises.query.all()]
-    paises = dict(zip(cod_paises, nome_paises))
-    # Selecionando estados
-    uf_estados = [row.uf for row in Estados.query.all()]
-    nome_estados = [row.nome for row in Estados.query.all()]
-    estados = dict(zip(uf_estados, nome_estados))
-    # Selecionando municipios
-    cod_municipio = [row.codigo for row in Municipios.query.all()]
-    nome_municipio = [row.nome for row in Municipios.query.all()]
-    municipios = dict(zip(cod_municipio, nome_municipio))
-    # Selecionando tipos logradouro
-    cod_tl = [row.codigo for row in TiposLogradouro.query.all()]
-    nome_tl = [row.nome for row in TiposLogradouro.query.all()]
-    tipos_logradouro = dict(zip(cod_tl, nome_tl))
-    # Selecionando bairros
-    bairros = [row.nome for row in db.session.query(Bairros.nome).distinct().order_by(Bairros.nome).all()]
-
-    return render_template("admin/index.html", adm=adm, pendente=p, realizado=r.count(), data=r, paises=paises,
-                           estados=estados, municipios=municipios, tl=tipos_logradouro, bairros=bairros)
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -117,9 +85,7 @@ def logout(page, protocolo):
 
 @app.route("/protected", methods=["GET", "POST"])
 def protected():
-    if not session.get("logged_in"):
-        return redirect(url_for("login"))
-
+    check_login()
     matricula = session.get("matricula")
 
     if request.method == "POST":
@@ -240,7 +206,6 @@ def protected():
             # Campos preenchidos através da matricula do Pegaso
             pegaso = Pegaso.query.filter_by(matricula=matricula)
 
-            # if pegaso.count() > 0:
             # Selecionando paises
             cod_paises = [row.codigo for row in Paises.query.all()]
             nome_paises = [row.nome for row in Paises.query.all()]
@@ -262,8 +227,53 @@ def protected():
 
             return render_template("index.html", pegaso=pegaso.first(), paises=paises, estados=estados,
                                    municipios=municipios, tl=tipos_logradouro, bairros=bairros)
-            # else:
-            #     return render_template("noauth.html")
+
+
+@app.route("/admin", methods=["GET", "POST"])
+def admin():
+    check_login()
+    adm = db.session.query(User.nome, Trabalhador.protocolo). \
+        outerjoin(Trabalhador, User.matricula == Trabalhador.matricula). \
+        filter(User.matricula == session.get("matricula")).first()
+
+    # Pendente
+    p = db.session.query(Pegaso).filter(Pegaso.matricula.notin_(db.session.query(Trabalhador.matricula))).count()
+    # Realizado
+    r = Trabalhador.query
+
+    return render_template("admin/index.html", adm=adm, pendente=p, realizado=r.count(), data=r)
+
+
+@app.route("/admin/worker/<matricula>", methods=["GET", "POST"])
+def admin_edit_worker(matricula):
+    check_login()
+
+    # Worker
+    worker = Trabalhador.query.filter_by(matricula=matricula).first()
+    # Dependents
+    dependents = Dependentes.query.filter_by(matrTab=matricula).all()
+
+    # Selecionando paises
+    cod_paises = [row.codigo for row in Paises.query.all()]
+    nome_paises = [row.nome for row in Paises.query.all()]
+    paises = dict(zip(cod_paises, nome_paises))
+    # Selecionando estados
+    uf_estados = [row.uf for row in Estados.query.all()]
+    nome_estados = [row.nome for row in Estados.query.all()]
+    estados = dict(zip(uf_estados, nome_estados))
+    # Selecionando municipios
+    cod_municipio = [row.codigo for row in Municipios.query.all()]
+    nome_municipio = [row.nome for row in Municipios.query.all()]
+    municipios = dict(zip(cod_municipio, nome_municipio))
+    # Selecionando tipos logradouro
+    cod_tl = [row.codigo for row in TiposLogradouro.query.all()]
+    nome_tl = [row.nome for row in TiposLogradouro.query.all()]
+    tipos_logradouro = dict(zip(cod_tl, nome_tl))
+    # Selecionando bairros
+    bairros = [row.nome for row in db.session.query(Bairros.nome).distinct().order_by(Bairros.nome).all()]
+
+    return render_template("admin/edit.html", worker=worker, dependents=dependents, paises=paises, estados=estados,
+                           municipios=municipios, tl=tipos_logradouro, bairros=bairros)
 
 
 if __name__ == "__main__":
