@@ -189,7 +189,7 @@ function requiredDep() {
         jQuery(tpDep).removeAttr('required');
 
     if (!nmDep.required)
-        jQuery(nmDep).attr('pattern', '^[a-zA-Z\\s]*$');
+        jQuery(nmDep).attr('pattern', '^[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇ\\s]*$');
     else
         jQuery(nmDep).removeAttr('pattern');
 

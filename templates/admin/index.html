@@ -108,7 +108,8 @@
                 </thead>
                 <tbody>
                 {% for row in data %}
-                    <tr data-toggle="modal" data-target="#modal-iframe" style="cursor:pointer;" onclick=test_func({{ row.matricula|string }});>
+                    {# <tr data-toggle="modal" data-target="#modal-iframe" style="cursor:pointer;" onclick=test_func({{ row.matricula|string }});>#}
+                    <tr>
                         <td>{{ row.matricula }}</td>
                         <td>{{ row.nmTrab }}</td>
                         <td>{{ row.cpfTrab }}</td>
