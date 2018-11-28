@@ -20,11 +20,10 @@
             $('#foneAlternat').mask('(00) 00000-0000');
         });
 
-        $('#add').click(function () {
-            $('#block:last').before('<div class="block"><input type="text" /><a id="remove-btn" class="btn btn-outline-danger">Remover</a></div>');
-        });
-        $('#multi').on('click', '#remove-btn', function () {
-            $(this).parent().remove();
+        $(document).ready(function () {
+            $(".add-more-btn").click(function () {
+                $("#multi").clone().appendTo("#collapseDep");
+            });
         });
 
         $(document).ready(function () {

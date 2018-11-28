@@ -74,7 +74,7 @@ def logout(page, protocolo):
             # Selecionando bairros
             bairros = [row.nome for row in db.session.query(Bairros.nome).distinct().order_by(Bairros.nome).all()]
 
-            return render_template("{}2.html".format(page), t=trabalhador, dependentes=dependentes, paises=paises,
+            return render_template("reject2.html".format(page), t=trabalhador, dependentes=dependentes, paises=paises,
                                    estados=estados, municipios=municipios, tl=tipos_logradouro, bairros=bairros)
         elif page == "submit":
             return render_template("{}.html".format(page), protocolo=protocolo)

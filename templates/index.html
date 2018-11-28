@@ -46,7 +46,7 @@
     </script>
 <body>
 <div class="container">
-        <img src="../static/images/alece.png" alt="IMG">
+    <img src="../static/images/alece.png" alt="IMG">
     <div class="page-header">
         <h2>Recadastramento</h2>
     </div>
@@ -173,19 +173,19 @@
         </script>
         <div class="form-group">
             <label for="nmMae">Nome Mãe:</label>
-            <input id="nmMae" name="nmMae" class="form-control" pattern="^[a-zA-Z\s]*$" maxlength="70"
+            <input id="nmMae" name="nmMae" class="form-control" pattern="^[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇ\s]*$" maxlength="70"
                    title="Preencher somente com Letras." style="text-transform: uppercase">
 
         </div>
         <div class="form-group">
             <label for="nmPai">Nome Pai:</label>
-            <input id="nmPai" name="nmPai" class="form-control" pattern="^[a-zA-Z\s]*$" maxlength="70"
+            <input id="nmPai" name="nmPai" class="form-control" pattern="^[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇ\s]*$" maxlength="70"
                    title="Preencher somente com Letras." style="text-transform: uppercase">
         </div>
 
         {# CTPS #}
         <div class="page-header">
-            <h3>Informações de CTPS</h3>
+            <h3>Informações de Carteira de Trabalho e Previdência Social (CTPS)</h3>
         </div>
         <div class="form-group">
             <label for="nrCtps">Nº CTPS:</label>
@@ -263,7 +263,7 @@
 
         {# CNH #}
         <div class="page-header">
-            <h3>Informações de CNH</h3>
+            <h3>Informações de CNH (Obrigatório para Motoristas)</h3>
         </div>
         <div class="form-check">
             <label for="showCnh" data-toggle="collapse" data-target="#collapseCnh">
@@ -280,7 +280,7 @@
                     <input id="nrRegCnh" name="nrRegCnh" class="form-control" maxlength="12">
                 </div>
                 <div class="form-group">
-                    <label for="cnh_dtExped">Data de Expedição:</label>
+                    <label for="cnh_dtExped">Data de Expedição/Emissão:</label>
                     <input type="date" id="cnh_dtExped" name="cnh_dtExped" class="form-control">
                 </div>
                 <div class="form-group">
@@ -448,11 +448,14 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="infoCota">Cota PCD?</label>
+            <label for="infoCota">Cota Pessoa com Deficiência (PCD)?</label>
             <select id="infoCota" name="infoCota" class="form-control">
                 <option value="N">Não</option>
                 <option value="S">Sim</option>
             </select>
+            <small id="infoCotaHelp" class="form-text text-muted">
+                Reserva legal de cotas é também conhecida como a Lei de Cotas (art. 93 da Lei nº 8.213/91.
+            </small>
         </div>
         <div class="form-group">
             <label for="observacao">Observação:</label>

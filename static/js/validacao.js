@@ -112,7 +112,6 @@ function requiredOC() {
     const nrOc = document.getElementById("nrOc");
     const orgaoEmissor = document.getElementById("oc_orgaoEmissor");
     const dtExped = document.getElementById("oc_dtExped");
-    const dtValid = document.getElementById("oc_dtValid");
 
     if (!nrOc.required)
         jQuery(nrOc).attr('pattern', '^[0-9]*$');
@@ -128,11 +127,6 @@ function requiredOC() {
         jQuery(dtExped).attr('required', '');
     else
         jQuery(dtExped).removeAttr('required');
-
-    if (!dtValid.required)
-        jQuery(dtValid).attr('required', '');
-    else
-        jQuery(dtValid).removeAttr('required');
 }
 
 function requiredCNH() {
