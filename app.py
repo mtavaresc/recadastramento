@@ -17,11 +17,13 @@ def check_login():
 
 @app.errorhandler(404)
 def page_not_found(e):
+    session.clear()
     return render_template("404.html"), 404
 
 
 @app.errorhandler(401)
 def unauthorized_access(e):
+    session.clear()
     return render_template("401.html"), 401
 
 
@@ -50,6 +52,7 @@ def login():
 @app.route("/logout/<page>!<protocolo>")
 def logout(page, protocolo):
     session.clear()
+
     try:
         if page == "reject":
             trabalhador = Trabalhador.query.filter_by(protocolo=protocolo).first()
@@ -78,6 +81,9 @@ def logout(page, protocolo):
                                    estados=estados, municipios=municipios, tl=tipos_logradouro, bairros=bairros)
         elif page == "submit":
             return render_template("{}.html".format(page), protocolo=protocolo)
+        else:
+            return render_template("401.html")
+
     except AttributeError as e:
         print(format(e))
         return render_template("401.html")
@@ -249,7 +255,7 @@ def admin_edit_worker(matricula):
     check_login()
 
     # Worker
-    worker = Trabalhador.query.filter_by(matricula=matricula).first()
+    worker = Trabalhador.query.filter_by(matricula=matricula)
     # Dependents
     dependents = Dependentes.query.filter_by(matrTab=matricula).all()
 
@@ -272,7 +278,10 @@ def admin_edit_worker(matricula):
     # Selecionando bairros
     bairros = [row.nome for row in db.session.query(Bairros.nome).distinct().order_by(Bairros.nome).all()]
 
-    return render_template("admin/edit.html", worker=worker, dependents=dependents, paises=paises, estados=estados,
+    if worker.count() == 0:
+        return render_template("401.html")
+
+    return render_template("admin/edit.html", worker=worker.first(), dependents=dependents, paises=paises, estados=estados,
                            municipios=municipios, tl=tipos_logradouro, bairros=bairros)
 
 
