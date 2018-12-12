@@ -108,6 +108,27 @@ $(document).ready(function () {
 });
 
 //Required fields dynamic.
+function requiredCtps() {
+    const nrCTPS = document.getElementById("nrCTPS");
+    const serieCtps = document.getElementById("serieCtps");
+    const ufCtps = document.getElementById("ufCtps");
+
+    if (!nrCTPS.required)
+        jQuery(nrCTPS).attr('required', '');
+    else
+        jQuery(nrCTPS).removeAttr('required');
+
+    if (!serieCtps.required)
+        jQuery(serieCtps).attr('required', '');
+    else
+        jQuery(serieCtps).removeAttr('required');
+
+    if (!ufCtps.required)
+        jQuery(ufCtps).attr('required', '');
+    else
+        jQuery(ufCtps).removeAttr('required')
+}
+
 function requiredOC() {
     const nrOc = document.getElementById("nrOc");
     const orgaoEmissor = document.getElementById("oc_orgaoEmissor");

@@ -9,8 +9,8 @@ app = Flask(__name__)
 app.secret_key = b'~\xde\xba\xc6\x16"O.\x0e\x95\xbet\xdfbZ\x03'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
 
-url = "oracle+cx_oracle://esocial:teste1423@10.85.100.59:1521/PROD"
-# url = "oracle+cx_oracle://esocial:teste1423@localhost:1521/XE"
+# url = "oracle+cx_oracle://esocial:teste1423@10.85.100.59:1521/PROD"
+url = "oracle+cx_oracle://esocial:teste1423@localhost:1521/XE"
 
 # Schema default
 app.config["SQLALCHEMY_DATABASE_URI"] = url

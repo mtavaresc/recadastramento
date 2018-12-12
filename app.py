@@ -27,6 +27,12 @@ def unauthorized_access(e):
     return render_template("401.html"), 401
 
 
+@app.route("/teste")
+def teste():
+    pegaso = {'cpf': '032.877.613-07', 'pispasep': '123456789', 'nome': 'Marcelo Tavares', 'dtnasc': '1991-11-19'}
+    return render_template("index.html", pegaso=pegaso)
+
+
 @app.route("/", methods=["GET", "POST"])
 def login():
     try:
@@ -281,7 +287,8 @@ def admin_edit_worker(matricula):
     if worker.count() == 0:
         return render_template("401.html")
 
-    return render_template("admin/edit.html", worker=worker.first(), dependents=dependents, paises=paises, estados=estados,
+    return render_template("admin/edit.html", worker=worker.first(), dependents=dependents, paises=paises,
+                           estados=estados,
                            municipios=municipios, tl=tipos_logradouro, bairros=bairros)
 
 
