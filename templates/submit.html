@@ -1,12 +1,31 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <title>Recadastramento</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>:: Recadastramento ::</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../static/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../static/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../static/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../static/favicon/site.webmanifest">
+    <link rel="mask-icon" href="../static/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="../static/admin/assets/css/normalize.css">
+    <link rel="stylesheet" href="../static/admin/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/admin/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/admin/assets/css/themify-icons.css">
+    <link rel="stylesheet" href="../static/admin/assets/css/flag-icon.min.css">
+    <link rel="stylesheet" href="../static/admin/assets/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="../static/admin/assets/css/lib/datatable/dataTables.bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="../../admin/assets/css/bootstrap-select.less"> -->
+    <link rel="stylesheet" href="../static/admin/assets/scss/style.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+    <script src="../static/js/jquery-3.3.1.min.js"></script>
     <script>
         window.setTimeout(function () {
             window.location.href = "{{ url_for('login') }}";
@@ -24,7 +43,7 @@
     </div>
 
     <img src="../static/images/alece.png" alt="IMG">
-    <button type="button" class="btn btn-light" onclick="window.print();">
+    <button type="button" class="btn btn-light float-right" onclick="window.print();">
         <i class="fa fa-print"></i> Imprimir
     </button>
 </div>
