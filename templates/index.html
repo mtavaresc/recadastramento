@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-    <meta charset="UTF-8">
     <title>:: Recadastramento ::</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="apple-touch-icon" sizes="180x180" href="../static/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../static/favicon/favicon-32x32.png">
@@ -13,15 +12,16 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
-    <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="../static/css/fontawesome-all.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/css/sticky-footer-navbar.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="../static/js/jquery-3.3.1.min.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="../static/js/jquery.mask.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="../static/js/validacao.js"></script>
     <script src="../static/js/cidades_estados.js"></script>
 
@@ -36,12 +36,6 @@
         });
 
         $(document).ready(function () {
-            $(".add-more-btn").click(function () {
-                $("#multi").clone().appendTo("#collapseDep");
-            });
-        });
-
-        $(document).ready(function () {
             $('[id^=nrLograd]').keypress(validateNumber);
         });
 
@@ -51,14 +45,116 @@
                 return true;
             } else return !(key < 48 || key > 57);
         }
+
+        $(document).ready(function () {
+            // Add new element
+            $('.add').click(function () {
+                // Finding total number of elements added
+                const total_element = $('.element').length;
+
+                // last <div> with element class id
+                const lastid = $('.element:last').attr('id');
+                const split_id = lastid.split("_");
+                const nextindex = Number(split_id[1]) + 1;
+
+                const max = 5;
+                // Check total number elements
+                if (total_element < max) {
+                    // Adding new div container after last occurance of element class
+                    $(".element:last").after("<div class='element' id='div_" + nextindex + "'></div>");
+
+                    // Adding element to <div>
+                    $('#div_' + nextindex).append('<br>\n' +
+                        '<button type="button" class="btn btn-danger remove" id="remove_' + nextindex + '">' +
+                        '    <i class="fa fa-minus-circle"></i> Remover' +
+                        '</button>\n' +
+                        '<br><br>\n' +
+                        '<div class="card card-body bg-light" id="multi">\n' +
+                        '    <div class="form-group">\n' +
+                        '        <label for="tpDep_' + nextindex + '">Tipo de dependente:</label>\n' +
+                        '        <select id="tpDep_' + nextindex + '" name="tpDep[]" class="form-control">\n' +
+                        '            <option value="">-- Selecione --</option>\n' +
+                        '            <option value="01">Cônjuge</option>\n' +
+                        '            <option value="02">Companheiro(a) com o(a) qual tenha filho ou viva há mais de 5 (cinco)\n' +
+                        '                anos ou possua Declaração de União Estável\n' +
+                        '            </option>\n' +
+                        '            <option value="03">Filho(a) ou enteado(a)</option>\n' +
+                        '            <option value="04">Filho(a) ou enteado(a) universitário(a) ou cursando escola técnica de\n' +
+                        '                2o grau, até 24 (vinte e quatro) anos\n' +
+                        '            </option>\n' +
+                        '            <option value="06">Irmão(ã), neto(a) ou bisneto(a) sem arrimo dos pais, do(a) qual detenha\n' +
+                        '                a guarda judicial\n' +
+                        '            </option>\n' +
+                        '            <option value="09">Pais, avós e bisavós</option>\n' +
+                        '            <option value="10">Menor pobre do qual detenha a guarda judicial</option>\n' +
+                        '            <option value="11">A pessoa absolutamente incapaz, da qual seja tutor ou curador</option>\n' +
+                        '            <option value="12">Ex-cônjuge</option>\n' +
+                        '            <option value="99">Agregado/Outros</option>' +
+                        '        </select>\n' +
+                        '    </div>\n' +
+                        '    <div class="form-group">\n' +
+                        '        <label for="nmDep_' + nextindex + '">Nome Completo:</label>\n' +
+                        '        <input id="nmDep_' + nextindex + '" name="nmDep[]" class="form-control" maxlength="70" style="text-transform: uppercase">\n' +
+                        '    </div>\n' +
+                        '    <div class="form-group">\n' +
+                        '        <label for="dep_dtNascto_' + nextindex + '">Data de Nascimento:</label>\n' +
+                        '        <input type="date" id="dep_dtNascto_' + nextindex + '" name="dep_dtNascto[]" class="form-control">\n' +
+                        '    </div>\n' +
+                        '    <div class="form-group">\n' +
+                        '        <label for="cpfDep_' + nextindex + '">CPF:</label>\n' +
+                        '        <input id="cpfDep_' + nextindex + '" name="cpfDep[]" class="form-control" onblur="TestaCPF(this)">\n' +
+                        '    </div>\n' +
+                        '    <div class="form-group">\n' +
+                        '        <label for="depIRRF_' + nextindex + '">Dependente IRRF?</label>\n' +
+                        '        <select id="depIRRF_' + nextindex + '" name="depIRRF[]" class="form-control">\n' +
+                        '            <option value="">-- Selecione --</option>\n' +
+                        '            <option value="S">Sim</option>\n' +
+                        '            <option value="N">Não</option>\n' +
+                        '        </select>\n' +
+                        '    </div>\n' +
+                        '    <div class="form-group">\n' +
+                        '        <label for="depSF_' + nextindex + '">Dependente Salário-Família?</label>\n' +
+                        '        <select id="depSF_' + nextindex + '" name="depSF[]" class="form-control">\n' +
+                        '            <option value="">-- Selecione --</option>\n' +
+                        '            <option value="S">Sim</option>\n' +
+                        '            <option value="N">Não</option>\n' +
+                        '        </select>\n' +
+                        '    </div>\n' +
+                        '    <div class="form-group">\n' +
+                        '        <label for="incTrab_' + nextindex + '">Incapacidade física ou mental para o trabalho?</label>\n' +
+                        '        <select id="incTrab_' + nextindex + '" name="incTrab[]" class="form-control">\n' +
+                        '            <option value="">-- Selecione --</option>\n' +
+                        '            <option value="N">Não</option>\n' +
+                        '            <option value="S">Sim</option>\n' +
+                        '        </select>\n' +
+                        '    </div>' +
+                        '</div>');
+                } else {
+                    document.getElementById('add').disabled = true;
+                }
+
+            });
+
+            // Remove element
+            $('.container').on('click', '.remove', function () {
+
+                const id = this.id;
+                const split_id = id.split('_');
+                const deleteindex = split_id[1];
+
+                // Remove <div> with id
+                $(`#div_${deleteindex}`).remove();
+                document.getElementById('add').disabled = false;
+
+            });
+        });
     </script>
 <body>
 <div class="container">
-    <img src="../static/images/alece.png" alt="IMG">
     <div class="page-header">
-        <h2>Recadastramento</h2>
+        <img src="../static/images/alece.png" alt="IMG">
     </div>
-
+    <br><br>
     <form id="form" class="container" method="POST">
         {# Trabalhador #}
         <div class="page-header">
@@ -135,9 +231,10 @@
         <div class="form-group">
             <label for="nmSoc">Nome Social:</label>
             <input id="nmSoc" name="nmSoc" class="form-control" maxlength="70" style="text-transform: uppercase">
-            <small id="nmSocHelp" class="form-text text-muted">Nome social para travesti ou transexual.</small>
+            <small id="nmSocHelp">Nome social para travesti ou transexual.</small>
         </div>
 
+        <br>
         {# Nascimento #}
         <div class="page-header">
             <h3>Informações de Nascimento</h3>
@@ -193,6 +290,7 @@
                    title="Preencher somente com Letras." style="text-transform: uppercase">
         </div>
 
+        <br>
         {# CTPS #}
         <div class="page-header">
             <h3>Informações de Carteira de Trabalho e Previdência Social (CTPS)</h3>
@@ -206,7 +304,7 @@
 
         <div id="collapseCtps" class="collapse">
             <br>
-            <div class="well">
+            <div class="card card-body bg-light">
                 <div class="form-group">
                     <label for="nrCtps">Nº CTPS:</label>
                     <input id="nrCtps" name="nrCtps" class="form-control" title="Preencher somente com Números"
@@ -229,6 +327,7 @@
             </div>
         </div>
 
+        <br>
         {# RG #}
         <div class="page-header">
             <h3>Informações do RG</h3>
@@ -242,13 +341,14 @@
             <label for="rg_orgaoEmissor">Órgão Emissor:</label>
             <input id="rg_orgaoEmissor" name="rg_orgaoEmissor" class="form-control" pattern="^[a-zA-Z\s]*$"
                    title="Preencher somente com Letras." maxlength="20" style="text-transform: uppercase">
-            <small id="rg_orgaoEmissorHelp" class="form-text text-muted">Órgão e UF de emissão.</small>
+            <small id="rg_orgaoEmissorHelp">Órgão e UF de emissão.</small>
         </div>
         <div class="form-group">
             <label for="rg_dtExped">Data de Expedição:</label>
             <input type="date" id="rg_dtExped" name="rg_dtExped" class="form-control">
         </div>
 
+        <br>
         {# OC #}
         <div class="page-header">
             <h3>Informações de Órgão de Classe</h3>
@@ -262,7 +362,7 @@
 
         <div id="collapseOc" class="collapse">
             <br>
-            <div class="well">
+            <div class="card card-body bg-light">
                 <div class="form-group">
                     <label for="nrOc">Nº OC:</label>
                     <input id="nrOc" name="nrOc" class="form-control" maxlength="14">
@@ -271,7 +371,7 @@
                     <label for="oc_orgaoEmissor">Órgão Emissor:</label>
                     <input id="oc_orgaoEmissor" name="oc_orgaoEmissor" class="form-control" maxlength="20"
                            style="text-transform: uppercase">
-                    <small id="oc_orgaoEmissorHelp" class="form-text text-muted">Órgão e UF de emissão.</small>
+                    <small id="oc_orgaoEmissorHelp">Órgão e UF de emissão.</small>
                 </div>
                 <div class="form-group">
                     <label for="oc_dtExped">Data de Expedição:</label>
@@ -284,6 +384,7 @@
             </div>
         </div>
 
+        <br>
         {# CNH #}
         <div class="page-header">
             <h3>Informações de CNH (Obrigatório para Motoristas)</h3>
@@ -297,7 +398,7 @@
 
         <div id="collapseCnh" class="collapse">
             <br>
-            <div class="well">
+            <div class="card card-body bg-light">
                 <div class="form-group">
                     <label for="nrRegCnh">Nº do Registro CNH:</label>
                     <input id="nrRegCnh" name="nrRegCnh" class="form-control" maxlength="12">
@@ -341,6 +442,7 @@
             </div>
         </div>
 
+        <br>
         {# Endereco - Brasil #}
         <div class="page-header">
             <h3>Informações de Endereço Residencial</h3>
@@ -417,7 +519,7 @@
         <div class="form-group">
             <label for="nrLograd">Nº Logradouro:</label>
             <input id="nrLograd" name="nrLograd" class="form-control" maxlength="10" required>
-            <small id="nrLogradHelp" class="form-text text-muted">Em caso de sem número, colocar 0.</small>
+            <small id="nrLogradHelp">Em caso de sem número, colocar 0.</small>
         </div>
         <div class="form-group">
             <label for="complemento">Complemento:</label>
@@ -425,6 +527,7 @@
                    style="text-transform: uppercase">
         </div>
 
+        <br>
         {# Informações de Deficiência #}
         <div class="page-header">
             <h3>Informações de Deficiência</h3>
@@ -477,8 +580,8 @@
                 <option value="N">Não</option>
                 <option value="S">Sim</option>
             </select>
-            <small id="infoCotaHelp" class="form-text text-muted">
-                Reserva legal de cotas é também conhecida como a Lei de Cotas (art. 93 da Lei nº 8.213/91.
+            <small id="infoCotaHelp">
+                Reserva legal de cotas é também conhecida como a Lei de Cotas (art. 93 da Lei nº 8.213/91).
             </small>
         </div>
         <div class="form-group">
@@ -487,6 +590,7 @@
                       style="text-transform: uppercase"></textarea>
         </div>
 
+        <br>
         {# Informações de Dependentes #}
         <div class="page-header">
             <h3>Informações de Dependentes</h3>
@@ -500,71 +604,75 @@
 
         <div id="collapseDep" class="collapse">
             <br>
-            <a class="add-more-btn">Adicionar</a>
+            <button id="add" type="button" class="btn btn-success add"><i class="fa fa-plus-square"></i> Adicionar
+            </button>
             <br><br>
-            <div class="well" id="multi">
-                <div class="form-group">
-                    <label for="tpDep">Tipo de dependente:</label>
-                    <select id="tpDep" name="tpDep[]" class="form-control">
-                        <option value="">-- Selecione --</option>
-                        <option value="01">Cônjuge</option>
-                        <option value="02">Companheiro(a) com o(a) qual tenha filho ou viva há mais de 5 (cinco)
-                            anos ou possua Declaração de União Estável
-                        </option>
-                        <option value="03">Filho(a) ou enteado(a)</option>
-                        <option value="04">Filho(a) ou enteado(a) universitário(a) ou cursando escola técnica de
-                            2o grau, até 24 (vinte e quatro) anos
-                        </option>
-                        <option value="06">Irmão(ã), neto(a) ou bisneto(a) sem arrimo dos pais, do(a) qual detenha
-                            a guarda judicial
-                        </option>
-                        <option value="09">Pais, avós e bisavós</option>
-                        <option value="10">Menor pobre do qual detenha a guarda judicial</option>
-                        <option value="11">A pessoa absolutamente incapaz, da qual seja tutor ou curador</option>
-                        <option value="12">Ex-cônjuge</option>
-                        <option value="99">Agregado/Outros</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="nmDep">Nome Completo:</label>
-                    <input id="nmDep" name="nmDep[]" class="form-control" maxlength="70"
-                           style="text-transform: uppercase">
-                </div>
-                <div class="form-group">
-                    <label for="dep_dtNascto">Data de Nascimento:</label>
-                    <input type="date" id="dep_dtNascto" name="dep_dtNascto[]" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="cpfDep">CPF:</label>
-                    <input id="cpfDep" name="cpfDep[]" class="form-control" onblur="TestaCPF(this)">
-                </div>
-                <div class="form-group">
-                    <label for="depIRRF">Dependente IRRF?</label>
-                    <select id="depIRRF" name="depIRRF[]" class="form-control">
-                        <option value="">-- Selecione --</option>
-                        <option value="S">Sim</option>
-                        <option value="N">Não</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="depSF">Dependente Salário-Família?</label>
-                    <select id="depSF" name="depSF[]" class="form-control">
-                        <option value="">-- Selecione --</option>
-                        <option value="S">Sim</option>
-                        <option value="N">Não</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="incTrab">Incapacidade física ou mental para o trabalho?</label>
-                    <select id="incTrab" name="incTrab[]" class="form-control">
-                        <option value="">-- Selecione --</option>
-                        <option value="N">Não</option>
-                        <option value="S">Sim</option>
-                    </select>
+            <div class="element" id="div_1">
+                <div class="card card-body bg-light" id="multi">
+                    <div class="form-group">
+                        <label for="tpDep">Tipo de dependente:</label>
+                        <select id="tpDep" name="tpDep[]" class="form-control">
+                            <option value="">-- Selecione --</option>
+                            <option value="01">Cônjuge</option>
+                            <option value="02">Companheiro(a) com o(a) qual tenha filho ou viva há mais de 5 (cinco)
+                                anos ou possua Declaração de União Estável
+                            </option>
+                            <option value="03">Filho(a) ou enteado(a)</option>
+                            <option value="04">Filho(a) ou enteado(a) universitário(a) ou cursando escola técnica de
+                                2o grau, até 24 (vinte e quatro) anos
+                            </option>
+                            <option value="06">Irmão(ã), neto(a) ou bisneto(a) sem arrimo dos pais, do(a) qual detenha
+                                a guarda judicial
+                            </option>
+                            <option value="09">Pais, avós e bisavós</option>
+                            <option value="10">Menor pobre do qual detenha a guarda judicial</option>
+                            <option value="11">A pessoa absolutamente incapaz, da qual seja tutor ou curador</option>
+                            <option value="12">Ex-cônjuge</option>
+                            <option value="99">Agregado/Outros</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="nmDep">Nome Completo:</label>
+                        <input id="nmDep" name="nmDep[]" class="form-control" maxlength="70"
+                               style="text-transform: uppercase">
+                    </div>
+                    <div class="form-group">
+                        <label for="dep_dtNascto">Data de Nascimento:</label>
+                        <input type="date" id="dep_dtNascto" name="dep_dtNascto[]" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="cpfDep">CPF:</label>
+                        <input id="cpfDep" name="cpfDep[]" class="form-control" onblur="TestaCPF(this)">
+                    </div>
+                    <div class="form-group">
+                        <label for="depIRRF">Dependente IRRF?</label>
+                        <select id="depIRRF" name="depIRRF[]" class="form-control">
+                            <option value="">-- Selecione --</option>
+                            <option value="S">Sim</option>
+                            <option value="N">Não</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="depSF">Dependente Salário-Família?</label>
+                        <select id="depSF" name="depSF[]" class="form-control">
+                            <option value="">-- Selecione --</option>
+                            <option value="S">Sim</option>
+                            <option value="N">Não</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="incTrab">Incapacidade física ou mental para o trabalho?</label>
+                        <select id="incTrab" name="incTrab[]" class="form-control">
+                            <option value="">-- Selecione --</option>
+                            <option value="N">Não</option>
+                            <option value="S">Sim</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <br>
         {# Informações de Aposentadoria #}
         <div class="page-header">
             <h3>Informações de Aposentadoria</h3>
@@ -577,6 +685,7 @@
             </select>
         </div>
 
+        <br>
         {# Informações de Contato #}
         <div class="page-header">
             <h3>Informações de Contato</h3>
@@ -585,7 +694,6 @@
             <label for="fonePrinc">Fone principal:</label>
             <input id="fonePrinc" name="fonePrinc" class="form-control"
                    pattern="^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$">
-
         </div>
         <div class="form-group">
             <label for="foneAlternat">Fone alternativo:</label>
@@ -603,7 +711,7 @@
         <br>
 
         <button type="submit" class="btn btn-primary">Enviar</button>
-        <br><br><br><br><br><br><br><br>
+        <br><br><br><br><br>
     </form>
 </div>
 <footer class="footer">
