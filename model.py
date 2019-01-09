@@ -91,7 +91,7 @@ class Trabalhador(db.Model):
     emailPrinc = db.Column(db.String(60))
     emailAlternat = db.Column(db.String(60))
 
-    protocolo = db.Column(db.String(14), unique=True)
+    protocolo = db.Column(db.String(14))
 
     def __init__(self, matricula, cpf_trab, nis_trab, nm_trab, sexo, raca_cor, est_civ, grau_instr, ind_pri_empr,
                  nm_soc, dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, nm_pai, nr_ctps, serie_ctps, uf_ctps,

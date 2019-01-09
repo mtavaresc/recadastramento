@@ -49,13 +49,13 @@ def login():
         return render_template("401.html")
 
 
-@app.route("/logout/<page>!<protocolo>")
-def logout(page, protocolo):
+@app.route("/logout/<page>")
+def logout(page):
     session.clear()
 
     try:
         if page == "submit":
-            return render_template("{}.html".format(page), protocolo=protocolo)
+            return render_template("{}.html".format(page))
         else:
             return render_template("401.html")
 
@@ -179,15 +179,14 @@ def protected():
         return redirect(url_for("logout", page="submit", protocolo=protocolo))
     else:
         form = Trabalhador.query.filter_by(matricula=matricula)
+        # Campos preenchidos através da matricula do Pegaso
+        pegaso = Pegaso.query.filter_by(matricula=matricula)
 
         if form.count() > 0:
             # Reject!
             # return redirect(url_for("logout", page="reject", protocolo=form.first().protocolo))
             return redirect(url_for("edit_worker"))
-        else:
-            # Campos preenchidos através da matricula do Pegaso
-            pegaso = Pegaso.query.filter_by(matricula=matricula)
-
+        elif pegaso.count() > 0:
             # Selecionando paises
             cod_paises = [row.codigo for row in Paises.query.all()]
             nome_paises = [row.nome for row in Paises.query.all()]
@@ -209,6 +208,8 @@ def protected():
 
             return render_template("index.html", pegaso=pegaso.first(), paises=paises, estados=estados,
                                    municipios=municipios, tl=tipos_logradouro, bairros=bairros)
+        else:
+            return render_template("401.html")
 
 
 @app.route("/protected/edit", methods=["GET", "POST"])
@@ -291,18 +292,14 @@ def edit_worker():
         fone_alternat = "".join(c for c in str(fone_alternat) if c not in "()- ")
         email_princ = request.form.get("emailPrinc")
         email_alternat = request.form.get("emailAlternat")
-        # Protocolo
-        protocolo = str(matricula) + date.today().strftime("%Y%m%d")
 
-        # Trabalhador.query.filter_by(matricula=matricula).update({'sexo': sexo, 'racaCor': raca_cor, 'estCiv': est_civ,
-        #                                                          'grauInstr': grau_instr, 'indPriEmpr': ind_pri_empr})
         c = Trabalhador(matricula, cpf_trab, nis_trab, nm_trab, sexo, raca_cor, est_civ, grau_instr, ind_pri_empr,
                         nm_soc, dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, nm_pai, nr_ctps, serie_ctps,
                         uf_ctps, nr_rg, rg_orgao_emissor, rg_dt_exped, nr_oc, oc_orgao_emissor, oc_dt_exped,
                         oc_dt_valid, nr_reg_cnh, cnh_dt_exped, uf_cnh, cnh_dt_valid, dt_pri_hab, categoria_cnh,
                         tp_lograd, dsc_lograd, nr_lograd, complemento, bairro, cep, end_cod_munic, end_uf, def_fisica,
                         def_visual, def_auditiva, def_mental, def_intelectual, def_readap, info_cota, observacao,
-                        trab_aposent, fone_princ, fone_alternat, email_princ, email_alternat, protocolo)
+                        trab_aposent, fone_princ, fone_alternat, email_princ, email_alternat, None)
 
         db.session.merge(c)
         db.session.commit()
@@ -329,7 +326,7 @@ def edit_worker():
             raise
 
         # Logout!
-        return redirect(url_for("logout", page="submit", protocolo=protocolo))
+        return redirect(url_for("logout", page="submit"))
 
     try:
         trabalhador = Trabalhador.query.filter_by(matricula=matricula).first()
@@ -363,16 +360,29 @@ def edit_worker():
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
     check_login()
-    adm = db.session.query(User.nome, Trabalhador.protocolo). \
+
+    if request.method == "POST":
+        protocolo = request.form.get("protocol")
+        matr = protocolo[:6]
+
+        Trabalhador.query.filter_by(matricula=matr).update({'protocolo': protocolo})
+        db.session.commit()
+
+    adm = db.session.query(User.nome, Trabalhador.protocolo, Trabalhador.sexo). \
         outerjoin(Trabalhador, User.matricula == Trabalhador.matricula). \
         filter(User.matricula == session.get("matricula")).first()
 
     # Pendente
     p = db.session.query(Pegaso).filter(Pegaso.matricula.notin_(db.session.query(Trabalhador.matricula))).count()
+    # Em análise
+    ea = db.session.query(Trabalhador).filter(Trabalhador.protocolo == None).count()
     # Realizado
-    r = Trabalhador.query
+    r = db.session.query(Trabalhador).filter(Trabalhador.protocolo != None).count()
 
-    return render_template("admin/index.html", adm=adm, pendente=p, realizado=r.count(), data=r)
+    w = Trabalhador.query
+
+    return render_template("admin/index.html", adm=adm, pendente=p, realizado=r, em_analise=ea, data=w,
+                           date=date.today().strftime("%Y%m%d"))
 
 
 @app.route("/admin/worker/<matricula>", methods=["GET", "POST"])
@@ -381,6 +391,10 @@ def admin_edit_worker(matricula):
 
     # Worker
     worker = Trabalhador.query.filter_by(matricula=matricula)
+
+    if worker.count() == 0:
+        return render_template("401.html")
+
     # Dependents
     dependents = Dependentes.query.filter_by(matrTab=matricula).all()
 
@@ -402,9 +416,6 @@ def admin_edit_worker(matricula):
     tipos_logradouro = dict(zip(cod_tl, nome_tl))
     # Selecionando bairros
     bairros = [row.nome for row in db.session.query(Bairros.nome).distinct().order_by(Bairros.nome).all()]
-
-    if worker.count() == 0:
-        return render_template("401.html")
 
     return render_template("admin/edit.html", worker=worker.first(), dependents=dependents, paises=paises,
                            estados=estados,

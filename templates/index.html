@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="../static/css/fontawesome-all.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/css/sticky-footer-navbar.css">
+    <link rel="stylesheet" href="../static/admin/assets/scss/style.css">
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -32,7 +33,7 @@
             $('#cep').mask('00000-000');
             $('#cpfDep').mask('000.000.000-00');
             $('#fonePrinc').mask('(00) 00000-0000');
-            $('#foneAlternat').mask('(00) 00000-0000');
+            $('#foneAlternat').mask('(00) 0000-0000');
         });
 
         $(document).ready(function () {
@@ -178,14 +179,16 @@
         </div>
         <div class="form-group">
             <label for="sexo">Sexo:</label>
-            <select id="sexo" name="sexo" class="form-control">
+            <select id="sexo" name="sexo" class="form-control" required>
+                <option value="">-- Selecione --</option>
                 <option value="M">Masculino</option>
                 <option value="F">Feminino</option>
             </select>
         </div>
         <div class="form-group">
             <label for="racaCor">Raça/Cor:</label>
-            <select id="racaCor" name="racaCor" class="form-control">
+            <select id="racaCor" name="racaCor" class="form-control" required>
+                <option value="">-- Selecione --</option>
                 <option value="1">Branca</option>
                 <option value="2">Preta</option>
                 <option value="3">Parda</option>
@@ -196,7 +199,8 @@
         </div>
         <div class="form-group">
             <label for="estCiv">Estado Civil:</label>
-            <select id="estCiv" name="estCiv" class="form-control">
+            <select id="estCiv" name="estCiv" class="form-control" required>
+                <option value="">-- Selecione --</option>
                 <option value="1">Solteiro(a)</option>
                 <option value="2">Casado(a)</option>
                 <option value="3">Divorciado(a)</option>
@@ -206,7 +210,8 @@
         </div>
         <div class="form-group">
             <label for="grauInstr">Grau de Instrução:</label>
-            <select id="grauInstr" name="grauInstr" class="form-control">
+            <select id="grauInstr" name="grauInstr" class="form-control" required>
+                <option value="">-- Selecione --</option>
                 <option value="01">Analfabeto</option>
                 <option value="02">Até o 5º ano incompleto do Ensino Fundamental (antiga 4ª série)</option>
                 <option value="03">5o ano completo do Ensino Fundamental</option>
@@ -242,7 +247,7 @@
         {# Origem tabela "paises" #}
         <div class="form-group">
             <label for="paisNac">País Nacionalidade:</label>
-            <select id="paisNac" name="paisNac" class="form-control">
+            <select id="paisNac" name="paisNac" class="form-control" required>
                 <option value="">-- Selecione --</option>
                 {% for x in paises %}
                     <option value="{{ x }}" {% if paises[x] == "Brasil" %} selected {% endif %}>{{ paises[x] }}</option>
@@ -252,7 +257,7 @@
         {# Origem tabela "paises" #}
         <div class="form-group">
             <label for="paisNascto">País Nascimento:</label>
-            <select id="paisNascto" name="paisNascto" class="form-control">
+            <select id="paisNascto" name="paisNascto" class="form-control" required>
                 <option value="">-- Selecione --</option>
                 {% for x in paises %}
                     <option value="{{ x }}" {% if paises[x] == "Brasil" %} selected {% endif %}>{{ paises[x] }}</option>
@@ -262,12 +267,12 @@
         {# Se pais nascimento selecionado = "Brasil" #}
         <div class="form-group">
             <label for="uf">Estado:</label>
-            <select id="uf" name="uf" class="form-control" value="CE">
+            <select id="uf" name="uf" class="form-control" value="CE" required>
             </select>
         </div>
         <div class="form-group">
             <label for="codMunic">Município:</label>
-            <select id="codMunic" name="codMunic" class="form-control">
+            <select id="codMunic" name="codMunic" class="form-control" required>
             </select>
         </div>
         <script charset="utf-8">
@@ -283,6 +288,7 @@
                    title="Preencher somente com Letras." style="text-transform: uppercase">
 
         </div>
+        {# TODO: Incluir input CPF Pais #}
         <div class="form-group">
             <label for="nmPai">Nome Pai:</label>
             <input id="nmPai" name="nmPai" class="form-control" pattern="^[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇ\s]*$"
@@ -345,7 +351,7 @@
         </div>
         <div class="form-group">
             <label for="rg_dtExped">Data de Expedição:</label>
-            <input type="date" id="rg_dtExped" name="rg_dtExped" class="form-control">
+            <input type="date" id="rg_dtExped" name="rg_dtExped" class="form-control" required>
         </div>
 
         <br>
@@ -464,21 +470,27 @@
         <div class="form-group">
             <label for="end_uf">Estado:</label>
             <select id="end_uf" name="end_uf" class="form-control">
-                <option value="">-- Selecione --</option>
-                {% for x in estados %}
-                    <option value="{{ x }}">{{ estados[x] }}</option>
-                {% endfor %}
+                {#                <option value="">-- Selecione --</option>#}
+                {#                {% for x in estados %}#}
+                {#                    <option value="{{ x }}">{{ estados[x] }}</option>#}
+                {#                {% endfor %}#}
             </select>
         </div>
         <div class="form-group">
             <label for="end_codMunic">Município:</label>
             <select id="end_codMunic" name="end_codMunic" class="form-control">
-                <option value="">-- Selecione --</option>
-                {% for x in municipios %}
-                    <option value="{{ x }}">{{ municipios[x] }}</option>
-                {% endfor %}
+                {#                <option value="">-- Selecione --</option>#}
+                {#                {% for x in municipios %}#}
+                {#                    <option value="{{ x }}">{{ municipios[x] }}</option>#}
+                {#                {% endfor %}#}
             </select>
         </div>
+        <script charset="utf-8">
+            new dgCidadesEstados({
+                cidade: document.getElementById('end_codMunic'),
+                estado: document.getElementById('end_uf')
+            })
+        </script>
         <div class="form-group">
             <label for="bairro">Bairro:</label>
             <input id="bairro" name="bairro" class="form-control" maxlength="80" style="text-transform: uppercase">
@@ -691,12 +703,12 @@
             <h3>Informações de Contato</h3>
         </div>
         <div class="form-group">
-            <label for="fonePrinc">Fone principal:</label>
+            <label for="fonePrinc">Celular principal:</label>
             <input id="fonePrinc" name="fonePrinc" class="form-control"
                    pattern="^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$">
         </div>
         <div class="form-group">
-            <label for="foneAlternat">Fone alternativo:</label>
+            <label for="foneAlternat">Fone fixo:</label>
             <input id="foneAlternat" name="foneAlternat" class="form-control">
         </div>
         <div class="form-group">
@@ -708,6 +720,52 @@
             <input type="email" id="emailAlternat" name="emailAlternat" class="form-control" maxlength="60">
         </div>
 
+        <br>
+        {#        <div class="form-group">#}
+        {#            <label for="agree"></label>#}
+        {#            <input type="checkbox" name="agree" value="check" id="agree"/>#}
+        {#            Declaro que as informações constantes nesta Ficha de Dados Cadastrais são verdadeiras.#}
+        {##}
+        {#            <!-- Button trigger modal -->#}
+        {#            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal">#}
+        {#                Launch demo modal#}
+        {#            </button>#}
+        {##}
+        {#            <!-- Modal -->#}
+        {#            <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"#}
+        {#                 aria-hidden="true">#}
+        {#                <div class="modal-dialog" role="document">#}
+        {#                    <div class="modal-content">#}
+        {#                        <div class="modal-header">#}
+        {#                            <h5 class="modal-title" id="ModalLabel">Declaração</h5>#}
+        {#                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+        {#                                <span aria-hidden="true">&times;</span>#}
+        {#                            </button>#}
+        {#                        </div>#}
+        {#                        <div class="modal-body">#}
+        {#                            <p>Declaro que as informações constantes nesta Ficha de Dados Cadastrais são verdadeiras,#}
+        {#                                estando ciente de que a prestação de informações falsas está sujeita às penalidades#}
+        {#                                previstas no art. 299 do Código Penal Brasileiro.</p>#}
+        {##}
+        {#                            <p><b>Art. 299</b> – <i>Omitir, em documento público ou particular, declaração que dele#}
+        {#                                devia constar, ou nele inserir ou fazer inserir declaração falsa ou diversa da que devia#}
+        {#                                ser escrita, com o fim de prejudicar direito, criar obrigação ou alterar a verdade sobre#}
+        {#                                fato juridicamente relevante.</i></p>#}
+        {#                            <p><b>Pena</b>: <i>reclusão, de um a cinco anos, e multa, se o documento é público, e#}
+        {#                                reclusão de um a três#}
+        {#                                anos, e multa, se o documento é particular.</i></p>#}
+        {#                            <p><b>Parágrafo único</b> – <i>Se o agente é funcionário público, e comete o crime#}
+        {#                                prevalecendo-se do cargo, ou se a falsificação ou alteração é de assentamento de#}
+        {#                                registro civil, aumenta-se a pena de sexta parte.</i></p>#}
+        {#                        </div>#}
+        {#                        <div class="modal-footer">#}
+        {#                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>#}
+        {#                            <button type="button" class="btn btn-primary">Aceito</button>#}
+        {#                        </div>#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#        </div>#}
         <br>
 
         <button type="submit" class="btn btn-primary">Enviar</button>
