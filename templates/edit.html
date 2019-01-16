@@ -31,8 +31,11 @@
             const element = document.getElementById("fieldset-form");
             element.disabled = !element.disabled;
         }
+
         jQuery(function () {
             $('#cpfTrab').mask('000.000.000-00');
+            $('#cpfMae').mask('000.000.000-00');
+            $('#cpfPai').mask('000.000.000-00');
             $('#nisTrab').mask('000.0000.000-0');
             $('#cep').mask('00000-000');
             $('#cpfDep').mask('000.000.000-00');
@@ -66,7 +69,7 @@
     <br><br>
     <div class="alert alert-warning">
         <strong>
-            Já existe formulário preenchido para esta matrícula! Seu número de protocolo é {{ t.protocolo }}.
+            Já existe formulário preenchido para esta matrícula! Seu formulário está em análise junto ao DRH.
         </strong>
     </div>
     <br>
@@ -76,12 +79,14 @@
         <input type="checkbox" class="switch-input" onclick="toggleEdit()">
         <span class="switch-label"></span> <span class="switch-handle"></span>
     </label> Habilitar Edição
+    <br><br>
     <form class="container" method="POST">
         <fieldset id="fieldset-form" disabled>
             {# Trabalhador #}
             <div class="page-header">
                 <h3>Informações do Trabalhador</h3>
             </div>
+            <br>
             <div class="form-group">
                 <label for="cpfTrab">*CPF: </label>
                 <input id="cpfTrab" name="cpfTrab" class="form-control" value="{{ t.cpfTrab }}" readonly>
@@ -169,10 +174,12 @@
                 <small id="nmSocHelp" class="form-text text-muted">Nome social para travesti ou transexual.</small>
             </div>
 
+            <br>
             {# Nascimento #}
             <div class="page-header">
                 <h3>Informações de Nascimento</h3>
             </div>
+            <br>
             {# Origem tabela "paises" #}
             <div class="form-group">
                 <label for="paisNac">País Nacionalidade:</label>
@@ -211,6 +218,12 @@
                     {% endfor %}
                 </select>
             </div>
+{#            <script charset="utf-8">#}
+{#                new dgCidadesEstados({#}
+{#                    cidade: document.getElementById('codMunic'),#}
+{#                    estado: document.getElementById('uf')#}
+{#                })#}
+{#            </script>#}
             <div class="form-group">
                 <label for="nmMae">Nome Mãe:</label>
                 <input id="nmMae" name="nmMae" class="form-control" pattern="^[a-zA-Z\s]*$" maxlength="70"
@@ -218,41 +231,56 @@
 
             </div>
             <div class="form-group">
+                <label for="cpfMae">CPF Mãe: </label>
+                <input id="cpfMae" name="cpfMae" class="form-control" value="{{ t.cpfMae }}">
+            </div>
+            <div class="form-group">
                 <label for="nmPai">Nome Pai:</label>
                 <input id="nmPai" name="nmPai" class="form-control" pattern="^[a-zA-Z\s]*$" maxlength="70"
                        title="Preencher somente com Letras." style="text-transform: uppercase" value="{{ t.nmPai }}">
             </div>
+            <div class="form-group">
+                <label for="cpfPai">CPF Pai: </label>
+                <input id="cpfPai" name="cpfPai" class="form-control" value="{{ t.cpfPai }}">
+            </div>
 
             {# CTPS #}
             {% if t.nrCtps != None %}
+                <br>
                 <div class="page-header">
-                    <h3>Informações de CTPS</h3>
+                    <h3>Informações de Carteira de Trabalho e Previdência Social (CTPS)</h3>
                 </div>
-                <div class="form-group">
-                    <label for="nrCtps">Nº CTPS:</label>
-                    <input id="nrCtps" name="nrCtps" class="form-control" title="Preencher somente com Números"
-                           maxlength="11" value="{{ t.nrCtps if t.nrCtps != None }}">
-                </div>
-                <div class="form-group">
-                    <label for="serieCtps">Série CTPS:</label>
-                    <input id="serieCtps" name="serieCtps" class="form-control" title="Preencher somente com Números"
-                           maxlength="5" value="{{ t.serieCtps if t.serieCtps != None }}">
-                </div>
-                <div class="form-group">
-                    <label for="ufCtps">UF CTPS:</label>
-                    <select id="ufCtps" name="ufCtps" class="form-control">
-                        <option value="">-- Selecione --</option>
-                        {% for x in estados %}
-                            <option value="{{ x }}" {% if x == t.ufCtps %}selected{% endif %}>{{ x }}</option>
-                        {% endfor %}
-                    </select>
+                <br>
+                <div class="card card-body bg-light">
+                    <div class="form-group">
+                        <label for="nrCtps">Nº CTPS:</label>
+                        <input id="nrCtps" name="nrCtps" class="form-control" title="Preencher somente com Números"
+                               maxlength="11" value="{{ t.nrCtps if t.nrCtps != None }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="serieCtps">Série CTPS:</label>
+                        <input id="serieCtps" name="serieCtps" class="form-control"
+                               title="Preencher somente com Números"
+                               maxlength="5" value="{{ t.serieCtps if t.serieCtps != None }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="ufCtps">UF CTPS:</label>
+                        <select id="ufCtps" name="ufCtps" class="form-control">
+                            <option value="">-- Selecione --</option>
+                            {% for x in estados %}
+                                <option value="{{ x }}" {% if x == t.ufCtps %}selected{% endif %}>{{ x }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
             {% endif %}
 
+            <br>
             {# RG #}
             <div class="page-header">
                 <h3>Informações do RG</h3>
             </div>
+            <br>
             <div class="form-group">
                 <label for="nrRg">Nº RG:</label>
                 <input id="nrRg" name="nrRg" class="form-control" pattern="^[0-9]*$"
@@ -272,12 +300,12 @@
 
             {# OC #}
             {% if t.nrOc != None %}
-
+                <br>
                 <div class="page-header">
                     <h3>Informações de Órgão de Classe</h3>
                 </div>
                 <br>
-                <div class="well">
+                <div class="card card-body bg-light">
                     <div class="form-group">
                         <label for="nrOc">Nº OC:</label>
                         <input id="nrOc" name="nrOc" class="form-control" maxlength="14"
@@ -305,12 +333,12 @@
 
             {# CNH #}
             {% if t.nrRegCnh != None %}
-
+                <br>
                 <div class="page-header">
-                    <h3>Informações de CNH</h3>
+                    <h3>Informações de CNH (Obrigatório para Motoristas)</h3>
                 </div>
                 <br>
-                <div class="well">
+                <div class="card card-body bg-light">
                     <div class="form-group">
                         <label for="nrRegCnh">Nº do Registro CNH:</label>
                         <input id="nrRegCnh" name="nrRegCnh" class="form-control" maxlength="12"
@@ -358,10 +386,12 @@
                 </div>
             {% endif %}
 
+            <br>
             {# Endereco - Brasil #}
             <div class="page-header">
                 <h3>Informações de Endereço Residencial</h3>
             </div>
+            <br>
             <div class="form-group">
                 <label for="paisResid">País Residência:</label>
                 <select id="paisResid" name="paisResid" class="form-control">
@@ -395,6 +425,12 @@
                     {% endfor %}
                 </select>
             </div>
+{#            <script charset="utf-8">#}
+{#                new dgCidadesEstados({#}
+{#                    cidade: document.getElementById('end_codMunic'),#}
+{#                    estado: document.getElementById('end_uf')#}
+{#                })#}
+{#            </script>#}
             <div class="form-group">
                 <label for="bairro">Bairro:</label>
                 <input id="bairro" name="bairro" class="form-control" maxlength="80" style="text-transform: uppercase"
@@ -444,10 +480,12 @@
                        style="text-transform: uppercase" value="{{ t.complemento if t.complemento != None }}">
             </div>
 
+            <br>
             {# Informações de Deficiência #}
             <div class="page-header">
                 <h3>Informações de Deficiência</h3>
             </div>
+            <br>
             <div class="form-group">
                 <label for="defFisica">Deficiência física?</label>
                 <select id="defFisica" name="defFisica" class="form-control">
@@ -491,11 +529,14 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="infoCota">Cota PCD?</label>
+                <label for="infoCota">Cota Pessoa com Deficiência (PCD)?</label>
                 <select id="infoCota" name="infoCota" class="form-control">
                     <option value="N" {% if t.defReadap == "N" %}selected{% endif %}>Não</option>
                     <option value="S" {% if t.defReadap == "S" %}selected{% endif %}>Sim</option>
                 </select>
+                <small id="infoCotaHelp">
+                    Reserva legal de cotas é também conhecida como a Lei de Cotas (art. 93 da Lei nº 8.213/91).
+                </small>
             </div>
             <div class="form-group">
                 <label for="observacao">Observação:</label>
@@ -503,13 +544,15 @@
                           style="text-transform: uppercase">{{ t.observacao if t.observacao != None }}</textarea>
             </div>
 
+            <br>
             {# Informações de Dependentes #}
             <div class="page-header">
                 <h3>Informações de Dependentes</h3>
             </div>
+            <br>
             {% for d in dependentes %}
                 <br>
-                <div class="well" id="multi">
+                <div class="card card-body bg-light" id="multi">
                     <div class="form-group">
                         <label for="tpDep">Tipo de dependente:</label>
                         <select id="tpDep" name="tpDep[]" class="form-control">
@@ -585,10 +628,12 @@
                 </div>
             {% endfor %}
 
+            <br>
             {# Informações de Aposentadoria #}
             <div class="page-header">
                 <h3>Informações de Aposentadoria</h3>
             </div>
+            <br>
             <div class="form-group">
                 <label for="trabAposent">Aposentado por tempo de contribuição ou idade?</label>
                 <select id="trabAposent" name="trabAposent" class="form-control">
@@ -597,10 +642,12 @@
                 </select>
             </div>
 
+            <br>
             {# Informações de Contato #}
             <div class="page-header">
                 <h3>Informações de Contato</h3>
             </div>
+            <br>
             <div class="form-group">
                 <label for="fonePrinc">Fone principal:</label>
                 <input id="fonePrinc" name="fonePrinc" class="form-control"

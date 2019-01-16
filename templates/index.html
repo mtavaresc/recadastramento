@@ -29,6 +29,8 @@
     <script>
         jQuery(function () {
             $('#cpfTrab').mask('000.000.000-00');
+            $('#cpfMae').mask('000.000.000-00');
+            $('#cpfPai').mask('000.000.000-00');
             $('#nisTrab').mask('000.0000.000-0');
             $('#cep').mask('00000-000');
             $('#cpfDep').mask('000.000.000-00');
@@ -149,6 +151,11 @@
 
             });
         });
+
+        function Agree() {
+            const element = document.getElementById("enviar");
+            element.disabled = !element.disabled;
+        }
     </script>
 <body>
 <div class="container">
@@ -161,6 +168,7 @@
         <div class="page-header">
             <h3>Informações do Trabalhador</h3>
         </div>
+        <br>
         <div class="form-group">
             <label for="cpfTrab">*CPF: </label>
             <input id="cpfTrab" name="cpfTrab" class="form-control" value="{{ pegaso.cpf }}" readonly>
@@ -244,6 +252,7 @@
         <div class="page-header">
             <h3>Informações de Nascimento</h3>
         </div>
+        <br>
         {# Origem tabela "paises" #}
         <div class="form-group">
             <label for="paisNac">País Nacionalidade:</label>
@@ -288,12 +297,19 @@
                    title="Preencher somente com Letras." style="text-transform: uppercase">
 
         </div>
-        {# TODO: Incluir input CPF Pais #}
+        <div class="form-group">
+            <label for="cpfMae">CPF Mãe: </label>
+            <input id="cpfMae" name="cpfMae" class="form-control">
+        </div>
         <div class="form-group">
             <label for="nmPai">Nome Pai:</label>
             <input id="nmPai" name="nmPai" class="form-control" pattern="^[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇ\s]*$"
                    maxlength="70"
                    title="Preencher somente com Letras." style="text-transform: uppercase">
+        </div>
+        <div class="form-group">
+            <label for="cpfPai">CPF Pai: </label>
+            <input id="cpfPai" name="cpfPai" class="form-control">
         </div>
 
         <br>
@@ -301,6 +317,7 @@
         <div class="page-header">
             <h3>Informações de Carteira de Trabalho e Previdência Social (CTPS)</h3>
         </div>
+        <br>
         <div class="form-check">
             <label for="showCtps" data-toggle="collapse" data-target="#collapseCtps">
                 <input id="showCtps" type="checkbox" class="form-check-input" onclick="requiredCtps()">
@@ -338,6 +355,7 @@
         <div class="page-header">
             <h3>Informações do RG</h3>
         </div>
+        <br>
         <div class="form-group">
             <label for="nrRg">Nº RG:</label>
             <input id="nrRg" name="nrRg" class="form-control" pattern="^[0-9]*$"
@@ -359,6 +377,7 @@
         <div class="page-header">
             <h3>Informações de Órgão de Classe</h3>
         </div>
+        <br>
         <div class="form-check">
             <label for="showOc" data-toggle="collapse" data-target="#collapseOc">
                 <input id="showOc" type="checkbox" class="form-check-input" onclick="requiredOC()">
@@ -395,6 +414,7 @@
         <div class="page-header">
             <h3>Informações de CNH (Obrigatório para Motoristas)</h3>
         </div>
+        <br>
         <div class="form-check">
             <label for="showCnh" data-toggle="collapse" data-target="#collapseCnh">
                 <input id="showCnh" type="checkbox" class="form-check-input" onclick="requiredCNH()">
@@ -453,6 +473,7 @@
         <div class="page-header">
             <h3>Informações de Endereço Residencial</h3>
         </div>
+        <br>
         <div class="form-group">
             <label for="paisResid">País Residência:</label>
             <select id="paisResid" name="paisResid" class="form-control">
@@ -497,7 +518,7 @@
         </div>
         <div class="form-group">
             <label for="tpLograd">Tipo Logradouro:</label>
-            <select id="tpLograd" name="tpLograd" class="form-control">
+            <select id="tpLograd" name="tpLograd" class="form-control" required>
                 <option value="">-- Selecione --</option>
                 <option value="AL">Alameda</option>
                 <option value="AV">Avenida</option>
@@ -544,6 +565,7 @@
         <div class="page-header">
             <h3>Informações de Deficiência</h3>
         </div>
+        <br>
         <div class="form-group">
             <label for="defFisica">Deficiência física?</label>
             <select id="defFisica" name="defFisica" class="form-control">
@@ -607,6 +629,7 @@
         <div class="page-header">
             <h3>Informações de Dependentes</h3>
         </div>
+        <br>
         <div class="form-check">
             <label for="showDep" data-toggle="collapse" data-target="#collapseDep">
                 <input id="showDep" type="checkbox" class="form-check-input" onclick="requiredDep()">
@@ -689,6 +712,7 @@
         <div class="page-header">
             <h3>Informações de Aposentadoria</h3>
         </div>
+        <br>
         <div class="form-group">
             <label for="trabAposent">Aposentado por tempo de contribuição ou idade?</label>
             <select id="trabAposent" name="trabAposent" class="form-control">
@@ -702,6 +726,7 @@
         <div class="page-header">
             <h3>Informações de Contato</h3>
         </div>
+        <br>
         <div class="form-group">
             <label for="fonePrinc">Celular principal:</label>
             <input id="fonePrinc" name="fonePrinc" class="form-control"
@@ -719,56 +744,35 @@
             <label for="emailAlternat">E-mail alternativo:</label>
             <input type="email" id="emailAlternat" name="emailAlternat" class="form-control" maxlength="60">
         </div>
+        <div class="form-group">
+            <label>Declaração:</label>
+            <div style="border: 1px solid #e5e5e5; height: 255px; overflow: auto; padding: 10px;">
+                <p>Declaro que as informações constantes nesta Ficha de Dados Cadastrais são verdadeiras,
+                    estando ciente de que a prestação de informações falsas está sujeita às penalidades
+                    previstas no art. 299 do Código Penal Brasileiro.</p>
 
-        <br>
-        {#        <div class="form-group">#}
-        {#            <label for="agree"></label>#}
-        {#            <input type="checkbox" name="agree" value="check" id="agree"/>#}
-        {#            Declaro que as informações constantes nesta Ficha de Dados Cadastrais são verdadeiras.#}
-        {##}
-        {#            <!-- Button trigger modal -->#}
-        {#            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal">#}
-        {#                Launch demo modal#}
-        {#            </button>#}
-        {##}
-        {#            <!-- Modal -->#}
-        {#            <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"#}
-        {#                 aria-hidden="true">#}
-        {#                <div class="modal-dialog" role="document">#}
-        {#                    <div class="modal-content">#}
-        {#                        <div class="modal-header">#}
-        {#                            <h5 class="modal-title" id="ModalLabel">Declaração</h5>#}
-        {#                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
-        {#                                <span aria-hidden="true">&times;</span>#}
-        {#                            </button>#}
-        {#                        </div>#}
-        {#                        <div class="modal-body">#}
-        {#                            <p>Declaro que as informações constantes nesta Ficha de Dados Cadastrais são verdadeiras,#}
-        {#                                estando ciente de que a prestação de informações falsas está sujeita às penalidades#}
-        {#                                previstas no art. 299 do Código Penal Brasileiro.</p>#}
-        {##}
-        {#                            <p><b>Art. 299</b> – <i>Omitir, em documento público ou particular, declaração que dele#}
-        {#                                devia constar, ou nele inserir ou fazer inserir declaração falsa ou diversa da que devia#}
-        {#                                ser escrita, com o fim de prejudicar direito, criar obrigação ou alterar a verdade sobre#}
-        {#                                fato juridicamente relevante.</i></p>#}
-        {#                            <p><b>Pena</b>: <i>reclusão, de um a cinco anos, e multa, se o documento é público, e#}
-        {#                                reclusão de um a três#}
-        {#                                anos, e multa, se o documento é particular.</i></p>#}
-        {#                            <p><b>Parágrafo único</b> – <i>Se o agente é funcionário público, e comete o crime#}
-        {#                                prevalecendo-se do cargo, ou se a falsificação ou alteração é de assentamento de#}
-        {#                                registro civil, aumenta-se a pena de sexta parte.</i></p>#}
-        {#                        </div>#}
-        {#                        <div class="modal-footer">#}
-        {#                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>#}
-        {#                            <button type="button" class="btn btn-primary">Aceito</button>#}
-        {#                        </div>#}
-        {#                    </div>#}
-        {#                </div>#}
-        {#            </div>#}
-        {#        </div>#}
-        <br>
+                <p><b>Art. 299</b> – <i>Omitir, em documento público ou particular, declaração que dele
+                    devia constar, ou nele inserir ou fazer inserir declaração falsa ou diversa da que devia
+                    ser escrita, com o fim de prejudicar direito, criar obrigação ou alterar a verdade sobre
+                    fato juridicamente relevante.</i></p>
+                <p><b>Pena</b>: <i>reclusão, de um a cinco anos, e multa, se o documento é público, e
+                    reclusão de um a três
+                    anos, e multa, se o documento é particular.</i></p>
+                <p><b>Parágrafo único</b> – <i>Se o agente é funcionário público, e comete o crime
+                    prevalecendo-se do cargo, ou se a falsificação ou alteração é de assentamento de
+                    registro civil, aumenta-se a pena de sexta parte.</i></p>
+            </div>
+        </div>
 
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <div class="form-group">
+            <label for="agree">
+                <input type="checkbox" id="agree" onclick="Agree()"/> Aceito os termos e condições
+            </label>
+        </div>
+
+        <br><br>
+
+        <button type="submit" id="enviar" class="btn btn-primary" disabled>Enviar</button>
         <br><br><br><br><br>
     </form>
 </div>

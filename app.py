@@ -89,7 +89,9 @@ def protected():
         pais_nascto = request.form.get("paisNascto")
         pais_nac = request.form.get("paisNac")
         nm_mae = request.form.get("nmMae")
+        cpf_mae = request.form.get("cpfMae")
         nm_pai = request.form.get("nmPai")
+        cpf_pai = request.form.get("cpfPai")
         # CTPS
         nr_ctps = request.form.get("nrCtps")
         serie_ctps = request.form.get("serieCtps")
@@ -147,12 +149,13 @@ def protected():
         protocolo = str(matricula) + date.today().strftime("%Y%m%d")
 
         c = Trabalhador(matricula, cpf_trab, nis_trab, nm_trab, sexo, raca_cor, est_civ, grau_instr, ind_pri_empr,
-                        nm_soc, dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, nm_pai, nr_ctps, serie_ctps,
-                        uf_ctps, nr_rg, rg_orgao_emissor, rg_dt_exped, nr_oc, oc_orgao_emissor, oc_dt_exped,
-                        oc_dt_valid, nr_reg_cnh, cnh_dt_exped, uf_cnh, cnh_dt_valid, dt_pri_hab, categoria_cnh,
-                        tp_lograd, dsc_lograd, nr_lograd, complemento, bairro, cep, end_cod_munic, end_uf, def_fisica,
-                        def_visual, def_auditiva, def_mental, def_intelectual, def_readap, info_cota, observacao,
-                        trab_aposent, fone_princ, fone_alternat, email_princ, email_alternat, protocolo)
+                        nm_soc, dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, cpf_mae, nm_pai, cpf_pai,
+                        nr_ctps, serie_ctps, uf_ctps, nr_rg, rg_orgao_emissor, rg_dt_exped, nr_oc, oc_orgao_emissor,
+                        oc_dt_exped, oc_dt_valid, nr_reg_cnh, cnh_dt_exped, uf_cnh, cnh_dt_valid, dt_pri_hab,
+                        categoria_cnh, tp_lograd, dsc_lograd, nr_lograd, complemento, bairro, cep, end_cod_munic,
+                        end_uf, def_fisica, def_visual, def_auditiva, def_mental, def_intelectual, def_readap,
+                        info_cota, observacao, trab_aposent, fone_princ, fone_alternat, email_princ, email_alternat,
+                        protocolo)
         db.session.merge(c)
         db.session.commit()
 
@@ -238,7 +241,9 @@ def edit_worker():
         pais_nascto = request.form.get("paisNascto")
         pais_nac = request.form.get("paisNac")
         nm_mae = request.form.get("nmMae")
+        cpf_mae = request.form.get("cpfMae")
         nm_pai = request.form.get("nmPai")
+        cpf_pai = request.form.get("cpfPai")
         # CTPS
         nr_ctps = request.form.get("nrCtps")
         serie_ctps = request.form.get("serieCtps")
@@ -294,12 +299,13 @@ def edit_worker():
         email_alternat = request.form.get("emailAlternat")
 
         c = Trabalhador(matricula, cpf_trab, nis_trab, nm_trab, sexo, raca_cor, est_civ, grau_instr, ind_pri_empr,
-                        nm_soc, dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, nm_pai, nr_ctps, serie_ctps,
-                        uf_ctps, nr_rg, rg_orgao_emissor, rg_dt_exped, nr_oc, oc_orgao_emissor, oc_dt_exped,
-                        oc_dt_valid, nr_reg_cnh, cnh_dt_exped, uf_cnh, cnh_dt_valid, dt_pri_hab, categoria_cnh,
-                        tp_lograd, dsc_lograd, nr_lograd, complemento, bairro, cep, end_cod_munic, end_uf, def_fisica,
-                        def_visual, def_auditiva, def_mental, def_intelectual, def_readap, info_cota, observacao,
-                        trab_aposent, fone_princ, fone_alternat, email_princ, email_alternat, None)
+                        nm_soc, dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, cpf_mae, nm_pai, cpf_pai,
+                        nr_ctps, serie_ctps, uf_ctps, nr_rg, rg_orgao_emissor, rg_dt_exped, nr_oc, oc_orgao_emissor,
+                        oc_dt_exped, oc_dt_valid, nr_reg_cnh, cnh_dt_exped, uf_cnh, cnh_dt_valid, dt_pri_hab,
+                        categoria_cnh, tp_lograd, dsc_lograd, nr_lograd, complemento, bairro, cep, end_cod_munic,
+                        end_uf, def_fisica, def_visual, def_auditiva, def_mental, def_intelectual, def_readap,
+                        info_cota, observacao, trab_aposent, fone_princ, fone_alternat, email_princ, email_alternat,
+                        None)
 
         db.session.merge(c)
         db.session.commit()

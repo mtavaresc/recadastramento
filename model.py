@@ -44,7 +44,9 @@ class Trabalhador(db.Model):
     paisNascto = db.Column(db.String(3))
     paisNac = db.Column(db.String(3))
     nmMae = db.Column(db.String(70))
+    cpfMae = db.Column('CPFMAE', db.String(11))
     nmPai = db.Column(db.String(70))
+    cpfPai = db.Column('CPFPAI', db.String(11))
     # CTPS
     nrCtps = db.Column(db.String(11))
     serieCtps = db.Column(db.String(5))
@@ -94,12 +96,12 @@ class Trabalhador(db.Model):
     protocolo = db.Column(db.String(14))
 
     def __init__(self, matricula, cpf_trab, nis_trab, nm_trab, sexo, raca_cor, est_civ, grau_instr, ind_pri_empr,
-                 nm_soc, dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, nm_pai, nr_ctps, serie_ctps, uf_ctps,
-                 nr_rg, rg_orgao_emissor, rg_dt_exped, nr_oc, oc_orgao_emissor, oc_dt_exped, oc_dt_valid, nr_reg_cnh,
-                 cnh_dt_exped, uf_cnh, cnh_dt_valid, dt_pri_hab, categoria_cnh, tp_lograd, dsc_lograd, nr_lograd,
-                 complemento, bairro, cep, end_cod_munic, end_uf, def_fisica, def_visual, def_auditiva, def_mental,
-                 def_intelectual, def_readap, info_cota, observacao, trab_aposent, fone_princ, fone_alternat,
-                 email_princ, email_alternat, protocolo):
+                 nm_soc, dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, cpf_mae, nm_pai, cpf_pai, nr_ctps,
+                 serie_ctps, uf_ctps, nr_rg, rg_orgao_emissor, rg_dt_exped, nr_oc, oc_orgao_emissor, oc_dt_exped,
+                 oc_dt_valid, nr_reg_cnh, cnh_dt_exped, uf_cnh, cnh_dt_valid, dt_pri_hab, categoria_cnh, tp_lograd,
+                 dsc_lograd, nr_lograd, complemento, bairro, cep, end_cod_munic, end_uf, def_fisica, def_visual,
+                 def_auditiva, def_mental, def_intelectual, def_readap, info_cota, observacao, trab_aposent, fone_princ,
+                 fone_alternat, email_princ, email_alternat, protocolo):
         self.matricula = matricula
         # Trabalhador
         self.cpfTrab = cpf_trab
@@ -118,7 +120,9 @@ class Trabalhador(db.Model):
         self.paisNascto = pais_nascto
         self.paisNac = pais_nac
         self.nmMae = nm_mae
+        self.cpfMae = cpf_mae
         self.nmPai = nm_pai
+        self.cpfPai = cpf_pai
         # CTPS
         self.nrCtps = nr_ctps
         self.serieCtps = serie_ctps
