@@ -27,6 +27,34 @@
     <script src="../static/js/cidades_estados.js"></script>
 
     <script>
+        $("#cep").blur(function () {
+            // Remove tudo o que não é número para fazer a pesquisa
+            const cep = this.value.replace(/[^0-9]/, "");
+
+            if (cep.length !== 8) {
+                return false;
+            }
+
+            const url = "https://viacep.com.br/ws/" + cep + "/json/";
+
+            $.getJSON(url, function (dadosRetorno) {
+                try {
+                    // Preenche os campos de acordo com o retorno da pesquisa
+                    $("#end_uf option").filter(function () {
+                        return this.text === dadosRetorno.uf;
+                    }).attr('selected', true);
+                    $("#end_codMunic option").filter(function () {
+                        return this.text === dadosRetorno.localidade;
+                    }).attr('selected', true);
+
+                    $("#bairro").val(dadosRetorno.bairro);
+                    $("#dscLograd").val((dadosRetorno.logradouro).replace((dadosRetorno.logradouro).split(" ")[0], "").trim());
+                } catch (ex) {
+                }
+            });
+        });
+    </script>
+    <script>
         jQuery(function () {
             $('#cpfTrab').mask('000.000.000-00');
             $('#cpfMae').mask('000.000.000-00');

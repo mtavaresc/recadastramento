@@ -196,6 +196,15 @@ class Dependentes(db.Model):
         self.incTrab = inc_trab
 
 
+class Documentos(db.Model):
+    __tablename__ = "DOCUMENTOS"
+
+    matrTab = db.Column(db.CHAR(6), primary_key=True)
+
+    def __init__(self, matr_tab):
+        self.matrTab = matr_tab
+
+
 class Paises(db.Model):
     __tablename__ = "PAISES"
 
