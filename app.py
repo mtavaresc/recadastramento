@@ -146,7 +146,7 @@ def protected():
         email_princ = request.form.get("emailPrinc")
         email_alternat = request.form.get("emailAlternat")
         # Protocolo
-        protocolo = str(matricula) + date.today().strftime("%Y%m%d")
+        # protocolo = str(matricula) + date.today().strftime("%Y%m%d")
 
         c = Trabalhador(matricula, cpf_trab, nis_trab, nm_trab, sexo, raca_cor, est_civ, grau_instr, ind_pri_empr,
                         nm_soc, dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, cpf_mae, nm_pai, cpf_pai,
@@ -155,7 +155,7 @@ def protected():
                         categoria_cnh, tp_lograd, dsc_lograd, nr_lograd, complemento, bairro, cep, end_cod_munic,
                         end_uf, def_fisica, def_visual, def_auditiva, def_mental, def_intelectual, def_readap,
                         info_cota, observacao, trab_aposent, fone_princ, fone_alternat, email_princ, email_alternat,
-                        protocolo)
+                        None)
         db.session.merge(c)
         db.session.commit()
 
@@ -179,7 +179,7 @@ def protected():
         except IntegrityError:
             pass
         # Logout!
-        return redirect(url_for("logout", page="submit", protocolo=protocolo))
+        return redirect(url_for("logout", page="submit"))
     else:
         form = Trabalhador.query.filter_by(matricula=matricula)
         # Campos preenchidos através da matricula do Pegaso

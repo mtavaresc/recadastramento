@@ -205,6 +205,18 @@ class Documentos(db.Model):
         self.matrTab = matr_tab
 
 
+class Auditoria(db.Model):
+    __tablename__ = "AUDITORIA"
+
+    matrAdm = db.Column(db.CHAR(6), primary_key=True)
+    matricula = db.Column(db.CHAR(6))
+    action = db.Column(db.String(50))
+    created_date = db.Column(db.DateTime, default=db.func.now())
+
+    def __init__(self, matr_tab):
+        self.matrTab = matr_tab
+
+
 class Paises(db.Model):
     __tablename__ = "PAISES"
 
