@@ -276,3 +276,6 @@ class TiposLogradouro(db.Model):
     def __init__(self, codigo, nome):
         self.codigo = codigo
         self.nome = nome
+
+# Base.metadata.drop_all(engine, tables=[Fila.__table__])
+# Base.metadata.create_all(engine, tables=[Fila.__table__])

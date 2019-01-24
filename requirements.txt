@@ -4,8 +4,10 @@ click==6.7
 cryptography==2.3.1
 cx-Oracle==7.0.0
 Flask==1.0.2
+Flask-Dropzone==1.5.3
 Flask-Login==0.4.1
 Flask-SQLAlchemy==2.3.2
+Flask-Uploads==0.2.1
 idna==2.7
 itsdangerous==0.24
 Jinja2==2.10

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flask App</title>
+    {{ dropzone.load() }}
+    {{ dropzone.style('border: 2px dashed #0087F7; margin: 10%; min-height: 400px;') }}
+</head>
+<body>
+<h1>Hello from Flask!</h1>
+<label for="matricula">E-mail alternativo:</label>
+<input id="matricula" name="matricula" class="form-control" maxlength="60">
+{{ dropzone.create(action_view='sandbox_index') }}
+</body>
+</html>
