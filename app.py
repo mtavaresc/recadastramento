@@ -128,8 +128,10 @@ def protected():
         pais_nac = request.form.get("paisNac")
         nm_mae = request.form.get("nmMae")
         cpf_mae = request.form.get("cpfMae")
+        cpf_mae = "".join(c for c in str(cpf_mae) if c not in ".-")
         nm_pai = request.form.get("nmPai")
         cpf_pai = request.form.get("cpfPai")
+        cpf_pai = "".join(c for c in str(cpf_pai) if c not in ".-")
         # CTPS
         nr_ctps = request.form.get("nrCtps")
         serie_ctps = request.form.get("serieCtps")
@@ -186,16 +188,19 @@ def protected():
         # Protocolo
         # protocolo = str(matricula) + date.today().strftime("%Y%m%d")
 
-        c = Trabalhador(matricula, cpf_trab, nis_trab, nm_trab, sexo, raca_cor, est_civ, grau_instr, ind_pri_empr,
-                        nm_soc, dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, cpf_mae, nm_pai, cpf_pai,
-                        nr_ctps, serie_ctps, uf_ctps, nr_rg, rg_orgao_emissor, rg_dt_exped, nr_oc, oc_orgao_emissor,
-                        oc_dt_exped, oc_dt_valid, nr_reg_cnh, cnh_dt_exped, uf_cnh, cnh_dt_valid, dt_pri_hab,
-                        categoria_cnh, tp_lograd, dsc_lograd, nr_lograd, complemento, bairro, cep, end_cod_munic,
-                        end_uf, def_fisica, def_visual, def_auditiva, def_mental, def_intelectual, def_readap,
-                        info_cota, observacao, trab_aposent, fone_princ, fone_alternat, email_princ, email_alternat,
-                        None)
-        db.session.merge(c)
-        db.session.commit()
+        try:
+            c = Trabalhador(matricula, cpf_trab, nis_trab, nm_trab, sexo, raca_cor, est_civ, grau_instr, ind_pri_empr,
+                            nm_soc, dt_nascto, cod_munic, uf, pais_nascto, pais_nac, nm_mae, cpf_mae, nm_pai, cpf_pai,
+                            nr_ctps, serie_ctps, uf_ctps, nr_rg, rg_orgao_emissor, rg_dt_exped, nr_oc, oc_orgao_emissor,
+                            oc_dt_exped, oc_dt_valid, nr_reg_cnh, cnh_dt_exped, uf_cnh, cnh_dt_valid, dt_pri_hab,
+                            categoria_cnh, tp_lograd, dsc_lograd, nr_lograd, complemento, bairro, cep, end_cod_munic,
+                            end_uf, def_fisica, def_visual, def_auditiva, def_mental, def_intelectual, def_readap,
+                            info_cota, observacao, trab_aposent, fone_princ, fone_alternat, email_princ, email_alternat,
+                            None)
+            db.session.merge(c)
+            db.session.commit()
+        except Exception as e:
+            print(format(e))
 
         # Dependetes
         tp_dep = request.form.getlist("tpDep[]")
@@ -214,8 +219,11 @@ def protected():
                 d = Dependentes(matricula, tp_dep[i], nm_dep[i], dtnascimento, cpf, dep_irrf[i], dep_sf[i], inc_trab[i])
                 db.session.merge(d)
                 db.session.commit()
-        except IntegrityError:
-            pass
+        except Exception as e:
+            db.session.rollback()
+            return format(e)
+
+        db.session.close()
         # Logout!
         return redirect(url_for("logout", page="submit"))
     else:
@@ -280,8 +288,10 @@ def edit_worker():
         pais_nac = request.form.get("paisNac")
         nm_mae = request.form.get("nmMae")
         cpf_mae = request.form.get("cpfMae")
+        cpf_mae = "".join(c for c in str(cpf_mae) if c not in ".-")
         nm_pai = request.form.get("nmPai")
         cpf_pai = request.form.get("cpfPai")
+        cpf_pai = "".join(c for c in str(cpf_pai) if c not in ".-")
         # CTPS
         nr_ctps = request.form.get("nrCtps")
         serie_ctps = request.form.get("serieCtps")

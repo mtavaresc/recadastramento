@@ -38,17 +38,6 @@
         });
 
         $(document).ready(function () {
-            $('[id^=nrLograd]').keypress(validateNumber);
-        });
-
-        function validateNumber(event) {
-            let key = window.event ? event.keyCode : event.which;
-            if (event.keyCode === 8 || event.keyCode === 46) {
-                return true;
-            } else return !(key < 48 || key > 57);
-        }
-
-        $(document).ready(function () {
             // Add new element
             $('.add').click(function () {
                 // Finding total number of elements added
