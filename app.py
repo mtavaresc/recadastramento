@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from datetime import date
+from datetime import date, datetime
 
 from flask import render_template, request, redirect, url_for, session
 from sqlalchemy import func
@@ -10,8 +10,8 @@ from model import *
 
 
 def check_login():
-    if not session.get("logged_in") or not session.get("matricula"):
-        return redirect(url_for("login"))
+    if session.get("logged_in") is None or session.get("matricula") is None:
+        return render_template('login.html')
 
 
 @app.errorhandler(404)
@@ -87,19 +87,10 @@ def login():
         return render_template("401.html")
 
 
-@app.route("/logout/<page>")
-def logout(page):
+@app.route("/logout")
+def logout():
     session.clear()
-
-    try:
-        if page == "submit":
-            return render_template("{}.html".format(page))
-        else:
-            return render_template("401.html")
-
-    except AttributeError as e:
-        print(format(e))
-        return render_template("401.html")
+    return render_template("submit.html")
 
 
 @app.route("/protected", methods=["GET", "POST"])
@@ -225,11 +216,11 @@ def protected():
 
         db.session.close()
         # Logout!
-        return redirect(url_for("logout", page="submit"))
+        return redirect(url_for("logout"))
     else:
         form = Trabalhador.query.filter_by(matricula=matricula)
         # Campos preenchidos através da matricula do Pegaso
-        pegaso = Pegaso.query.filter_by(matricula=matricula)
+        pegaso = Pegaso.query.filter_by(matr=matricula)
 
         if form.count() > 0:
             # Reject!
@@ -380,11 +371,11 @@ def edit_worker():
             raise
 
         # Logout!
-        return redirect(url_for("logout", page="submit"))
+        return redirect(url_for("logout"))
 
     try:
         trabalhador = Trabalhador.query.filter_by(matricula=matricula).first()
-        dependentes = Dependentes.query.filter_by(matrTab=trabalhador.matricula).all()
+        dependentes = Dependentes.query.filter_by(matrtab=trabalhador.matricula).all()
 
         # Selecionando paises
         cod_paises = [row.codigo for row in Paises.query.all()]
@@ -416,18 +407,28 @@ def admin():
     check_login()
 
     if request.method == "POST":
-        protocolo = request.form.get("protocol")
-        matr = protocolo[:6]
+        try:
+            protocolo = request.form.get("protocol")
+            matr = protocolo[:6]
 
-        Trabalhador.query.filter_by(matricula=matr).update({'protocolo': protocolo})
-        db.session.commit()
+            Trabalhador.query.filter_by(matricula=matr).update({'protocolo': protocolo})
+            db.session.commit()
+        except Exception as e:
+            return '#1: {}'.format(e)
+
+        try:
+            a = Auditoria(matradm=session.get("matricula"), matricula=matr, action="Validar", created=datetime.now())
+            db.session.add(a)
+            db.session.commit()
+        except Exception as e:
+            return '#2: {}'.format(e)
 
     adm = db.session.query(User.nome, Trabalhador.protocolo, Trabalhador.sexo). \
         outerjoin(Trabalhador, User.matricula == Trabalhador.matricula). \
         filter(User.matricula == session.get("matricula")).first()
 
     # Pendente
-    p = db.session.query(Pegaso).filter(Pegaso.matricula.notin_(db.session.query(Trabalhador.matricula))).count()
+    p = db.session.query(Pegaso).filter(Pegaso.matr.notin_(db.session.query(Trabalhador.matricula))).count()
     # Em análise
     ea = db.session.query(Trabalhador).filter(Trabalhador.protocolo == None).count()
     # Realizado
@@ -443,6 +444,11 @@ def admin():
 def admin_edit_worker(matricula):
     check_login()
 
+    # if request.method == 'POST':
+    # a = Auditoria(matr_tab=session.get("matricula"), matricula=matr, action="validar")
+    # db.session.add(a)
+    # db.session.commit()
+
     # Worker
     worker = Trabalhador.query.filter_by(matricula=matricula)
 
@@ -450,7 +456,7 @@ def admin_edit_worker(matricula):
         return render_template("401.html")
 
     # Dependents
-    dependents = Dependentes.query.filter_by(matrTab=matricula).all()
+    dependents = Dependentes.query.filter_by(matrtab=matricula).all()
 
     # Selecionando paises
     cod_paises = [row.codigo for row in Paises.query.all()]
@@ -472,8 +478,7 @@ def admin_edit_worker(matricula):
     bairros = [row.nome for row in db.session.query(Bairros.nome).distinct().order_by(Bairros.nome).all()]
 
     return render_template("admin/edit.html", worker=worker.first(), dependents=dependents, paises=paises,
-                           estados=estados,
-                           municipios=municipios, tl=tipos_logradouro, bairros=bairros)
+                           estados=estados, municipios=municipios, tl=tipos_logradouro, bairros=bairros)
 
 
 if __name__ == "__main__":

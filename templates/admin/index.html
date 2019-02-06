@@ -118,11 +118,11 @@
                 <tbody>
                 {% for row in data %}
                     <tr data-toggle="modal" data-target="#modal-iframe" style="cursor:pointer;"
-                        href="#">
-{#                        href="/admin/worker/{{ row.matricula }}">#}
+{#                        href="#">#}
+                        href="/admin/worker/{{ row.matricula }}">
                         <td>{{ row.matricula }}</td>
-                        <td>{{ row.nmTrab }}</td>
-                        <td>{{ row.cpfTrab }}</td>
+                        <td>{{ row.nmtrab }}</td>
+                        <td>{{ row.cpftrab }}</td>
                         <td>{% if row.protocolo == None %}
                             <form method="POST">
                             <input type="hidden" name="protocol" value="{{ row.matricula + date }}">

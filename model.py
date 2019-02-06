@@ -211,13 +211,13 @@ class Auditoria(db.Model):
     matradm = db.Column(db.CHAR(6))
     matricula = db.Column(db.CHAR(6))
     action = db.Column(db.String(50))
-    created_Date = db.Column(db.DateTime, primary_key=True)
+    created = db.Column(db.DateTime, primary_key=True)
 
-    def __init__(self, matradm, matricula, action, created_date):
+    def __init__(self, matradm, matricula, action, created):
         self.matradm = matradm
         self.matricula = matricula
         self.action = action
-        self.created_Date = created_date
+        self.created = created
 
 
 class Paises(db.Model):
