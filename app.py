@@ -555,41 +555,10 @@ def admin_edit_worker(matricula):
     except AttributeError:
         return redirect(url_for("login"))
 
-    # if request.method == 'POST':
-    # a = Auditoria(matr_tab=session.get("matricula"), matricula=matr, action="validar")
-    # db.session.add(a)
-    # db.session.commit()
-
-    # Worker
-    # worker = Trabalhador.query.filter_by(matricula=matricula)
-    #
-    # if worker.count() == 0:
-    #     return render_template("401.html")
-    #
-    # # Dependents
-    # dependents = Dependentes.query.filter_by(matrtab=matricula).all()
-    #
-    # # Selecionando paises
-    # cod_paises = [row.codigo for row in Paises.query.all()]
-    # nome_paises = [row.nome for row in Paises.query.all()]
-    # paises = dict(zip(cod_paises, nome_paises))
-    # # Selecionando estados
-    # uf_estados = [row.uf for row in Estados.query.all()]
-    # nome_estados = [row.nome for row in Estados.query.all()]
-    # estados = dict(zip(uf_estados, nome_estados))
-    # # Selecionando municipios
-    # cod_municipio = [row.codigo for row in Municipios.query.all()]
-    # nome_municipio = [row.nome for row in Municipios.query.all()]
-    # municipios = dict(zip(cod_municipio, nome_municipio))
-    # # Selecionando tipos logradouro
-    # cod_tl = [row.codigo for row in TiposLogradouro.query.all()]
-    # nome_tl = [row.nome for row in TiposLogradouro.query.all()]
-    # tipos_logradouro = dict(zip(cod_tl, nome_tl))
-    # # Selecionando bairros
-    # bairros = [row.nome for row in db.session.query(Bairros.nome).distinct().order_by(Bairros.nome).all()]
-    #
-    # return render_template("admin/edit.html", worker=worker.first(), dependents=dependents, paises=paises,
-    #                        estados=estados, municipios=municipios, tl=tipos_logradouro, bairros=bairros)
+    # TODO: Realizar Backup BD;
+    # TODO: Drop All;
+    # TODO: Create All;
+    # TODO: Restore BD;
 
 
 if __name__ == "__main__":
