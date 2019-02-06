@@ -4,7 +4,7 @@ from base import db
 class Pegaso(db.Model):
     __tablename__ = "TV_CADASTRO"
 
-    matricula = db.Column("MATR", db.CHAR(6), primary_key=True)
+    matr = db.Column(db.CHAR(6), primary_key=True)
     nome = db.Column(db.String(70))
     cpf = db.Column(db.String(11))
     pispasep = db.Column(db.String(11))
@@ -12,7 +12,7 @@ class Pegaso(db.Model):
 
 
 class User(db.Model):
-    __tablename__ = "FORM_LOGIN"
+    __tablename__ = "form_login"
 
     matricula = db.Column(db.CHAR(6), primary_key=True)
     nome = db.Column(db.String(70))
@@ -20,78 +20,78 @@ class User(db.Model):
     adm = db.Column(db.Integer)
 
     def __repr__(self):
-        return '<User %r>' % self.matricula
+        return '<user %r>' % self.matricula
 
 
 class Trabalhador(db.Model):
     __tablename__ = "TRABALHADOR"
 
     matricula = db.Column(db.CHAR(6), primary_key=True)
-    # Trabalhador
-    cpfTrab = db.Column(db.String(11))
-    nisTrab = db.Column(db.String(11))
-    nmTrab = db.Column(db.String(70))
+    # trabalhador
+    cpftrab = db.Column(db.String(11))
+    nistrab = db.Column(db.String(11))
+    nmtrab = db.Column(db.String(70))
     sexo = db.Column(db.String(1))
-    racaCor = db.Column(db.Integer)
-    estCiv = db.Column(db.Integer)
-    grauInstr = db.Column(db.String(2))
-    indPriEmpr = db.Column(db.String(1))
-    nmSoc = db.Column(db.String(70))
-    # Nascimento
-    dtNascto = db.Column(db.Date)
-    codMunic = db.Column(db.Integer)
+    racacor = db.Column(db.Integer)
+    estciv = db.Column(db.Integer)
+    grauinstr = db.Column(db.String(2))
+    indpriempr = db.Column(db.String(1))
+    nmsoc = db.Column(db.String(70))
+    # nascimento
+    dtnascto = db.Column(db.Date)
+    codmunic = db.Column(db.Integer)
     uf = db.Column(db.String(2))
-    paisNascto = db.Column(db.String(3))
-    paisNac = db.Column(db.String(3))
-    nmMae = db.Column(db.String(70))
-    cpfMae = db.Column('CPFMAE', db.String(11))
-    nmPai = db.Column(db.String(70))
-    cpfPai = db.Column('CPFPAI', db.String(11))
-    # CTPS
-    nrCtps = db.Column(db.String(11))
-    serieCtps = db.Column(db.String(5))
-    ufCtps = db.Column(db.String(2))
-    # RG
-    nrRg = db.Column(db.String(14))
-    rg_orgaoEmissor = db.Column(db.String(20))
-    rg_dtExped = db.Column(db.Date)
-    # OC
-    nrOc = db.Column(db.String(14))
-    oc_orgaoEmissor = db.Column(db.String(20))
-    oc_dtExped = db.Column(db.Date)
-    oc_dtValid = db.Column(db.Date)
-    # CNH
-    nrRegCnh = db.Column(db.String(12))
-    cnh_dtExped = db.Column(db.Date)
-    ufCnh = db.Column(db.String(2))
-    cnh_dtValid = db.Column(db.Date)
-    dtPriHab = db.Column(db.Date)
-    categoriaCnh = db.Column(db.String(2))
-    # Endereco - Brasil
-    tpLograd = db.Column(db.String(4))
-    dscLograd = db.Column(db.String(80))
-    nrLograd = db.Column(db.String(10))
+    paisnascto = db.Column(db.String(3))
+    paisnac = db.Column(db.String(3))
+    nmmae = db.Column(db.String(70))
+    cpfmae = db.Column(db.String(11))
+    nmpai = db.Column(db.String(70))
+    cpfpai = db.Column(db.String(11))
+    # ctps
+    nrctps = db.Column(db.String(11))
+    seriectps = db.Column(db.String(5))
+    ufctps = db.Column(db.String(2))
+    # rg
+    nrrg = db.Column(db.String(14))
+    rg_orgaoemissor = db.Column(db.String(20))
+    rg_dtexped = db.Column(db.Date)
+    # oc
+    nroc = db.Column(db.String(14))
+    oc_orgaoemissor = db.Column(db.String(20))
+    oc_dtexped = db.Column(db.Date)
+    oc_dtvalid = db.Column(db.Date)
+    # cnh
+    nrregcnh = db.Column(db.String(12))
+    cnh_dtexped = db.Column(db.Date)
+    ufcnh = db.Column(db.String(2))
+    cnh_dtvalid = db.Column(db.Date)
+    dtprihab = db.Column(db.Date)
+    categoriacnh = db.Column(db.String(2))
+    # endereco - brasil
+    tplograd = db.Column(db.String(4))
+    dsclograd = db.Column(db.String(80))
+    nrlograd = db.Column(db.String(10))
     complemento = db.Column(db.String(30))
     bairro = db.Column(db.String(60))
     cep = db.Column(db.String(8))
-    end_codMunic = db.Column(db.Integer)
+    end_codmunic = db.Column(db.Integer)
     end_uf = db.Column(db.String(2))
-    # Info Deficiencia
-    defFisica = db.Column(db.String(1))
-    defVisual = db.Column(db.String(1))
-    defAuditiva = db.Column(db.String(1))
-    defMental = db.Column(db.String(1))
-    defIntelectual = db.Column(db.String(1))
-    defReadap = db.Column(db.String(1))
-    infoCota = db.Column(db.String(1))
+    # info deficiencia
+    deffisica = db.Column(db.String(1))
+    defvisual = db.Column(db.String(1))
+    defauditiva = db.Column(db.String(1))
+    defmental = db.Column(db.String(1))
+    defintelectual = db.Column(db.String(1))
+    defreadap = db.Column(db.String(1))
+    infocota = db.Column(db.String(1))
     observacao = db.Column(db.String(255))
-    # Aposentadoria
-    trabAposent = db.Column(db.String(1))
-    # Contato
-    fonePrinc = db.Column(db.String(13))
-    foneAlternat = db.Column(db.String(13))
-    emailPrinc = db.Column(db.String(60))
-    emailAlternat = db.Column(db.String(60))
+    # aposentadoria
+    trabaposent = db.Column(db.String(1))
+    # contato
+    foneprinc = db.Column(db.String(13))
+    fonealternat = db.Column(db.String(13))
+    emailprinc = db.Column(db.String(60))
+    emailalternat = db.Column(db.String(60))
 
     protocolo = db.Column(db.String(14))
 
@@ -103,118 +103,121 @@ class Trabalhador(db.Model):
                  def_auditiva, def_mental, def_intelectual, def_readap, info_cota, observacao, trab_aposent, fone_princ,
                  fone_alternat, email_princ, email_alternat, protocolo):
         self.matricula = matricula
-        # Trabalhador
-        self.cpfTrab = cpf_trab
-        self.nisTrab = nis_trab
-        self.nmTrab = nm_trab
+        # trabalhador
+        self.cpftrab = cpf_trab
+        self.nistrab = nis_trab
+        self.nmtrab = nm_trab
         self.sexo = sexo
-        self.racaCor = raca_cor
-        self.estCiv = est_civ
-        self.grauInstr = grau_instr
-        self.indPriEmpr = ind_pri_empr
-        self.nmSoc = nm_soc
-        # Nascimento
-        self.dtNascto = dt_nascto
-        self.codMunic = cod_munic
+        self.racacor = raca_cor
+        self.estciv = est_civ
+        self.grauinstr = grau_instr
+        self.indpriempr = ind_pri_empr
+        self.nmsoc = nm_soc
+        # nascimento
+        self.dtnascto = dt_nascto
+        self.codmunic = cod_munic
         self.uf = uf
-        self.paisNascto = pais_nascto
-        self.paisNac = pais_nac
-        self.nmMae = nm_mae
-        self.cpfMae = cpf_mae
-        self.nmPai = nm_pai
-        self.cpfPai = cpf_pai
-        # CTPS
-        self.nrCtps = nr_ctps
-        self.serieCtps = serie_ctps
-        self.ufCtps = uf_ctps
-        # RG
-        self.nrRg = nr_rg
-        self.rg_orgaoEmissor = rg_orgao_emissor
-        self.rg_dtExped = rg_dt_exped
-        # OC
-        self.nrOc = nr_oc
-        self.oc_orgaoEmissor = oc_orgao_emissor
-        self.oc_dtExped = oc_dt_exped
-        self.oc_dtValid = oc_dt_valid
-        # CNH
-        self.nrRegCnh = nr_reg_cnh
-        self.cnh_dtExped = cnh_dt_exped
-        self.ufCnh = uf_cnh
-        self.cnh_dtValid = cnh_dt_valid
-        self.dtPriHab = dt_pri_hab
-        self.categoriaCnh = categoria_cnh
-        # Endereco - Brasil
-        self.tpLograd = tp_lograd
-        self.dscLograd = dsc_lograd
-        self.nrLograd = nr_lograd
+        self.paisnascto = pais_nascto
+        self.paisnac = pais_nac
+        self.nmmae = nm_mae
+        self.cpfmae = cpf_mae
+        self.nmpai = nm_pai
+        self.cpfpai = cpf_pai
+        # ctps
+        self.nrctps = nr_ctps
+        self.seriectps = serie_ctps
+        self.ufctps = uf_ctps
+        # rg
+        self.nrrg = nr_rg
+        self.rg_orgaoemissor = rg_orgao_emissor
+        self.rg_dtexped = rg_dt_exped
+        # oc
+        self.nroc = nr_oc
+        self.oc_orgaoemissor = oc_orgao_emissor
+        self.oc_dtexped = oc_dt_exped
+        self.oc_dtvalid = oc_dt_valid
+        # cnh
+        self.nrregcnh = nr_reg_cnh
+        self.cnh_dtexped = cnh_dt_exped
+        self.ufcnh = uf_cnh
+        self.cnh_dtvalid = cnh_dt_valid
+        self.dtprihab = dt_pri_hab
+        self.categoriacnh = categoria_cnh
+        # endereco - brasil
+        self.tplograd = tp_lograd
+        self.dsclograd = dsc_lograd
+        self.nrlograd = nr_lograd
         self.complemento = complemento
         self.bairro = bairro
         self.cep = cep
-        self.end_codMunic = end_cod_munic
+        self.end_codmunic = end_cod_munic
         self.end_uf = end_uf
-        # Info Deficiencia
-        self.defFisica = def_fisica
-        self.defVisual = def_visual
-        self.defAuditiva = def_auditiva
-        self.defMental = def_mental
-        self.defIntelectual = def_intelectual
-        self.defReadap = def_readap
-        self.infoCota = info_cota
+        # info deficiencia
+        self.deffisica = def_fisica
+        self.defvisual = def_visual
+        self.defauditiva = def_auditiva
+        self.defmental = def_mental
+        self.defintelectual = def_intelectual
+        self.defreadap = def_readap
+        self.infocota = info_cota
         self.observacao = observacao
-        # Aposentadoria
-        self.trabAposent = trab_aposent
-        # Contato
-        self.fonePrinc = fone_princ
-        self.foneAlternat = fone_alternat
-        self.emailPrinc = email_princ
-        self.emailAlternat = email_alternat
-        # Protocolo
+        # aposentadoria
+        self.trabaposent = trab_aposent
+        # contato
+        self.foneprinc = fone_princ
+        self.fonealternat = fone_alternat
+        self.emailprinc = email_princ
+        self.emailalternat = email_alternat
+        # protocolo
         self.protocolo = protocolo
 
 
 class Dependentes(db.Model):
     __tablename__ = "DEPENDENTES"
 
-    matrTab = db.Column(db.CHAR(6))
-    tpDep = db.Column(db.String(2))
-    nmDep = db.Column(db.String(70))
-    dep_dtNascto = db.Column(db.Date)
-    cpfDep = db.Column(db.String(11))
-    depIRRF = db.Column(db.String(1))
-    depSF = db.Column(db.String(1))
-    incTrab = db.Column(db.String(1))
-    db.PrimaryKeyConstraint(matrTab, cpfDep, name="dep_pk")
+    matrtab = db.Column(db.CHAR(6))
+    tpdep = db.Column(db.String(2))
+    nmdep = db.Column(db.String(70))
+    dep_dtnascto = db.Column(db.Date)
+    cpfdep = db.Column(db.String(11))
+    depirrf = db.Column(db.String(1))
+    depsf = db.Column(db.String(1))
+    inctrab = db.Column(db.String(1))
+    db.PrimaryKeyConstraint(matrtab, cpfdep, name="dep_pk")
 
     def __init__(self, matr_tab, tp_dep, nm_dep, dep_dt_nascto, cpf_dep, dep_irrf, dep_sf, inc_trab):
-        self.matrTab = matr_tab
-        self.tpDep = tp_dep
-        self.nmDep = nm_dep
-        self.dep_dtNascto = dep_dt_nascto
-        self.cpfDep = cpf_dep
-        self.depIRRF = dep_irrf
-        self.depSF = dep_sf
-        self.incTrab = inc_trab
+        self.matrtab = matr_tab
+        self.tpdep = tp_dep
+        self.nmdep = nm_dep
+        self.dep_dtnascto = dep_dt_nascto
+        self.cpfdep = cpf_dep
+        self.depirrf = dep_irrf
+        self.depsf = dep_sf
+        self.inctrab = inc_trab
 
 
 class Documentos(db.Model):
     __tablename__ = "DOCUMENTOS"
 
-    matrTab = db.Column(db.CHAR(6), primary_key=True)
+    matrtab = db.Column(db.CHAR(6), primary_key=True)
 
     def __init__(self, matr_tab):
-        self.matrTab = matr_tab
+        self.matrtab = matr_tab
 
 
 class Auditoria(db.Model):
     __tablename__ = "AUDITORIA"
 
-    matrAdm = db.Column(db.CHAR(6), primary_key=True)
+    matradm = db.Column(db.CHAR(6))
     matricula = db.Column(db.CHAR(6))
     action = db.Column(db.String(50))
-    created_date = db.Column(db.DateTime, default=db.func.now())
+    created_Date = db.Column(db.DateTime, primary_key=True)
 
-    def __init__(self, matr_tab):
-        self.matrTab = matr_tab
+    def __init__(self, matradm, matricula, action, created_date):
+        self.matradm = matradm
+        self.matricula = matricula
+        self.action = action
+        self.created_Date = created_date
 
 
 class Paises(db.Model):
@@ -223,20 +226,12 @@ class Paises(db.Model):
     codigo = db.Column(db.String(3), primary_key=True)
     nome = db.Column(db.String(100))
 
-    def __init__(self, codigo, nome):
-        self.codigo = codigo
-        self.nome = nome
-
 
 class Estados(db.Model):
     __tablename__ = "ESTADOS"
 
     uf = db.Column(db.CHAR(2), primary_key=True)
     nome = db.Column(db.String(50))
-
-    def __init__(self, uf, nome):
-        self.uf = uf
-        self.nome = nome
 
 
 class Municipios(db.Model):
@@ -245,11 +240,6 @@ class Municipios(db.Model):
     codigo = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(255))
     uf = db.Column(db.CHAR(2))
-
-    def __init__(self, codigo, nome, uf):
-        self.codigo = codigo
-        self.nome = nome
-        self.uf = uf
 
 
 class Bairros(db.Model):
@@ -260,22 +250,9 @@ class Bairros(db.Model):
     municipio = db.Column(db.String(70))
     uf = db.Column(db.CHAR(2))
 
-    def __init__(self, codigo, nome, municipio, uf):
-        self.codigo = codigo
-        self.nome = nome
-        self.municipio = municipio
-        self.uf = uf
-
 
 class TiposLogradouro(db.Model):
     __tablename__ = "TIPOS_LOGRADOURO"
 
     codigo = db.Column(db.CHAR(4), primary_key=True)
     nome = db.Column(db.String(30))
-
-    def __init__(self, codigo, nome):
-        self.codigo = codigo
-        self.nome = nome
-
-# Base.metadata.drop_all(engine, tables=[Fila.__table__])
-# Base.metadata.create_all(engine, tables=[Fila.__table__])
