@@ -1,25 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <title>Recadastramento</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>:: Recadastramento ::</title>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Latest compiled and minified CSS -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../../static/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../static/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../static/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../../static/favicon/site.webmanifest">
+    <link rel="mask-icon" href="../../static/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
     <link rel="stylesheet" href="../../static/css/fontawesome-all.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../static/css/sticky-footer-navbar.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/admin/assets/scss/style.css">
 
-    <!-- Latest compiled and minified JavaScript -->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="../../static/js/jquery.mask.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="../../static/js/validacao.js"></script>
     <script src="../../static/js/cidades_estados.js"></script>
 
     <script>
         jQuery(function () {
             $('#cpfTrab').mask('000.000.000-00');
+            $('#cpfMae').mask('000.000.000-00');
+            $('#cpfPai').mask('000.000.000-00');
             $('#nisTrab').mask('000.0000.000-0');
             $('#cep').mask('00000-000');
             $('#cpfDep').mask('000.000.000-00');
@@ -28,554 +39,710 @@
         });
 
         $(document).ready(function () {
-            $(".add-more-btn").click(function () {
-                $("#multi").clone().appendTo("#collapseDep");
+            // Add new element
+            $('.add').click(function () {
+                // Finding total number of elements added
+                const total_element = $('.element').length;
+
+                // last <div> with element class id
+                const lastid = $('.element:last').attr('id');
+                const split_id = lastid.split("_");
+                const nextindex = Number(split_id[1]) + 1;
+
+                const max = 5;
+                // Check total number elements
+                if (total_element < max) {
+                    // Adding new div container after last occurance of element class
+                    $(".element:last").after("<div class='element' id='div_" + nextindex + "'></div>");
+
+                    // Adding element to <div>
+                    $('#div_' + nextindex).append('<br>\n' +
+                        '<button type="button" class="btn btn-danger remove" id="remove_' + nextindex + '">' +
+                        '    <i class="fa fa-minus-circle"></i> Remover' +
+                        '</button>\n' +
+                        '<br><br>\n' +
+                        '<div class="card card-body bg-light" id="multi">\n' +
+                        '    <div class="form-group">\n' +
+                        '        <label for="tpDep_' + nextindex + '">Tipo de dependente:</label>\n' +
+                        '        <select id="tpDep_' + nextindex + '" name="tpDep[]" class="form-control">\n' +
+                        '            <option value="">-- Selecione --</option>\n' +
+                        '            <option value="01">Cônjuge</option>\n' +
+                        '            <option value="02">Companheiro(a) com o(a) qual tenha filho ou viva há mais de 5 (cinco)\n' +
+                        '                anos ou possua Declaração de União Estável\n' +
+                        '            </option>\n' +
+                        '            <option value="03">Filho(a) ou enteado(a)</option>\n' +
+                        '            <option value="04">Filho(a) ou enteado(a) universitário(a) ou cursando escola técnica de\n' +
+                        '                2o grau, até 24 (vinte e quatro) anos\n' +
+                        '            </option>\n' +
+                        '            <option value="06">Irmão(ã), neto(a) ou bisneto(a) sem arrimo dos pais, do(a) qual detenha\n' +
+                        '                a guarda judicial\n' +
+                        '            </option>\n' +
+                        '            <option value="09">Pais, avós e bisavós</option>\n' +
+                        '            <option value="10">Menor pobre do qual detenha a guarda judicial</option>\n' +
+                        '            <option value="11">A pessoa absolutamente incapaz, da qual seja tutor ou curador</option>\n' +
+                        '            <option value="12">Ex-cônjuge</option>\n' +
+                        '            <option value="99">Agregado/Outros</option>' +
+                        '        </select>\n' +
+                        '    </div>\n' +
+                        '    <div class="form-group">\n' +
+                        '        <label for="nmDep_' + nextindex + '">Nome Completo:</label>\n' +
+                        '        <input id="nmDep_' + nextindex + '" name="nmDep[]" class="form-control" maxlength="70" style="text-transform: uppercase">\n' +
+                        '    </div>\n' +
+                        '    <div class="form-group">\n' +
+                        '        <label for="dep_dtNascto_' + nextindex + '">Data de Nascimento:</label>\n' +
+                        '        <input type="date" id="dep_dtNascto_' + nextindex + '" name="dep_dtNascto[]" class="form-control">\n' +
+                        '    </div>\n' +
+                        '    <div class="form-group">\n' +
+                        '        <label for="cpfDep_' + nextindex + '">CPF:</label>\n' +
+                        '        <input id="cpfDep_' + nextindex + '" name="cpfDep[]" class="form-control" onblur="TestaCPF(this)">\n' +
+                        '    </div>\n' +
+                        '    <div class="form-group">\n' +
+                        '        <label for="depIRRF_' + nextindex + '">Dependente IRRF?</label>\n' +
+                        '        <select id="depIRRF_' + nextindex + '" name="depIRRF[]" class="form-control">\n' +
+                        '            <option value="">-- Selecione --</option>\n' +
+                        '            <option value="S">Sim</option>\n' +
+                        '            <option value="N">Não</option>\n' +
+                        '        </select>\n' +
+                        '    </div>\n' +
+                        '    <div class="form-group">\n' +
+                        '        <label for="depSF_' + nextindex + '">Dependente Salário-Família?</label>\n' +
+                        '        <select id="depSF_' + nextindex + '" name="depSF[]" class="form-control">\n' +
+                        '            <option value="">-- Selecione --</option>\n' +
+                        '            <option value="S">Sim</option>\n' +
+                        '            <option value="N">Não</option>\n' +
+                        '        </select>\n' +
+                        '    </div>\n' +
+                        '    <div class="form-group">\n' +
+                        '        <label for="incTrab_' + nextindex + '">Incapacidade física ou mental para o trabalho?</label>\n' +
+                        '        <select id="incTrab_' + nextindex + '" name="incTrab[]" class="form-control">\n' +
+                        '            <option value="">-- Selecione --</option>\n' +
+                        '            <option value="N">Não</option>\n' +
+                        '            <option value="S">Sim</option>\n' +
+                        '        </select>\n' +
+                        '    </div>' +
+                        '</div>');
+                } else {
+                    document.getElementById('add').disabled = true;
+                }
+
+            });
+
+            // Remove element
+            $('.container').on('click', '.remove', function () {
+
+                const id = this.id;
+                const split_id = id.split('_');
+                const deleteindex = split_id[1];
+
+                // Remove <div> with id
+                $(`#div_${deleteindex}`).remove();
+                document.getElementById('add').disabled = false;
+
             });
         });
-
-        $(document).ready(function () {
-            $('[id^=nrLograd]').keypress(validateNumber);
-        });
-
-        function validateNumber(event) {
-            let key = window.event ? event.keyCode : event.which;
-            if (event.keyCode === 8 || event.keyCode === 46) {
-                return true;
-            } else return !(key < 48 || key > 57);
-        }
     </script>
+</head>
 <body>
-<form id="form" class="container" method="POST" style="width: 100%;">
-    {# Trabalhador #}
-    <div class="page-header">
-        <h3>Informações do Trabalhador</h3>
-    </div>
-    <div class="form-group">
-        <label for="cpfTrab">*CPF: </label>
-        <input id="cpfTrab" name="cpfTrab" class="form-control" value="{{ worker.cpfTrab }}" readonly>
-    </div>
-    <div class="form-group">
-        <label for="nisTrab">*NIS: </label>
-        <input id="nisTrab" name="nisTrab" class="form-control" value="{{ worker.nisTrab }}" readonly>
-    </div>
-    <div class="form-group">
-        <label for="nmTrab">*Nome Completo: </label>
-        <input id="nmTrab" name="nmTrab" class="form-control" value="{{ worker.nmTrab }}" readonly>
-    </div>
-    <div class="form-group">
-        <label for="dtNascto">*Data de Nascimento: </label>
-        <input type="date" id="dtNascto" name="dtNascto" class="form-control" value="{{ worker.dtNascto }}" readonly>
-    </div>
-    <div class="form-group">
-        <label for="sexo">Sexo:</label>
-        <select id="sexo" name="sexo" class="form-control">
-            <option value="M" {% if worker.sexo == "M" %} selected {% endif %}>Masculino</option>
-            <option value="F" {% if worker.sexo == "F" %} selected {% endif %}>Feminino</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="racaCor">Raça/Cor:</label>
-        <select id="racaCor" name="racaCor" class="form-control">
-            <option value="1" {% if worker.racaCor == "1" %} selected {% endif %}>Branca</option>
-            <option value="2" {% if worker.racaCor == "2" %} selected {% endif %}>Preta</option>
-            <option value="3" {% if worker.racaCor == "3" %} selected {% endif %}>Parda</option>
-            <option value="4" {% if worker.racaCor == "4" %} selected {% endif %}>Amarela</option>
-            <option value="5" {% if worker.racaCor == "5" %} selected {% endif %}>Indígena</option>
-            <option value="6" {% if worker.racaCor == "6" %} selected {% endif %}>Não informado</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="estCiv">Estado Civil:</label>
-        <select id="estCiv" name="estCiv" class="form-control">
-            <option value="1">Solteiro(a)</option>
-            <option value="2">Casado(a)</option>
-            <option value="3">Divorciado(a)</option>
-            <option value="4">Separado(a)</option>
-            <option value="5">Viúvo(a)</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="grauInstr">Grau de Instrução:</label>
-        <select id="grauInstr" name="grauInstr" class="form-control">
-            <option value="01">Analfabeto</option>
-            <option value="02">Até o 5º ano incompleto do Ensino Fundamental (antiga 4ª série)</option>
-            <option value="03">5o ano completo do Ensino Fundamental</option>
-            <option value="04">Do 6o ao 9o ano do Ensino Fundamental incompleto (antiga 5a a 8a série)</option>
-            <option value="05">Ensino Fundamental Completo</option>
-            <option value="06">Ensino Médio incompleto</option>
-            <option value="07">Ensino Médio completo</option>
-            <option value="08">Educação Superior incompleta</option>
-            <option value="09">Educação Superior completa</option>
-            <option value="10">Pós-Graduação completa</option>
-            <option value="11">Mestrado completo</option>
-            <option value="12">Doutorado completo</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="indPriEmpr">Primeiro emprego?</label>
-        <select id="indPriEmpr" name="indPriEmpr" class="form-control">
-            <option value="S">Sim</option>
-            <option value="N">Não</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="nmSoc">Nome Social:</label>
-        <input id="nmSoc" name="nmSoc" class="form-control" maxlength="70" style="text-transform: uppercase">
-        <small id="nmSocHelp" class="form-text text-muted">Nome social para travesti ou transexual.</small>
-    </div>
-
-    {# Nascimento #}
-    <div class="page-header">
-        <h3>Informações de Nascimento</h3>
-    </div>
-    {# Origem tabela "paises" #}
-    <div class="form-group">
-        <label for="paisNac">País Nacionalidade:</label>
-        <select id="paisNac" name="paisNac" class="form-control">
-            <option value="">-- Selecione --</option>
-            {% for x in paises %}
-                <option value="{{ x }}" {% if paises[x] == "Brasil" %} selected {% endif %}>{{ paises[x] }}</option>
-            {% endfor %}
-        </select>
-    </div>
-    {# Origem tabela "paises" #}
-    <div class="form-group">
-        <label for="paisNascto">País Nascimento:</label>
-        <select id="paisNascto" name="paisNascto" class="form-control">
-            <option value="">-- Selecione --</option>
-            {% for x in paises %}
-                <option value="{{ x }}" {% if paises[x] == "Brasil" %} selected {% endif %}>{{ paises[x] }}</option>
-            {% endfor %}
-        </select>
-    </div>
-    {# Se pais nascimento selecionado = "Brasil" #}
-    <div class="form-group">
-        <label for="uf">Estado:</label>
-        <select id="uf" name="uf" class="form-control" value="CE">
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="codMunic">Município:</label>
-        <select id="codMunic" name="codMunic" class="form-control">
-        </select>
-    </div>
-    <script charset="utf-8">
-        new dgCidadesEstados({
-            estado: documenworker.getElementById('uf'),
-            cidade: documenworker.getElementById('codMunic')
-        })
-    </script>
-    <div class="form-group">
-        <label for="nmMae">Nome Mãe:</label>
-        <input id="nmMae" name="nmMae" class="form-control" pattern="^[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇ\s]*$"
-               maxlength="70"
-               title="Preencher somente com Letras." style="text-transform: uppercase">
-
-    </div>
-    <div class="form-group">
-        <label for="nmPai">Nome Pai:</label>
-        <input id="nmPai" name="nmPai" class="form-control" pattern="^[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇ\s]*$"
-               maxlength="70"
-               title="Preencher somente com Letras." style="text-transform: uppercase">
-    </div>
-
-    {# CTPS #}
-    <div class="page-header">
-        <h3>Informações de Carteira de Trabalho e Previdência Social (CTPS)</h3>
-    </div>
-    <div class="form-group">
-        <label for="nrCtps">Nº CTPS:</label>
-        <input id="nrCtps" name="nrCtps" class="form-control" title="Preencher somente com Números" maxlength="11">
-    </div>
-    <div class="form-group">
-        <label for="serieCtps">Série CTPS:</label>
-        <input id="serieCtps" name="serieCtps" class="form-control" title="Preencher somente com Números"
-               maxlength="5">
-    </div>
-    <div class="form-group">
-        <label for="ufCtps">UF CTPS:</label>
-        <select id="ufCtps" name="ufCtps" class="form-control">
-            <option value="">-- Selecione --</option>
-            {% for x in estados %}
-                <option value="{{ x }}">{{ x }}</option>
-            {% endfor %}
-        </select>
-    </div>
-
-    {# RG #}
-    <div class="page-header">
-        <h3>Informações do RG</h3>
-    </div>
-    <div class="form-group">
-        <label for="nrRg">Nº RG:</label>
-        <input id="nrRg" name="nrRg" class="form-control" pattern="^[0-9]*$"
-               title="Preencher somente com Números" maxlength="14">
-    </div>
-    <div class="form-group">
-        <label for="rg_orgaoEmissor">Órgão Emissor:</label>
-        <input id="rg_orgaoEmissor" name="rg_orgaoEmissor" class="form-control" pattern="^[a-zA-Z\s]*$"
-               title="Preencher somente com Letras." maxlength="20" style="text-transform: uppercase">
-        <small id="rg_orgaoEmissorHelp" class="form-text text-muted">Órgão e UF de emissão.</small>
-    </div>
-    <div class="form-group">
-        <label for="rg_dtExped">Data de Expedição:</label>
-        <input type="date" id="rg_dtExped" name="rg_dtExped" class="form-control">
-    </div>
-
-    {# OC #}
-    <div class="page-header">
-        <h3>Informações de Órgão de Classe</h3>
-    </div>
-    <div class="form-check">
-        <label for="showOc" data-toggle="collapse" data-target="#collapseOc">
-            <input id="showOc" type="checkbox" class="form-check-input" onclick="requiredOC()">
-            &nbsp;&nbsp;&nbsp;&nbsp;Eu tenho Órgão de Classe
-        </label>
-    </div>
-
-    <div id="collapseOc" class="collapse">
-        <br>
-        <div class="well">
-            <div class="form-group">
-                <label for="nrOc">Nº OC:</label>
-                <input id="nrOc" name="nrOc" class="form-control" maxlength="14">
-            </div>
-            <div class="form-group">
-                <label for="oc_orgaoEmissor">Órgão Emissor:</label>
-                <input id="oc_orgaoEmissor" name="oc_orgaoEmissor" class="form-control" maxlength="20"
-                       style="text-transform: uppercase">
-                <small id="oc_orgaoEmissorHelp" class="form-text text-muted">Órgão e UF de emissão.</small>
-            </div>
-            <div class="form-group">
-                <label for="oc_dtExped">Data de Expedição:</label>
-                <input type="date" id="oc_dtExped" name="oc_dtExped" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="oc_dtValid">Data de Validade:</label>
-                <input type="date" id="oc_dtValid" name="oc_dtValid" class="form-control">
-            </div>
+<div class="container">
+    <form class="container" method="POST">
+        {# Trabalhador #}
+        <div class="page-header">
+            <h3>Informações do Trabalhador</h3>
         </div>
-    </div>
-
-    {# CNH #}
-    <div class="page-header">
-        <h3>Informações de CNH (Obrigatório para Motoristas)</h3>
-    </div>
-    <div class="form-check">
-        <label for="showCnh" data-toggle="collapse" data-target="#collapseCnh">
-            <input id="showCnh" type="checkbox" class="form-check-input" onclick="requiredCNH()">
-            Eu tenho Carteira Nacional de Habilitação
-        </label>
-    </div>
-
-    <div id="collapseCnh" class="collapse">
         <br>
-        <div class="well">
-            <div class="form-group">
-                <label for="nrRegCnh">Nº do Registro CNH:</label>
-                <input id="nrRegCnh" name="nrRegCnh" class="form-control" maxlength="12">
-            </div>
-            <div class="form-group">
-                <label for="cnh_dtExped">Data de Expedição/Emissão:</label>
-                <input type="date" id="cnh_dtExped" name="cnh_dtExped" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="ufCnh">UF CNH:</label>
-                <select id="ufCnh" name="ufCnh" class="form-control">
-                    <option value="">-- Selecione --</option>
-                    {% for x in estados %}
-                        <option value="{{ x }}">{{ x }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="cnh_dtValid">Data de Validade:</label>
-                <input type="date" id="cnh_dtValid" name="cnh_dtValid" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="dtPriHab">Data da Primeira Habilitação:</label>
-                <input type="date" id="dtPriHab" name="dtPriHab" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="categoriaCnh">Categoria CNH:</label>
-                <select id="categoriaCnh" name="categoriaCnh" class="form-control">
-                    <option value="">-- Selecione --</option>
-                    <option>A</option>
-                    <option>B</option>
-                    <option>C</option>
-                    <option>D</option>
-                    <option>E</option>
-                    <option>AB</option>
-                    <option>AC</option>
-                    <option>AD</option>
-                    <option>AE</option>
-                </select>
-            </div>
+        <div class="form-group">
+            <label for="cpfTrab">*CPF: </label>
+            <input id="cpfTrab" name="cpfTrab" class="form-control" value="{{ t.cpftrab }}" readonly>
         </div>
-    </div>
+        <div class="form-group">
+            <label for="nisTrab">*NIS: </label>
+            <input id="nisTrab" name="nisTrab" class="form-control" value="{{ t.nistrab }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="nmTrab">*Nome Completo: </label>
+            <input id="nmTrab" name="nmTrab" class="form-control" value="{{ t.nmtrab }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="dtNascto">*Data de Nascimento: </label>
+            <input type="date" id="dtNascto" name="dtNascto" class="form-control" value="{{ t.dtnascto }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="sexo">Sexo:</label>
+            <select id="sexo" name="sexo" class="form-control">
+                <option value="M" {% if t.sexo == "M" %}selected{% endif %}>Masculino</option>
+                <option value="F" {% if t.sexo == "F" %}selected{% endif %}>Feminino</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="racacor">Raça/Cor:</label>
+            <select id="racacor" name="racacor" class="form-control">
+                <option value="1" {% if t.racacor == 1 %}selected{% endif %}>Branca</option>
+                <option value="2" {% if t.racacor == 2 %}selected{% endif %}>Preta</option>
+                <option value="3" {% if t.racacor == 3 %}selected{% endif %}>Parda</option>
+                <option value="4" {% if t.racacor == 4 %}selected{% endif %}>Amarela</option>
+                <option value="5" {% if t.racacor == 5 %}selected{% endif %}>Indígena</option>
+                <option value="6" {% if t.racacor == 6 %}selected{% endif %}>Não informado</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="estCiv">Estado Civil:</label>
+            <select id="estCiv" name="estCiv" class="form-control">
+                <option value="1" {% if t.estciv == 1 %}selected{% endif %}>Solteiro(a)</option>
+                <option value="2" {% if t.estciv == 2 %}selected{% endif %}>Casado(a)</option>
+                <option value="3" {% if t.estciv == 3 %}selected{% endif %}>Divorciado(a)</option>
+                <option value="4" {% if t.estciv == 4 %}selected{% endif %}>Separado(a)</option>
+                <option value="5" {% if t.estciv == 5 %}selected{% endif %}>Viúvo(a)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="grauinstr">Grau de Instrução:</label>
+            <select id="grauinstr" name="grauinstr" class="form-control">
+                <option value="01" {% if t.grauinstr == "01" %}selected{% endif %}>Analfabeto</option>
+                <option value="02" {% if t.grauinstr == "02" %}selected{% endif %}>Até o 5º ano incompleto do
+                    Ensino Fundamental (antiga 4ª série)
+                </option>
+                <option value="03" {% if t.grauinstr == "03" %}selected{% endif %}>5o ano completo do Ensino
+                    Fundamental
+                </option>
+                <option value="04" {% if t.grauinstr == "04" %}selected{% endif %}>Do 6o ao 9o ano do Ensino
+                    Fundamental incompleto (antiga 5a a 8a série)
+                </option>
+                <option value="05" {% if t.grauinstr == "05" %}selected{% endif %}>Ensino Fundamental Completo
+                </option>
+                <option value="06" {% if t.grauinstr == "06" %}selected{% endif %}>Ensino Médio incompleto
+                </option>
+                <option value="07" {% if t.grauinstr == "07" %}selected{% endif %}>Ensino Médio completo</option>
+                <option value="08" {% if t.grauinstr == "08" %}selected{% endif %}>Educação Superior
+                    incompleta
+                </option>
+                <option value="09" {% if t.grauinstr == "09" %}selected{% endif %}>Educação Superior completa
+                </option>
+                <option value="10" {% if t.grauinstr == "10" %}selected{% endif %}>Pós-Graduação completa
+                </option>
+                <option value="11" {% if t.grauinstr == "11" %}selected{% endif %}>Mestrado completo</option>
+                <option value="12" {% if t.grauinstr == "12" %}selected{% endif %}>Doutorado completo</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="indPriEmpr">Primeiro emprego?</label>
+            <select id="indPriEmpr" name="indPriEmpr" class="form-control">
+                <option value="S" {% if t.indpriempr == "S" %}selected{% endif %}>Sim</option>
+                <option value="N" {% if t.indpriempr == "N" %}selected{% endif %}>Não</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="nmSoc">Nome Social:</label>
+            <input id="nmSoc" name="nmSoc" class="form-control" maxlength="70" style="text-transform: uppercase"
+                   value="{{ t.nmsoc if t.nmsoc != None }}">
+            <small id="nmSocHelp" class="form-text text-muted">Nome social para travesti ou transexual.</small>
+        </div>
 
-    {# Endereco - Brasil #}
-    <div class="page-header">
-        <h3>Informações de Endereço Residencial</h3>
-    </div>
-    <div class="form-group">
-        <label for="paisResid">País Residência:</label>
-        <select id="paisResid" name="paisResid" class="form-control">
-            {% for x in paises %}
-                <option value="{{ x }}" {% if paises[x] == "Brasil" %} selected {% endif %}>{{ paises[x] }}</option>
-            {% endfor %}
-        </select>
-    </div>
-    {# Se pais residencia selecionado = "Brasil" #}
-    <div class="form-group">
-        <label for="cep">CEP:</label>
-        <input id="cep" name="cep" class="form-control" required>
-    </div>
-    <div class="form-group">
-        <label for="end_uf">Estado:</label>
-        <select id="end_uf" name="end_uf" class="form-control">
-            <option value="">-- Selecione --</option>
-            {% for x in estados %}
-                <option value="{{ x }}">{{ estados[x] }}</option>
-            {% endfor %}
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="end_codMunic">Município:</label>
-        <select id="end_codMunic" name="end_codMunic" class="form-control">
-            <option value="">-- Selecione --</option>
-            {% for x in municipios %}
-                <option value="{{ x }}">{{ municipios[x] }}</option>
-            {% endfor %}
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="bairro">Bairro:</label>
-        <input id="bairro" name="bairro" class="form-control" maxlength="80" style="text-transform: uppercase">
-    </div>
-    <div class="form-group">
-        <label for="tpLograd">Tipo Logradouro:</label>
-        <select id="tpLograd" name="tpLograd" class="form-control">
-            <option value="">-- Selecione --</option>
-            <option value="AL">Alameda</option>
-            <option value="AV">Avenida</option>
-            <option value="BAL">Balneário</option>
-            <option value="BL">Bloco</option>
-            <option value="CH">Chácara</option>
-            <option value="CJ">Conjunto</option>
-            <option value="COND">Condomínio</option>
-            <option value="EST">Estrada</option>
-            <option value="FAZ">Fazenda</option>
-            <option value="GAL">Galeria</option>
-            <option value="GJA">Granja</option>
-            <option value="JD">Jardim</option>
-            <option value="LG">Largo</option>
-            <option value="LOT">Loteamento</option>
-            <option value="PÇ">Praça</option>
-            <option value="PR">Praia</option>
-            <option value="PRQ">Parque</option>
-            <option value="Q">Quadra</option>
-            <option value="R">Rua</option>
-            <option value="ST">Setor</option>
-            <option value="TV">Travessa</option>
-            <option value="VL">Vila</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="dscLograd">Logradouro:</label>
-        <input id="dscLograd" name="dscLograd" class="form-control" maxlength="80"
-               style="text-transform: uppercase">
-    </div>
-    <div class="form-group">
-        <label for="nrLograd">Nº Logradouro:</label>
-        <input id="nrLograd" name="nrLograd" class="form-control" maxlength="10" required>
-        <small id="nrLogradHelp" class="form-text text-muted">Em caso de sem número, colocar 0.</small>
-    </div>
-    <div class="form-group">
-        <label for="complemento">Complemento:</label>
-        <input id="complemento" name="complemento" class="form-control" maxlength="30"
-               style="text-transform: uppercase">
-    </div>
-
-    {# Informações de Deficiência #}
-    <div class="page-header">
-        <h3>Informações de Deficiência</h3>
-    </div>
-    <div class="form-group">
-        <label for="defFisica">Deficiência física?</label>
-        <select id="defFisica" name="defFisica" class="form-control">
-            <option value="N">Não</option>
-            <option value="S">Sim</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="defVisual">Deficiência visual?</label>
-        <select id="defVisual" name="defVisual" class="form-control">
-            <option value="N">Não</option>
-            <option value="S">Sim</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="defAuditiva">Deficiência auditiva?</label>
-        <select id="defAuditiva" name="defAuditiva" class="form-control">
-            <option value="N">Não</option>
-            <option value="S">Sim</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="defMental">Deficiência mental?</label>
-        <select id="defMental" name="defMental" class="form-control">
-            <option value="N">Não</option>
-            <option value="S">Sim</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="defIntelectual">Deficiência intelectual?</label>
-        <select id="defIntelectual" name="defIntelectual" class="form-control">
-            <option value="N">Não</option>
-            <option value="S">Sim</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="defReadap">Readaptado/Reabilitado?</label>
-        <select id="defReadap" name="defReadap" class="form-control">
-            <option value="N">Não</option>
-            <option value="S">Sim</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="infoCota">Cota Pessoa com Deficiência (PCD)?</label>
-        <select id="infoCota" name="infoCota" class="form-control">
-            <option value="N">Não</option>
-            <option value="S">Sim</option>
-        </select>
-        <small id="infoCotaHelp" class="form-text text-muted">
-            Reserva legal de cotas é também conhecida como a Lei de Cotas (arworker. 93 da Lei nº 8.213/91.
-        </small>
-    </div>
-    <div class="form-group">
-        <label for="observacao">Observação:</label>
-        <textarea id="observacao" name="observacao" class="form-control" maxlength="255"
-                  style="text-transform: uppercase"></textarea>
-    </div>
-
-    {# Informações de Dependentes #}
-    <div class="page-header">
-        <h3>Informações de Dependentes</h3>
-    </div>
-    <div class="form-check">
-        <label for="showDep" data-toggle="collapse" data-target="#collapseDep">
-            <input id="showDep" type="checkbox" class="form-check-input" onclick="requiredDep()">
-            Eu tenho Dependente(s)
-        </label>
-    </div>
-
-    <div id="collapseDep" class="collapse">
         <br>
-        <a class="add-more-btn">Adicionar</a>
-        <br><br>
-        <div class="well" id="multi">
-            <div class="form-group">
-                <label for="tpDep">Tipo de dependente:</label>
-                <select id="tpDep" name="tpDep[]" class="form-control">
-                    <option value="">-- Selecione --</option>
-                    <option value="01">Cônjuge</option>
-                    <option value="02">Companheiro(a) com o(a) qual tenha filho ou viva há mais de 5 (cinco)
-                        anos ou possua Declaração de União Estável
-                    </option>
-                    <option value="03">Filho(a) ou enteado(a)</option>
-                    <option value="04">Filho(a) ou enteado(a) universitário(a) ou cursando escola técnica de
-                        2o grau, até 24 (vinte e quatro) anos
-                    </option>
-                    <option value="06">Irmão(ã), neto(a) ou bisneto(a) sem arrimo dos pais, do(a) qual detenha
-                        a guarda judicial
-                    </option>
-                    <option value="09">Pais, avós e bisavós</option>
-                    <option value="10">Menor pobre do qual detenha a guarda judicial</option>
-                    <option value="11">A pessoa absolutamente incapaz, da qual seja tutor ou curador</option>
-                    <option value="12">Ex-cônjuge</option>
-                    <option value="99">Agregado/Outros</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="nmDep">Nome Completo:</label>
-                <input id="nmDep" name="nmDep[]" class="form-control" maxlength="70"
-                       style="text-transform: uppercase">
-            </div>
-            <div class="form-group">
-                <label for="dep_dtNascto">Data de Nascimento:</label>
-                <input type="date" id="dep_dtNascto" name="dep_dtNascto[]" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="cpfDep">CPF:</label>
-                <input id="cpfDep" name="cpfDep[]" class="form-control" onblur="TestaCPF(this)">
-            </div>
-            <div class="form-group">
-                <label for="depIRRF">Dependente IRRF?</label>
-                <select id="depIRRF" name="depIRRF[]" class="form-control">
-                    <option value="">-- Selecione --</option>
-                    <option value="S">Sim</option>
-                    <option value="N">Não</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="depSF">Dependente Salário-Família?</label>
-                <select id="depSF" name="depSF[]" class="form-control">
-                    <option value="">-- Selecione --</option>
-                    <option value="S">Sim</option>
-                    <option value="N">Não</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="incTrab">Incapacidade física ou mental para o trabalho?</label>
-                <select id="incTrab" name="incTrab[]" class="form-control">
-                    <option value="">-- Selecione --</option>
-                    <option value="N">Não</option>
-                    <option value="S">Sim</option>
-                </select>
-            </div>
+        {# Nascimento #}
+        <div class="page-header">
+            <h3>Informações de Nascimento</h3>
         </div>
-    </div>
+        <br>
+        {# Origem tabela "paises" #}
+        <div class="form-group">
+            <label for="paisNac">País Nacionalidade:</label>
+            <select id="paisNac" name="paisNac" class="form-control">
+                <option value="">-- Selecione --</option>
+                {% for x in paises %}
+                    <option value="{{ x }}" {% if x == t.paisnac %}selected{% endif %}>{{ paises[x] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {# Origem tabela "paises" #}
+        <div class="form-group">
+            <label for="paisNascto">País Nascimento:</label>
+            <select id="paisNascto" name="paisNascto" class="form-control">
+                <option value="">-- Selecione --</option>
+                {% for x in paises %}
+                    <option value="{{ x }}" {% if x == t.paisnascto %}selected{% endif %}>{{ paises[x] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {# Se pais nascimento selecionado = "Brasil" #}
+        <div class="form-group">
+            <label for="uf">Estado:</label>
+            <select id="uf" name="uf" class="form-control">
+                {% for x in estados %}
+                    <option value="{{ x }}" {% if x == t.uf %}selected{% endif %}>{{ estados[x] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="codMunic">Município:</label>
+            <select id="codMunic" name="codMunic" class="form-control">
+                {% for x in municipios %}
+                    <option value="{{ x }}" {% if x == t.codmunic %}
+                            selected{% endif %}>{{ municipios[x] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <script charset="utf-8">
+            new dgCidadesEstados({
+                cidade: document.getElementById('codMunic'),
+                estado: document.getElementById('uf')
+            })
+        </script>
+        <div class="form-group">
+            <label for="nmMae">Nome Mãe:</label>
+            <input id="nmMae" name="nmMae" class="form-control" pattern="^[a-zA-Z\s]*$" maxlength="70"
+                   title="Preencher somente com Letras." style="text-transform: uppercase" value="{{ t.nmmae }}">
+        </div>
+        <div class="form-group">
+            <label for="cpfMae">CPF Mãe: </label>
+            <input id="cpfMae" name="cpfMae" class="form-control" value="{{ t.cpfmae }}">
+        </div>
+        <div class="form-group">
+            <label for="nmPai">Nome Pai:</label>
+            <input id="nmPai" name="nmPai" class="form-control" pattern="^[a-zA-Z\s]*$" maxlength="70"
+                   title="Preencher somente com Letras." style="text-transform: uppercase" value="{{ t.nmpai }}">
+        </div>
+        <div class="form-group">
+            <label for="cpfPai">CPF Pai: </label>
+            <input id="cpfPai" name="cpfPai" class="form-control" value="{{ t.cpfpai }}">
+        </div>
 
-    {# Informações de Aposentadoria #}
-    <div class="page-header">
-        <h3>Informações de Aposentadoria</h3>
-    </div>
-    <div class="form-group">
-        <label for="trabAposent">Aposentado por tempo de contribuição ou idade?</label>
-        <select id="trabAposent" name="trabAposent" class="form-control">
-            <option value="N">Não</option>
-            <option value="S">Sim</option>
-        </select>
-    </div>
+        {# CTPS #}
+        {% if t.nrctps != None %}
+            <br>
+            <div class="page-header">
+                <h3>Informações de Carteira de Trabalho e Previdência Social (CTPS)</h3>
+            </div>
+            <br>
+            <div class="card card-body bg-light">
+                <div class="form-group">
+                    <label for="nrCtps">Nº CTPS:</label>
+                    <input id="nrCtps" name="nrCtps" class="form-control" title="Preencher somente com Números"
+                           maxlength="11" value="{{ t.nrctps if t.nrctps != None }}">
+                </div>
+                <div class="form-group">
+                    <label for="serieCtps">Série CTPS:</label>
+                    <input id="serieCtps" name="serieCtps" class="form-control"
+                           title="Preencher somente com Números"
+                           maxlength="5" value="{{ t.seriectps if t.seriectps != None }}">
+                </div>
+                <div class="form-group">
+                    <label for="ufCtps">UF CTPS:</label>
+                    <select id="ufCtps" name="ufCtps" class="form-control">
+                        <option value="">-- Selecione --</option>
+                        {% for x in estados %}
+                            <option value="{{ x }}" {% if x == t.ufctps %}selected{% endif %}>{{ x }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        {% endif %}
 
-    {# Informações de Contato #}
-    <div class="page-header">
-        <h3>Informações de Contato</h3>
-    </div>
-    <div class="form-group">
-        <label for="fonePrinc">Fone principal:</label>
-        <input id="fonePrinc" name="fonePrinc" class="form-control"
-               pattern="^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$">
+        <br>
+        {# RG #}
+        <div class="page-header">
+            <h3>Informações do RG</h3>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="nrRg">Nº RG:</label>
+            <input id="nrRg" name="nrRg" class="form-control" pattern="^[0-9]*$"
+                   title="Preencher somente com Números" maxlength="14" value="{{ t.nrrg }}">
+        </div>
+        <div class="form-group">
+            <label for="rg_orgaoEmissor">Órgão Emissor:</label>
+            <input id="rg_orgaoEmissor" name="rg_orgaoEmissor" class="form-control" pattern="^[a-zA-Z\s]*$"
+                   title="Preencher somente com Letras." maxlength="20" style="text-transform: uppercase"
+                   value="{{ t.rg_orgaoemissor }}">
+            <small id="rg_orgaoEmissorHelp" class="form-text text-muted">Órgão e UF de emissão.</small>
+        </div>
+        <div class="form-group">
+            <label for="rg_dtExped">Data de Expedição:</label>
+            <input type="date" id="rg_dtExped" name="rg_dtExped" class="form-control" value="{{ t.rg_dtexped }}">
+        </div>
 
-    </div>
-    <div class="form-group">
-        <label for="foneAlternat">Fone alternativo:</label>
-        <input id="foneAlternat" name="foneAlternat" class="form-control">
-    </div>
-    <div class="form-group">
-        <label for="emailPrinc">E-mail principal:</label>
-        <input type="email" id="emailPrinc" name="emailPrinc" class="form-control" maxlength="60" required>
-    </div>
-    <div class="form-group">
-        <label for="emailAlternat">E-mail alternativo:</label>
-        <input type="email" id="emailAlternat" name="emailAlternat" class="form-control" maxlength="60">
-    </div>
+        {# OC #}
+        {% if t.nroc != None %}
+            <br>
+            <div class="page-header">
+                <h3>Informações de Órgão de Classe</h3>
+            </div>
+            <br>
+            <div class="card card-body bg-light">
+                <div class="form-group">
+                    <label for="nrOc">Nº OC:</label>
+                    <input id="nrOc" name="nrOc" class="form-control" maxlength="14"
+                           value="{{ t.nroc if t.nroc != None }}">
+                </div>
+                <div class="form-group">
+                    <label for="oc_orgaoEmissor">Órgão Emissor:</label>
+                    <input id="oc_orgaoEmissor" name="oc_orgaoEmissor" class="form-control" maxlength="20"
+                           style="text-transform: uppercase"
+                           value="{{ t.oc_orgaoemissor if t.oc_orgaoemissor != None }}">
+                    <small id="oc_orgaoEmissorHelp" class="form-text text-muted">Órgão e UF de emissão.</small>
+                </div>
+                <div class="form-group">
+                    <label for="oc_dtExped">Data de Expedição:</label>
+                    <input type="date" id="oc_dtExped" name="oc_dtExped" class="form-control"
+                           value="{{ t.oc_dtexped if t.oc_dtexped != None }}">
+                </div>
+                <div class="form-group">
+                    <label for="oc_dtValid">Data de Validade:</label>
+                    <input type="date" id="oc_dtValid" name="oc_dtValid" class="form-control"
+                           value="{{ t.oc_dtvalid if t.oc_dtvalid != None }}">
+                </div>
+            </div>
+        {% endif %}
 
-    <br>
+        {# CNH #}
+        {% if t.nrregcnh != None %}
+            <br>
+            <div class="page-header">
+                <h3>Informações de CNH (Obrigatório para Motoristas)</h3>
+            </div>
+            <br>
+            <div class="card card-body bg-light">
+                <div class="form-group">
+                    <label for="nrRegCnh">Nº do Registro CNH:</label>
+                    <input id="nrRegCnh" name="nrRegCnh" class="form-control" maxlength="12"
+                           value="{{ t.nrregcnh if t.nrregcnh != None }}">
+                </div>
+                <div class="form-group">
+                    <label for="cnh_dtExped">Data de Expedição:</label>
+                    <input type="date" id="cnh_dtExped" name="cnh_dtExped" class="form-control"
+                           value="{{ t.cnh_dtexped if t.cnh_dtexped != None }}">
+                </div>
+                <div class="form-group">
+                    <label for="ufCnh">UF CNH:</label>
+                    <select id="ufCnh" name="ufCnh" class="form-control">
+                        <option value="">-- Selecione --</option>
+                        {% for x in estados %}
+                            <option value="{{ x }}" {% if x == t.ufcnh %}selected{% endif %}>{{ x }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="cnh_dtValid">Data de Validade:</label>
+                    <input type="date" id="cnh_dtValid" name="cnh_dtValid" class="form-control"
+                           value="{{ t.cnh_dtvalid if t.cnh_dtvalid != None }}">
+                </div>
+                <div class="form-group">
+                    <label for="dtPriHab">Data da Primeira Habilitação:</label>
+                    <input type="date" id="dtPriHab" name="dtPriHab" class="form-control"
+                           value="{{ t.dtprihab if t.dtprihab != None }}">
+                </div>
+                <div class="form-group">
+                    <label for="categoriaCnh">Categoria CNH:</label>
+                    <select id="categoriaCnh" name="categoriaCnh" class="form-control">
+                        <option value="">-- Selecione --</option>
+                        <option {% if t.categoriacnh == "A" %}selected{% endif %}>A</option>
+                        <option {% if t.categoriacnh == "B" %}selected{% endif %}>B</option>
+                        <option {% if t.categoriacnh == "C" %}selected{% endif %}>C</option>
+                        <option {% if t.categoriacnh == "D" %}selected{% endif %}>D</option>
+                        <option {% if t.categoriacnh == "E" %}selected{% endif %}>E</option>
+                        <option {% if t.categoriacnh == "AB" %}selected{% endif %}>AB</option>
+                        <option {% if t.categoriacnh == "AC" %}selected{% endif %}>AC</option>
+                        <option {% if t.categoriacnh == "AD" %}selected{% endif %}>AD</option>
+                        <option {% if t.categoriacnh == "AE" %}selected{% endif %}>AE</option>
+                    </select>
+                </div>
+            </div>
+        {% endif %}
 
-    <button type="submit" class="btn btn-primary">Enviar</button>
-    <br><br><br><br><br>
-</form>
+        <br>
+        {# Endereco - Brasil #}
+        <div class="page-header">
+            <h3>Informações de Endereço Residencial</h3>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="paisResid">País Residência:</label>
+            <select id="paisResid" name="paisResid" class="form-control">
+                {% for x in paises %}
+                    <option value="{{ x }}" {% if paises[x] == "Brasil" %}
+                            selected{% endif %}>{{ paises[x] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {# Se pais residencia selecionado = "Brasil" #}
+        <div class="form-group">
+            <label for="cep">CEP:</label>
+            <input id="cep" name="cep" class="form-control" value="{{ t.cep }}">
+        </div>
+        <div class="form-group">
+            <label for="end_uf">Estado:</label>
+            <select id="end_uf" name="end_uf" class="form-control">
+                <option value="">-- Selecione --</option>
+                {% for x in estados %}
+                    <option value="{{ x }}" {% if x == t.end_uf %}selected{% endif %}>{{ estados[x] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="end_codMunic">Município:</label>
+            <select id="end_codMunic" name="end_codMunic" class="form-control">
+                <option value="">-- Selecione --</option>
+                {% for x in municipios %}
+                    <option value="{{ x }}" {% if x == t.end_codmunic %}
+                            selected{% endif %}>{{ municipios[x] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <script charset="utf-8">
+            new dgCidadesEstados({
+                cidade: document.getElementById('end_codMunic'),
+                estado: document.getElementById('end_uf')
+            })
+        </script>
+        <div class="form-group">
+            <label for="bairro">Bairro:</label>
+            <input id="bairro" name="bairro" class="form-control" maxlength="80" style="text-transform: uppercase"
+                   value="{{ t.bairro }}">
+        </div>
+        <div class="form-group">
+            <label for="tplograd">Tipo Logradouro:</label>
+            <select id="tplograd" name="tplograd" class="form-control">
+                <option value="">-- Selecione --</option>
+                <option value="AL" {% if t.tplograd == "AL" %}selected{% endif %}>Alameda</option>
+                <option value="AV" {% if t.tplograd == "AV" %}selected{% endif %}>Avenida</option>
+                <option value="BAL" {% if t.tplograd == "BAL" %}selected{% endif %}>Balneário</option>
+                <option value="BL" {% if t.tplograd == "BL" %}selected{% endif %}>Bloco</option>
+                <option value="CH" {% if t.tplograd == "CH" %}selected{% endif %}>Chácara</option>
+                <option value="CJ" {% if t.tplograd == "CJ" %}selected{% endif %}>Conjunto</option>
+                <option value="COND" {% if t.tplograd == "COND" %}selected{% endif %}>Condomínio</option>
+                <option value="EST" {% if t.tplograd == "EST" %}selected{% endif %}>Estrada</option>
+                <option value="FAZ" {% if t.tplograd == "FAZ" %}selected{% endif %}>Fazenda</option>
+                <option value="GAL" {% if t.tplograd == "GAL" %}selected{% endif %}>Galeria</option>
+                <option value="GJA" {% if t.tplograd == "GJA" %}selected{% endif %}>Granja</option>
+                <option value="JD" {% if t.tplograd == "JD" %}selected{% endif %}>Jardim</option>
+                <option value="LG" {% if t.tplograd == "LG" %}selected{% endif %}>Largo</option>
+                <option value="LOT" {% if t.tplograd == "LOT" %}selected{% endif %}>Loteamento</option>
+                <option value="PÇ" {% if t.tplograd == "PÇ" %}selected{% endif %}>Praça</option>
+                <option value="PR" {% if t.tplograd == "PR" %}selected{% endif %}>Praia</option>
+                <option value="PRQ" {% if t.tplograd == "PRQ" %}selected{% endif %}>Parque</option>
+                <option value="Q" {% if t.tplograd == "Q" %}selected{% endif %}>Quadra</option>
+                <option value="R" {% if t.tplograd == "R" %}selected{% endif %}>Rua</option>
+                <option value="ST" {% if t.tplograd == "ST" %}selected{% endif %}>Setor</option>
+                <option value="TV" {% if t.tplograd == "TV" %}selected{% endif %}>Travessa</option>
+                <option value="VL" {% if t.tplograd == "VL" %}selected{% endif %}>Vila</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="dscLograd">Logradouro:</label>
+            <input id="dscLograd" name="dscLograd" class="form-control" maxlength="80"
+                   style="text-transform: uppercase" value="{{ t.dsclograd }}">
+        </div>
+        <div class="form-group">
+            <label for="nrLograd">Nº Logradouro:</label>
+            <input id="nrLograd" name="nrLograd" class="form-control" maxlength="10" value="{{ t.nrlograd }}">
+            <small id="nrLogradHelp" class="form-text text-muted">Em caso de sem número, colocar 0.</small>
+        </div>
+        <div class="form-group">
+            <label for="complemento">Complemento:</label>
+            <input id="complemento" name="complemento" class="form-control" maxlength="30"
+                   style="text-transform: uppercase" value="{{ t.complemento if t.complemento != None }}">
+        </div>
+
+        <br>
+        {# Informações de Deficiência #}
+        <div class="page-header">
+            <h3>Informações de Deficiência</h3>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="defFisica">Deficiência física?</label>
+            <select id="defFisica" name="defFisica" class="form-control">
+                <option value="N" {% if t.deffisica == "N" %}selected{% endif %}>Não</option>
+                <option value="S" {% if t.deffisica == "S" %}selected{% endif %}>Sim</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="defVisual">Deficiência visual?</label>
+            <select id="defVisual" name="defVisual" class="form-control">
+                <option value="N" {% if t.defvisual == "N" %}selected{% endif %}>Não</option>
+                <option value="S" {% if t.defvisual == "S" %}selected{% endif %}>Sim</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="defAuditiva">Deficiência auditiva?</label>
+            <select id="defAuditiva" name="defAuditiva" class="form-control">
+                <option value="N" {% if t.defauditiva == "N" %}selected{% endif %}>Não</option>
+                <option value="S" {% if t.defauditiva == "S" %}selected{% endif %}>Sim</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="defMental">Deficiência mental?</label>
+            <select id="defMental" name="defMental" class="form-control">
+                <option value="N" {% if t.defmental == "N" %}selected{% endif %}>Não</option>
+                <option value="S" {% if t.defmental == "S" %}selected{% endif %}>Sim</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="defIntelectual">Deficiência intelectual?</label>
+            <select id="defIntelectual" name="defntelectual" class="form-control">
+                <option value="N" {% if t.defintelectual == "N" %}selected{% endif %}>Não</option>
+                <option value="S" {% if t.defintelectual == "S" %}selected{% endif %}>Sim</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="defReadap">Readaptado/Reabilitado?</label>
+            <select id="defReadap" name="defReadap" class="form-control">
+                <option value="N" {% if t.defreadap == "N" %}selected{% endif %}>Não</option>
+                <option value="S" {% if t.defreadap == "S" %}selected{% endif %}>Sim</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="infoCota">Cota Pessoa com Deficiência (PCD)?</label>
+            <select id="infoCota" name="infoCota" class="form-control">
+                <option value="N" {% if t.infocota == "N" %}selected{% endif %}>Não</option>
+                <option value="S" {% if t.infocota == "S" %}selected{% endif %}>Sim</option>
+            </select>
+            <small id="infoCotaHelp">
+                Reserva legal de cotas é também conhecida como a Lei de Cotas (art. 93 da Lei nº 8.213/91).
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="observacao">Observação:</label>
+            <textarea id="observacao" name="observacao" class="form-control" maxlength="255"
+                      style="text-transform: uppercase">{{ t.observacao if t.observacao != None }}</textarea>
+        </div>
+
+        <br>
+        {% if dependentes|length > 0 %}
+            {# Informações de Dependentes #}
+            <div class="page-header">
+                <h3>Informações de Dependentes</h3>
+            </div>
+            <br>
+            <button id="add" type="button" class="btn btn-success add"><i class="fa fa-plus-square"></i> Adicionar
+            </button>
+            <br><br>
+        {% endif %}
+        {% for d in dependentes %}
+            <br>
+            <div class="card card-body bg-light" id="multi">
+                <div class="form-group">
+                    <label for="tpDep">Tipo de dependente:</label>
+                    <select id="tpDep" name="tpDep[]" class="form-control">
+                        <option value="">-- Selecione --</option>
+                        <option value="01" {% if d.tpdep == "01" %}selected{% endif %}>Cônjuge</option>
+                        <option value="02" {% if d.tpdep == "02" %}selected{% endif %}>Companheiro(a) com o(a)
+                            qual tenha filho ou viva há mais de 5 (cinco)
+                            anos ou possua Declaração de União Estável
+                        </option>
+                        <option value="03" {% if d.tpdep == "03" %}selected{% endif %}>Filho(a) ou enteado(a)
+                        </option>
+                        <option value="04" {% if d.tpdep == "04" %}selected{% endif %}>Filho(a) ou enteado(a)
+                            universitário(a) ou cursando escola técnica de
+                            2o grau, até 24 (vinte e quatro) anos
+                        </option>
+                        <option value="06" {% if d.tpdep == "06" %}selected{% endif %}>Irmão(ã), neto(a) ou
+                            bisneto(a) sem arrimo dos pais, do(a) qual detenha
+                            a guarda judicial
+                        </option>
+                        <option value="09" {% if d.tpdep == "09" %}selected{% endif %}>Pais, avós e bisavós
+                        </option>
+                        <option value="10" {% if d.tpdep == "10" %}selected{% endif %}>Menor pobre do qual
+                            detenha
+                            a guarda judicial
+                        </option>
+                        <option value="11" {% if d.tpdep == "11" %}selected{% endif %}>A pessoa absolutamente
+                            incapaz, da qual seja tutor ou curador
+                        </option>
+                        <option value="12" {% if d.tpdep == "12" %}selected{% endif %}>Ex-cônjuge</option>
+                        <option value="99" {% if d.tpdep == "99" %}selected{% endif %}>Agregado/Outros
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="nmDep">Nome Completo:</label>
+                    <input id="nmDep" name="nmDep[]" class="form-control" maxlength="70"
+                           style="text-transform: uppercase" value="{{ d.nmdep }}">
+                </div>
+                <div class="form-group">
+                    <label for="dep_dtNascto">Data de Nascimento:</label>
+                    <input type="date" id="dep_dtNascto" name="dep_dtNascto[]" class="form-control"
+                           value="{{ d.dep_dtnascto }}">
+                </div>
+                <div class="form-group">
+                    <label for="cpfDep">CPF:</label>
+                    <input id="cpfDep" name="cpfDep[]" class="form-control" onblur="TestaCPF(this)"
+                           value="{{ d.cpfdep }}">
+                </div>
+                <div class="form-group">
+                    <label for="depIRRF">Dependente IRRF?</label>
+                    <select id="depIRRF" name="depIRRF[]" class="form-control">
+                        <option value="">-- Selecione --</option>
+                        <option value="S" {% if d.depirrf == "S" %}selected{% endif %}>Sim</option>
+                        <option value="N" {% if d.depirrf == "N" %}selected{% endif %}>Não</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="depSF">Dependente Salário-Família?</label>
+                    <select id="depSF" name="depSF[]" class="form-control">
+                        <option value="">-- Selecione --</option>
+                        <option value="S" {% if d.depsf == "S" %}selected{% endif %}>Sim</option>
+                        <option value="N" {% if d.depsf == "N" %}selected{% endif %}>Não</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="incTrab">Incapacidade física ou mental para o trabalho?</label>
+                    <select id="incTrab" name="incTrab[]" class="form-control">
+                        <option value="">-- Selecione --</option>
+                        <option value="N" {% if d.inctrab == "N" %}selected{% endif %}>Não</option>
+                        <option value="S" {% if d.inctrab == "S" %}selected{% endif %}>Sim</option>
+                    </select>
+                </div>
+            </div>
+        {% endfor %}
+
+        <br>
+        {# Informações de Aposentadoria #}
+        <div class="page-header">
+            <h3>Informações de Aposentadoria</h3>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="trabAposent">Aposentado por tempo de contribuição ou idade?</label>
+            <select id="trabAposent" name="trabAposent" class="form-control">
+                <option value="N" {% if t.trabaposent == "N" %}selected{% endif %}>Não</option>
+                <option value="S" {% if t.trabaposent == "S" %}selected{% endif %}>Sim</option>
+            </select>
+        </div>
+
+        <br>
+        {# Informações de Contato #}
+        <div class="page-header">
+            <h3>Informações de Contato</h3>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="fonePrinc">Fone principal:</label>
+            <input id="fonePrinc" name="fonePrinc" class="form-control"
+                   pattern="^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$"
+                   value="{{ t.foneprinc }}">
+        </div>
+        <div class="form-group">
+            <label for="foneAlternat">Fone alternativo:</label>
+            <input id="foneAlternat" name="foneAlternat" class="form-control"
+                   value="{{ t.fonealternat if t.fonealternat != None }}">
+        </div>
+        <div class="form-group">
+            <label for="emailPrinc">E-mail principal:</label>
+            <input type="email" id="emailPrinc" name="emailPrinc" class="form-control" maxlength="60"
+                   value="{{ t.emailprinc }}">
+        </div>
+        <div class="form-group">
+            <label for="emailAlternat">E-mail alternativo:</label>
+            <input type="email" id="emailAlternat" name="emailAlternat" class="form-control" maxlength="60"
+                   value="{{ t.emailalternat if t.emailalternat != None }}">
+        </div>
+
+        <br>
+
+        <button type="submit" class="btn btn-primary">Editar</button>
+        <br><br><br><br>
+    </form>
+</div>
+
 </body>
 </html>

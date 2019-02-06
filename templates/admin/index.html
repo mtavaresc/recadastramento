@@ -28,6 +28,14 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
     <script src="../../static/js/jquery-3.3.1.min.js"></script>
+
+    {% if adm.nome is undefined %}
+    <script>
+        window.setTimeout(function () {
+            window.location.href = "{{ url_for('login') }}";
+        }, 5000);
+    </script>
+    {% endif %}
 </head>
 <body>
 <!-- Left Panel -->
@@ -113,13 +121,14 @@
                     <th>Nome</th>
                     <th>CPF</th>
                     <th>Protocolo</th>
+                    <th>Ações</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for row in data %}
-                    <tr data-toggle="modal" data-target="#modal-iframe" style="cursor:pointer;"
-{#                        href="#">#}
-                        href="/admin/worker/{{ row.matricula }}">
+                    <tr>
+{#                    <tr data-toggle="modal" data-target="#modal-iframe" style="cursor:pointer;"#}
+{#                        href="/admin/worker/{{ row.matricula }}">#}
                         <td>{{ row.matricula }}</td>
                         <td>{{ row.nmtrab }}</td>
                         <td>{{ row.cpftrab }}</td>
@@ -132,6 +141,14 @@
                             {{ row.protocolo }}
                             {% endif %}
                         </td>
+                    <td>
+                        <a href="/admin/worker/{{ row.matricula }}">
+                        <button type="button" class="btn btn-info">
+                            <i class="fa fa-edit"></i>
+                            Editar
+                        </button>
+                    </a>
+                    </td>
                     </tr>
                 {% endfor %}
                 </tbody>
