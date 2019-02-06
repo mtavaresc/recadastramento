@@ -519,7 +519,7 @@ def admin_edit_worker(matricula):
 
         # Logout!
         try:
-            a = Auditoria(matradm=session.get("matricula"), matricula=matricula, action="Editar", created=datetime.now())
+            a = Auditoria(session.get("matricula"), matricula, "Editar", datetime.now())
             db.session.add(a)
             db.session.commit()
         except Exception as e:
@@ -555,7 +555,7 @@ def admin_edit_worker(matricula):
     except AttributeError:
         return redirect(url_for("login"))
 
-    # TODO: Realizar Backup BD;
+    # TODO: Backup BD;
     # TODO: Drop All;
     # TODO: Create All;
     # TODO: Restore BD;

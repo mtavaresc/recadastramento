@@ -20,9 +20,11 @@
     <link rel="stylesheet" type="text/css" href="../static/login/css/util.css">
     <link rel="stylesheet" type="text/css" href="../static/login/css/main.css">
     <!--===============================================================================================-->
-</head>
-<body>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css">
 
+</head>
+<body onload="show_info()">
+{# TODO: Adicionar notificação de "Somente navegadores atualizados!" #}
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">
@@ -90,6 +92,21 @@
 </script>
 <!--===============================================================================================-->
 <script src="../static/login/js/main.js"></script>
-
+<script src="../static/js/bootstrap-notify.min.js"></script>
+<script>
+    function show_info() {
+        $.notify({
+            message: "<p>Atualize o seu navegador para ter uma melhor experi&ecirc;ncia e visualiza&ccedil;&atilde;o deste site.</p>",
+            url: "http://outdatedbrowser.com/pt-br"
+        }, {
+            // settings
+            delay: 30000,
+            animate: {
+                enter: 'animated fadeInDown',
+                exit: 'animated fadeOutUp'
+            },
+        });
+    }
+</script>
 </body>
 </html>
