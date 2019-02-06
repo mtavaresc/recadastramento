@@ -38,13 +38,16 @@
 <div class="container">
     <br>
     <div class="alert alert-success">
-        <strong>Formulário enviado para análise com sucesso!<br>
+        <strong>Formulário enviado para análise com sucesso! {{ agora }}<br>
+            CPF: {{ cpf }}, após a análise do DRH, será liberado o seu número de <b>Protocolo</b>.
+            <br><br>
             Em caso de dúvidas, entrar em contato com o DRH - (85) 3277-3731 / 2824.
-{#            Seu número de protocolo é {{ protocolo }}.#}
         </strong>
     </div>
 
     <img src="../static/images/alece.png" alt="IMG">
+    <br><br>
+    <a class="btn btn-secondary" href="{{ url_for('login') }}">Voltar para Login</a>
     <button type="button" class="btn btn-light float-right" onclick="window.print();">
         <i class="fa fa-print"></i> Imprimir
     </button>

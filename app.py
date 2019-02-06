@@ -48,10 +48,10 @@ def login():
         return render_template("401.html")
 
 
-@app.route("/logout")
-def logout():
+@app.route("/logout/<cpf>")
+def logout(cpf):
     session.clear()
-    return render_template("submit.html")
+    return render_template("submit.html", cpf=cpf, agora=datetime.now().strftime('%d/%m/%Y %H:%M:%S'))
 
 
 @app.route("/protected", methods=["GET", "POST"])
@@ -178,7 +178,7 @@ def protected():
             raise
 
         # Logout!
-        return redirect(url_for("logout"))
+        return redirect(url_for("logout", cpf=cpf_trab))
     else:
         form = Trabalhador.query.filter_by(matricula=matricula)
         # Campos preenchidos através da matricula do Pegaso
