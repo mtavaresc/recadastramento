@@ -324,9 +324,10 @@ def edit_worker():
                 dtnascimento = func.to_date(dep_dt_nascto[i], "YYYY-MM-DD")
                 cpf = "".join(c for c in str(cpf_dep[i]) if c not in ".-")
 
-                d = Dependentes(matricula, tp_dep[i], nm_dep[i], dtnascimento, cpf, dep_irrf[i], dep_sf[i], inc_trab[i])
-                db.session.merge(d)
-                db.session.commit()
+                if cpf is not None and cpf != '':
+                    d = Dependentes(matricula, tp_dep[i], nm_dep[i], dtnascimento, cpf, dep_irrf[i], dep_sf[i], inc_trab[i])
+                    db.session.merge(d)
+                    db.session.commit()
         except IntegrityError:
             db.session.rollback()
             raise
@@ -510,9 +511,10 @@ def admin_edit_worker(matricula):
                 dtnascimento = func.to_date(dep_dt_nascto[i], "YYYY-MM-DD")
                 cpf = "".join(c for c in str(cpf_dep[i]) if c not in ".-")
 
-                d = Dependentes(matricula, tp_dep[i], nm_dep[i], dtnascimento, cpf, dep_irrf[i], dep_sf[i], inc_trab[i])
-                db.session.merge(d)
-                db.session.commit()
+                if cpf is not None and cpf != '':
+                    d = Dependentes(matricula, tp_dep[i], nm_dep[i], dtnascimento, cpf, dep_irrf[i], dep_sf[i], inc_trab[i])
+                    db.session.merge(d)
+                    db.session.commit()
         except IntegrityError:
             db.session.rollback()
             raise
