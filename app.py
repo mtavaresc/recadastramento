@@ -169,7 +169,8 @@ def protected():
                 cpf = "".join(c for c in str(cpf_dep[i]) if c not in ".-")
 
                 if cpf is not None and cpf != '':
-                    d = Dependentes(matricula, tp_dep[i], nm_dep[i], dtnascimento, cpf, dep_irrf[i], dep_sf[i], inc_trab[i])
+                    d = Dependentes(matricula, tp_dep[i], nm_dep[i], dtnascimento, cpf, dep_irrf[i], dep_sf[i],
+                                    inc_trab[i])
                     db.session.merge(d)
                     db.session.commit()
         except IntegrityError:
@@ -325,7 +326,8 @@ def edit_worker():
                 cpf = "".join(c for c in str(cpf_dep[i]) if c not in ".-")
 
                 if cpf is not None and cpf != '':
-                    d = Dependentes(matricula, tp_dep[i], nm_dep[i], dtnascimento, cpf, dep_irrf[i], dep_sf[i], inc_trab[i])
+                    d = Dependentes(matricula, tp_dep[i], nm_dep[i], dtnascimento, cpf, dep_irrf[i], dep_sf[i],
+                                    inc_trab[i])
                     db.session.merge(d)
                     db.session.commit()
         except IntegrityError:
@@ -512,7 +514,8 @@ def admin_edit_worker(matricula):
                 cpf = "".join(c for c in str(cpf_dep[i]) if c not in ".-")
 
                 if cpf is not None and cpf != '':
-                    d = Dependentes(matricula, tp_dep[i], nm_dep[i], dtnascimento, cpf, dep_irrf[i], dep_sf[i], inc_trab[i])
+                    d = Dependentes(matricula, tp_dep[i], nm_dep[i], dtnascimento, cpf, dep_irrf[i], dep_sf[i],
+                                    inc_trab[i])
                     db.session.merge(d)
                     db.session.commit()
         except IntegrityError:
@@ -556,11 +559,6 @@ def admin_edit_worker(matricula):
                                estados=estados, municipios=municipios, tl=tipos_logradouro, bairros=bairros)
     except AttributeError:
         return redirect(url_for("login"))
-
-    # TODO: Backup BD;
-    # TODO: Drop All;
-    # TODO: Create All;
-    # TODO: Restore BD;
 
 
 if __name__ == "__main__":
