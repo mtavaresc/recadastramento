@@ -145,6 +145,9 @@
             element.disabled = !element.disabled;
         }
     </script>
+    {{ dropzone.load_css() }}
+    {{ dropzone.style('border: 2px dashed #0087F7; margin: 10px 0 10px; max-height: 400px; width: 800px') }}
+</head>
 <body>
 <div class="container">
     <div class="page-header">
@@ -735,6 +738,15 @@
             <label for="emailAlternat">E-mail alternativo:</label>
             <input type="email" id="emailAlternat" name="emailAlternat" class="form-control" maxlength="60">
         </div>
+
+        <br>
+        {# Envio de Documentos #}
+        <div class="page-header">
+            <h3>Envio de Documentos</h3>
+        </div>
+        {{ dropzone.create() }}
+
+        <br>
         <div class="form-group">
             <label>Declaração:</label>
             <div style="border: 1px solid #e5e5e5; height: 255px; overflow: auto; padding: 10px;">
@@ -766,6 +778,8 @@
         <button type="submit" id="enviar" class="btn btn-primary" disabled>Enviar</button>
         <br><br><br><br><br>
     </form>
+    {{ dropzone.load_js() }}
+    {{ dropzone.config() }}
 </div>
 <footer class="footer">
     <div class="container">

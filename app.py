@@ -54,6 +54,23 @@ def logout(cpf):
     return render_template("submit.html", cpf=cpf, agora=datetime.now().strftime('%d/%m/%Y %H:%M:%S'))
 
 
+@app.route('/upload', methods=['POST'])
+def handle_upload():
+    matricula = session.get("matricula")
+
+    # Documentos - Multiple
+    for key, f in request.files.items():
+        if key.startswith('file'):
+            if not os.path.isdir(app.config['UPLOADED_PATH']):
+                os.mkdir(app.config['UPLOADED_PATH'])
+
+            if not os.path.isdir(os.path.join(app.config['UPLOADED_PATH'], matricula)):
+                os.mkdir(os.path.join(app.config['UPLOADED_PATH'], matricula))
+
+            f.save(os.path.join(app.config['UPLOADED_PATH'], matricula, f.filename))
+    return '', 204
+
+
 @app.route("/protected", methods=["GET", "POST"])
 def protected():
     check_login()
@@ -151,6 +168,9 @@ def protected():
                             None)
             db.session.merge(c)
             db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            raise
         except Exception as e:
             print(format(e))
 
