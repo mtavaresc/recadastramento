@@ -6,7 +6,7 @@ from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
 
 from base import *
-from model import *
+from models.formulario import *
 
 
 def check_login():
@@ -414,9 +414,9 @@ def admin():
     # Pendente
     p = db.session.query(Pegaso).filter(Pegaso.matr.notin_(db.session.query(Trabalhador.matricula))).count()
     # Em análise
-    ea = db.session.query(Trabalhador).filter(Trabalhador.protocolo == None).count()
+    ea = db.session.query(Trabalhador).filter(Trabalhador.protocolo.is_(None)).count()
     # Realizado
-    r = db.session.query(Trabalhador).filter(Trabalhador.protocolo != None).count()
+    r = db.session.query(Trabalhador).filter(Trabalhador.protocolo.isnot(None)).count()
 
     w = Trabalhador.query
 
