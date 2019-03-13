@@ -1,3 +1,4 @@
+sqlalchemy
 Click==7.0
 Flask==1.0.2
 Flask-Dropzone==1.5.3

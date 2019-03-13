@@ -2,7 +2,7 @@ from base import db
 
 
 class Pegaso(db.Model):
-    __tablename__ = "TV_CADASTRO"
+    __tablename__ = "tv_cadastro"
 
     matr = db.Column(db.CHAR(6), primary_key=True)
     nome = db.Column(db.String(70))
@@ -24,7 +24,7 @@ class User(db.Model):
 
 
 class Trabalhador(db.Model):
-    __tablename__ = "TRABALHADOR"
+    __tablename__ = "trabalhador"
 
     matricula = db.Column(db.CHAR(6), primary_key=True)
     # trabalhador
@@ -173,7 +173,7 @@ class Trabalhador(db.Model):
 
 
 class Dependentes(db.Model):
-    __tablename__ = "DEPENDENTES"
+    __tablename__ = "dependentes"
 
     matrtab = db.Column(db.CHAR(6))
     tpdep = db.Column(db.String(2))
@@ -197,7 +197,7 @@ class Dependentes(db.Model):
 
 
 class Documentos(db.Model):
-    __tablename__ = "DOCUMENTOS"
+    __tablename__ = "documentos"
 
     matrtab = db.Column(db.CHAR(6), primary_key=True)
 
@@ -206,7 +206,7 @@ class Documentos(db.Model):
 
 
 class Auditoria(db.Model):
-    __tablename__ = "AUDITORIA"
+    __tablename__ = "auditoria"
 
     matradm = db.Column(db.CHAR(6))
     matricula = db.Column(db.CHAR(6))
@@ -221,21 +221,21 @@ class Auditoria(db.Model):
 
 
 class Paises(db.Model):
-    __tablename__ = "PAISES"
+    __tablename__ = "paises"
 
     codigo = db.Column(db.String(3), primary_key=True)
     nome = db.Column(db.String(100))
 
 
 class Estados(db.Model):
-    __tablename__ = "ESTADOS"
+    __tablename__ = "estados"
 
     uf = db.Column(db.CHAR(2), primary_key=True)
     nome = db.Column(db.String(50))
 
 
 class Municipios(db.Model):
-    __tablename__ = "MUNICIPIOS"
+    __tablename__ = "municipios"
 
     codigo = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(255))
@@ -243,7 +243,7 @@ class Municipios(db.Model):
 
 
 class Bairros(db.Model):
-    __tablename__ = "BAIRROS"
+    __tablename__ = "bairros"
 
     codigo = db.Column(db.CHAR(10), primary_key=True)
     nome = db.Column(db.String(70))
@@ -252,7 +252,7 @@ class Bairros(db.Model):
 
 
 class TiposLogradouro(db.Model):
-    __tablename__ = "TIPOS_LOGRADOURO"
+    __tablename__ = "tipos_logradouro"
 
     codigo = db.Column(db.CHAR(4), primary_key=True)
     nome = db.Column(db.String(30))
