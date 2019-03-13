@@ -1,6 +1,18 @@
 from base import db
 
 
+class Cadastro(db.Model):
+    __tablename__ = "tv_cadastro"
+    __table_args__ = {'schema': 'zeus'}
+
+    matr = db.Column(db.CHAR(6), primary_key=True)
+    nome = db.Column(db.String(70))
+    cpf = db.Column(db.String(11))
+    pispasep = db.Column(db.String(11))
+    dtnasc = db.Column(db.Date)
+    lotoriginal = db.Column(db.String(150))
+
+
 class Lotacao(db.Model):
     __tablename__ = "tb_lota"
     __table_args__ = {'schema': 'zeus'}

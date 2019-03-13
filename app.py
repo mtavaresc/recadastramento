@@ -2,11 +2,12 @@
 from datetime import date, datetime
 
 from flask import render_template, request, redirect, url_for, session
-from sqlalchemy import func
+from sqlalchemy import func, distinct
 from sqlalchemy.exc import IntegrityError
 
 from base import *
 from models.formulario import *
+from models.admin import *
 
 
 def check_login():
@@ -420,8 +421,24 @@ def admin():
 
     w = Trabalhador.query
 
-    return render_template("admin/index.html", adm=adm, pendente=p, realizado=r, em_analise=ea, data=w,
+    return render_template("admin/_index.html", adm=adm, pendente=p, realizado=r, em_analise=ea, data=w,
                            date=date.today().strftime("%Y%m%d"))
+
+
+@app.route("/admin/chart")
+def admin_chart():
+    cadastro = db.session.query(Cadastro.lotoriginal, func.count(distinct(Cadastro.nome)).label('qtd')).group_by(
+        Cadastro.lotoriginal)
+
+    labels = []
+    for l in cadastro:
+        labels.append(l.lotoriginal)
+
+    values = []
+    for v in cadastro:
+        values.append(v.qtd)
+
+    return render_template('admin/chart.html', title='Total Lotação', max=cadastro.count(), labels=labels, values=values)
 
 
 @app.route("/admin/worker/<matricula>", methods=["GET", "POST"])

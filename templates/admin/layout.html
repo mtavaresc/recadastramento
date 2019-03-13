@@ -1,0 +1,47 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang=""> <!--<![endif]-->
+<head>
+    <title>Administrativo :: Recadastramento</title>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="apple-touch-icon" sizes="180x180"
+          href="{{ url_for('static', filename='favicon/apple-touch-icon.png', _external=True) }}">
+    <link rel="icon" type="image/png" sizes="32x32"
+          href="{{ url_for('static', filename='favicon/favicon-32x32.png', _external=True) }}">
+    <link rel="icon" type="image/png" sizes="16x16"
+          href="{{ url_for('static', filename='favicon/favicon-16x16.png', _external=True) }}">
+    <link rel="manifest" href="{{ url_for('static', filename='favicon/site.webmanifest', _external=True) }}">
+    <link rel="mask-icon" href="{{ url_for('static', filename='favicon/safari-pinned-tab.svg', _external=True) }}"
+          color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin/assets/css/normalize.css', _external=True) }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='admin/assets/css/bootstrap.min.css', _external=True) }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='admin/assets/css/font-awesome.min.css', _external=True) }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='admin/assets/css/themify-icons.css', _external=True) }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='admin/assets/css/flag-icon.min.css', _external=True) }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='admin/assets/css/cs-skin-elastic.css', _external=True) }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='admin/assets/css/lib/datatable/dataTables.bootstrap.min.css', _external=True) }}">
+    <!-- <link rel="stylesheet" href="../../admin/assets/css/bootstrap-select.less"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin/assets/scss/style.css', _external=True) }}">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js', _external=True) }}"></script>
+    {% block head %}{% endblock %}
+</head>
+{% block body %}
+    {% block scripts %}
+    {% endblock %}
+{% endblock %}
+</html>
