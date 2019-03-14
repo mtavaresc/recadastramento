@@ -435,9 +435,9 @@ def admin_controle_lotacao():
 
     consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc,
                                 func.count(HistoricoFuncao.hmatr).label('qtd_matr')) \
-        .outerjoin(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
-        .outerjoin(HistoricoLotacao, HistoricoFuncao.hmatr == HistoricoLotacao.hlt_matr) \
-        .outerjoin(Lotacao, HistoricoLotacao.hlt_lota == Lotacao.lot_cod) \
+        .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
+        .join(HistoricoLotacao, HistoricoFuncao.hmatr == HistoricoLotacao.hlt_matr) \
+        .join(Lotacao, HistoricoLotacao.hlt_lota == Lotacao.lot_cod) \
         .filter(
         and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
              Lotacao.lot_cod.in_(['GT38110', 'GT38130', 'GT38140', 'GT38300', 'GT38310']),
@@ -451,7 +451,7 @@ def admin_controle_lotacao():
 
 @app.route("/admin/controle/lotacao/<carfun>+<lot>")
 def admin_controle_lotacao_detalhe(carfun, lot):
-    consulta = db.session.query(CargoFuncao, Cadastro.matr, Cadastro.nome) \
+    consulta = db.session.query(CargoFuncao.car_cod, Lotacao.lot_cod, Cadastro.matr, Cadastro.nome) \
         .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
         .join(HistoricoLotacao, HistoricoFuncao.hmatr == HistoricoLotacao.hlt_matr) \
         .join(Lotacao, HistoricoLotacao.hlt_lota == Lotacao.lot_cod) \
