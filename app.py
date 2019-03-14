@@ -2,7 +2,7 @@
 from datetime import date, datetime
 
 from flask import render_template, request, redirect, url_for, session
-from sqlalchemy import func, distinct
+from sqlalchemy import func, and_
 from sqlalchemy.exc import IntegrityError
 
 from base import *
@@ -425,20 +425,45 @@ def admin():
                            date=date.today().strftime("%Y%m%d"))
 
 
-@app.route("/admin/chart")
-def admin_chart():
-    cadastro = db.session.query(Cadastro.lotoriginal, func.count(distinct(Cadastro.nome)).label('qtd')).group_by(
-        Cadastro.lotoriginal)
+@app.route("/admin/controle/lotacao")
+def admin_controle_lotacao():
+    check_login()
 
-    labels = []
-    for l in cadastro:
-        labels.append(l.lotoriginal)
+    adm = db.session.query(User.nome, Trabalhador.protocolo, Trabalhador.sexo). \
+        outerjoin(Trabalhador, User.matricula == Trabalhador.matricula). \
+        filter(User.matricula == session.get("matricula")).first()
 
-    values = []
-    for v in cadastro:
-        values.append(v.qtd)
+    consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc,
+                                func.count(HistoricoFuncao.hmatr).label('qtd_matr')) \
+        .outerjoin(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
+        .outerjoin(HistoricoLotacao, HistoricoFuncao.hmatr == HistoricoLotacao.hlt_matr) \
+        .outerjoin(Lotacao, HistoricoLotacao.hlt_lota == Lotacao.lot_cod) \
+        .filter(
+        and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
+             Lotacao.lot_cod.in_(['GT38110', 'GT38130', 'GT38140', 'GT38300', 'GT38310']),
+             CargoFuncao.car_ativo == 'S',
+             HistoricoFuncao.hst == 'S')) \
+        .group_by(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc) \
+        .order_by(CargoFuncao.car_desc, Lotacao.lot_desc)
 
-    return render_template('admin/chart.html', title='Total Lotação', max=cadastro.count(), labels=labels, values=values)
+    return render_template('admin/controle/lotacao.html', adm=adm, data=consulta)
+
+
+@app.route("/admin/controle/lotacao/<carfun>+<lot>")
+def admin_controle_lotacao_detalhe(carfun, lot):
+    consulta = db.session.query(CargoFuncao, Cadastro.matr, Cadastro.nome) \
+        .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
+        .join(HistoricoLotacao, HistoricoFuncao.hmatr == HistoricoLotacao.hlt_matr) \
+        .join(Lotacao, HistoricoLotacao.hlt_lota == Lotacao.lot_cod) \
+        .join(Cadastro, HistoricoFuncao.hmatr == Cadastro.matr) \
+        .filter(
+        and_(CargoFuncao.car_cod == carfun,
+             Lotacao.lot_cod == lot,
+             CargoFuncao.car_ativo == 'S',
+             HistoricoFuncao.hst == 'S')) \
+        .order_by(Cadastro.nome)
+
+    return render_template('admin/controle/detalhe.html', data=consulta)
 
 
 @app.route("/admin/worker/<matricula>", methods=["GET", "POST"])

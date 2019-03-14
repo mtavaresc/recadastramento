@@ -21,8 +21,20 @@ oracle_connection_string = 'oracle+cx_oracle://{username}:{password}@{tnsname}/{
     # sid='XE'
 )
 
+oracle_connection_prod = 'oracle+cx_oracle://{username}:{password}@{tnsname}/{sid}'.format(
+    username='dionisio',
+    password='baco',
+    tnsname='10.85.100.3',
+    # tnsname='localhost',
+    sid='PROD'
+    # sid='XE'
+)
+
 # SQLAlchemy settings
 app.config['SQLALCHEMY_DATABASE_URI'] = oracle_connection_string
+app.config['SQLALCHEMY_BINDS'] = {
+    'prod': oracle_connection_prod
+}
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SQLALCHEMY_NATIVE_UNICODE'] = 'ISO-8859-1'
 

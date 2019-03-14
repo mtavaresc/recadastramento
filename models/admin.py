@@ -2,7 +2,8 @@ from base import db
 
 
 class Cadastro(db.Model):
-    __tablename__ = "tv_cadastro"
+    __bind_key__ = 'prod'
+    __tablename__ = 'tv_cadastro'
     __table_args__ = {'schema': 'zeus'}
 
     matr = db.Column(db.CHAR(6), primary_key=True)
@@ -14,7 +15,8 @@ class Cadastro(db.Model):
 
 
 class Lotacao(db.Model):
-    __tablename__ = "tb_lota"
+    __bind_key__ = 'prod'
+    __tablename__ = 'tb_lota'
     __table_args__ = {'schema': 'zeus'}
 
     lot_cod = db.Column(db.CHAR(6), primary_key=True)
@@ -33,22 +35,9 @@ class Lotacao(db.Model):
     lot_lota = db.Column(db.String(11))
 
 
-class CargoFuncao(db.Model):
-    __tablename__ = "tb_carfun"
-    __table_args__ = {'schema': 'zeus'}
-
-    car_cod = db.Column(db.CHAR(6), primary_key=True)
-    car_desc = db.Column(db.String(70))
-    car_tipo = db.Column(db.CHAR(1))
-    car_obs = db.Column(db.String(250))
-    usuario = db.Column(db.String(70))
-    dtusu = db.Column(db.Date)
-    trans = db.Column(db.CHAR(1))
-    car_ativo = db.Column(db.CHAR(1))
-
-
 class HistoricoLotacao(db.Model):
-    __tablename__ = "tb_hlota"
+    __bind_key__ = 'prod'
+    __tablename__ = 'tb_hlota'
     __table_args__ = {'schema': 'zeus'}
 
     hlt_cod = db.Column(db.CHAR(6), primary_key=True)
@@ -60,3 +49,28 @@ class HistoricoLotacao(db.Model):
     usuario = db.Column(db.String(70))
     dtusu = db.Column(db.Date)
     trans = db.Column(db.CHAR(1))
+
+
+class CargoFuncao(db.Model):
+    __bind_key__ = 'prod'
+    __tablename__ = 'tb_carfun'
+    __table_args__ = {'schema': 'zeus'}
+
+    car_cod = db.Column(db.CHAR(4), primary_key=True)
+    car_desc = db.Column(db.String(70))
+    car_tipo = db.Column(db.CHAR(1))
+    car_obs = db.Column(db.String(250))
+    usuario = db.Column(db.String(70))
+    dtusu = db.Column(db.Date)
+    trans = db.Column(db.CHAR(1))
+    car_ativo = db.Column(db.CHAR(1))
+
+
+class HistoricoFuncao(db.Model):
+    __bind_key__ = 'prod'
+    __tablename__ = 'tv_hisfun'
+    __table_args__ = {'schema': 'zeus'}
+
+    hmatr = db.Column(db.CHAR(6), primary_key=True)
+    hcodcarfun = db.Column(db.CHAR(4))
+    hst = db.Column(db.CHAR(1))
