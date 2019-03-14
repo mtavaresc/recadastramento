@@ -48,6 +48,9 @@ app.config['DROPZONE_ALLOWED_FILE_TYPE'] = 'image/*, .pdf'
 app.config['DROPZONE_UPLOAD_ON_CLICK'] = True
 app.config['DROPZONE_UPLOAD_ACTION'] = 'handle_upload'
 app.config['DROPZONE_UPLOAD_BTN_ID'] = 'enviar'
+app.config['DROP-ZONE_MAX_FILE_SIZE'] = 5
+app.config['DROPZONE_INVALID_FILE_TYPE'] = 'Você não pode enviar este tipo de arquivo.'
+app.config['DROPZONE_FILE_TOO_BIG'] = 'Arquivo muito grande {{filesize}} MB. Tamanho máximo: {{maxFilesize}} MB.'
 app.config['DROPZONE_DEFAULT_MESSAGE'] = 'Arraste os documentos aqui ou clique para procurar'
 
 db = SQLAlchemy(app)

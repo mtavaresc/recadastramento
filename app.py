@@ -432,7 +432,6 @@ def admin_controle_lotacao():
     adm = db.session.query(User.nome, Trabalhador.protocolo, Trabalhador.sexo). \
         outerjoin(Trabalhador, User.matricula == Trabalhador.matricula). \
         filter(User.matricula == session.get("matricula")).first()
-
     consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc,
                                 func.count(HistoricoFuncao.hmatr).label('qtd_matr')) \
         .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
@@ -440,7 +439,16 @@ def admin_controle_lotacao():
         .join(Lotacao, HistoricoLotacao.hlt_lota == Lotacao.lot_cod) \
         .filter(
         and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
-             Lotacao.lot_cod.in_(['GT38110', 'GT38130', 'GT38140', 'GT38300', 'GT38310']),
+             Lotacao.lot_cod.in_(
+                 ['GT38160', 'GT38240', 'GT38180', 'GT38230', 'GT38120', 'GT38250', 'GT38170', 'GT38190', 'GT38220',
+                  'GT38200', 'GT38100', 'GT38270', 'GT38210', 'GT38290', 'GT38150', 'GT38280', 'GT38260', 'GT38000',
+                  'GT38300', 'GT38310', 'GT38110', 'GT38130', 'GT38140', 'SG38121', 'SG38173', 'SG38231', 'SG38223',
+                  'SG38161', 'SG38243', 'SG38213', 'SG38122', 'SG38251', 'SG38252', 'SG38193', 'SG38222', 'SG38263',
+                  'SG38262', 'SG38261', 'SG38221', 'SG38003', 'SG38171', 'SG38273', 'SG38192', 'SG38271', 'SG38203',
+                  'SG38001', 'SG38101', 'SG38151', 'SG38163', 'SG38123', 'SG38102', 'SG38191', 'SG38272', 'SG38153',
+                  'SG38002', 'SG38201', 'SG38152', 'SG38241', 'SG38242', 'SG38211', 'SG38233', 'SG38182', 'SG38183',
+                  'SG38181', 'SG38202', 'SG38232', 'SG38103', 'SG38172', 'SG38253', 'SG38212', 'SG38162', 'SG38132',
+                  'SG38133', 'SG38143', 'SG38142', 'SG38113', 'SG38111', 'SG38112', 'SG38141', 'SG38131']),
              CargoFuncao.car_ativo == 'S',
              HistoricoFuncao.hst == 'S')) \
         .group_by(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc) \
