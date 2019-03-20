@@ -33,6 +33,9 @@ class Lotacao(db.Model):
     lot_ativo = db.Column(db.String(11))
     lot_macro = db.Column(db.String(11))
     lot_lota = db.Column(db.String(11))
+    lot_desctot = db.Column(db.String(200))
+    lot_ato = db.Column(db.String(10))
+    lot_dtato = db.Column(db.Date)
 
 
 class HistoricoLotacao(db.Model):

@@ -17,12 +17,28 @@
                     <li class="active">
                         <a href="{{ url_for('admin') }}"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                     </li>
-                    <h3 class="menu-title">Controle</h3><!-- /.menu-title -->
+                    <h3 class="menu-title">Controle Lotação</h3><!-- /.menu-title -->
                     <li>
-                        <a href="{{ url_for('admin_controle_lotacao') }}"><i class="menu-icon fa fa-line-chart"></i>
-                            Lotação
+                        <a href="{{ url_for('admin_controle_lotacao', indice='prg') }}">
+                            <i class="menu-icon fa fa-line-chart"></i> Programas
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ url_for('admin_controle_lotacao', indice='gt') }}">
+                            <i class="menu-icon fa fa-line-chart"></i> Grupos de Trabalho
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin_controle_lotacao', indice='sg') }}">
+                            <i class="menu-icon fa fa-line-chart"></i> Subgrupos dos GTs
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin_controle_lotacao', indice='subprg') }}">
+                            <i class="menu-icon fa fa-line-chart"></i> Subprogramas
+                        </a>
+                    </li>
+
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>
