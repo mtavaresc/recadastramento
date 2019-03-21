@@ -17,10 +17,13 @@ def check_login():
         return render_template('login.html')
 
 
-@app.route('/download')
-def download():
-    return send_file(os.path.join(basedir, 'static', 'generated_ato.docx'), as_attachment=True,
-                     attachment_filename='Ato_Nomeacao_{:%d%m%Y_%H%M%S}.docx'.format(datetime.now()))
+@app.route('/download_ato')
+def download_ato():
+    try:
+        return send_file(os.path.join(app.static_folder, 'ato_gerado.docx'), cache_timeout=-1, as_attachment=True,
+                         attachment_filename='Ato_Nomeacao_{:%d%m%Y_%H%M%S}.docx'.format(datetime.now()))
+    except Exception as e:
+        return format(e)
 
 
 @app.errorhandler(404)
@@ -453,18 +456,33 @@ def admin_controle_lotacao(indice):
         outerjoin(Trabalhador, User.matricula == Trabalhador.matricula). \
         filter(User.matricula == session.get("matricula")).first()
 
-    consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc,
-                                func.count(HistoricoFuncao.hmatr).label('qtd_matr')) \
-        .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
-        .join(HistoricoLotacao, HistoricoFuncao.hmatr == HistoricoLotacao.hlt_matr) \
-        .join(Lotacao, HistoricoLotacao.hlt_lota == Lotacao.lot_cod) \
-        .filter(
-        and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
-             Lotacao.lot_desc.like('{}%'.format(indice.upper())),
-             CargoFuncao.car_ativo == 'S',
-             HistoricoFuncao.hst == 'S')) \
-        .group_by(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc) \
-        .order_by(CargoFuncao.car_desc, Lotacao.lot_desc)
+    if indice == 'gt':
+        consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc,
+                                    func.count(HistoricoFuncao.hmatr).label('qtd_matr')) \
+            .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
+            .join(HistoricoLotacao, HistoricoFuncao.hmatr == HistoricoLotacao.hlt_matr) \
+            .join(Lotacao, HistoricoLotacao.hlt_lota == Lotacao.lot_cod) \
+            .filter(
+            and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
+                 Lotacao.lot_desc.like('{}%'.format(indice.upper())),
+                 Lotacao.lot_cod.like('GT38%'),
+                 CargoFuncao.car_ativo == 'S',
+                 HistoricoFuncao.hst == 'S')) \
+            .group_by(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc) \
+            .order_by(CargoFuncao.car_desc, Lotacao.lot_desc)
+    else:
+        consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc,
+                                    func.count(HistoricoFuncao.hmatr).label('qtd_matr')) \
+            .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
+            .join(HistoricoLotacao, HistoricoFuncao.hmatr == HistoricoLotacao.hlt_matr) \
+            .join(Lotacao, HistoricoLotacao.hlt_lota == Lotacao.lot_cod) \
+            .filter(
+            and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
+                 Lotacao.lot_desc.like('{}%'.format(indice.upper())),
+                 CargoFuncao.car_ativo == 'S',
+                 HistoricoFuncao.hst == 'S')) \
+            .group_by(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc) \
+            .order_by(CargoFuncao.car_desc, Lotacao.lot_desc)
 
     return render_template('admin/controle/lotacao.html', adm=adm, data=consulta)
 
@@ -516,7 +534,7 @@ def admin_controle_lotacao_detalhe(carfun, lot):
 
         document.merge_rows('car_desc', funcionarios)
 
-        f = 'generated_ato.docx'
+        f = 'ato_gerado.docx'
         document.write(os.path.join(basedir, 'static', f))
 
     return render_template('admin/controle/detalhe.html', data=consulta, carfun=carfun, lot=lot)

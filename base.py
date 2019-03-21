@@ -8,7 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 basedir = os.path.abspath(os.path.dirname(__file__))
 os.environ['NLS_LANG'] = 'AMERICAN_AMERICA.WE8ISO8859P1'
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 app.secret_key = b'~\xde\xba\xc6\x16"O.\x0e\x95\xbet\xdfbZ\x03'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=3000)
 
