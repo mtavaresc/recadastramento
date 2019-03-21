@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 from datetime import date, datetime
 
-from flask import render_template, request, redirect, url_for, session
+import requests
+from flask import render_template, request, redirect, url_for, session, flash, send_file
+from mailmerge import MailMerge
 from sqlalchemy import func, and_
 from sqlalchemy.exc import IntegrityError
 
 from base import *
-from models.formulario import *
 from models.admin import *
+from models.formulario import *
+from urllib.request import urlretrieve
 
 
 def check_login():
@@ -425,9 +428,21 @@ def admin():
                            date=date.today().strftime("%Y%m%d"))
 
 
-@app.route("/admin/controle-lotacao/<indice>")
+@app.route("/admin/controle-lotacao/<indice>", methods=['GET', 'POST'])
 def admin_controle_lotacao(indice):
     check_login()
+
+    if request.method == 'POST':
+        ato = request.form.get('ato')
+        data_ato = request.form.get('data')
+        carfun = request.form.get('carfun')
+        lot = request.form.get('lot')
+
+        url = '{host}admin/controle-lotacao/detalhe/{car}+{lot}'.format(host=request.host_url, car=carfun, lot=lot)
+        requests.post(url, data={'ato': ato, 'data': data_ato})
+
+        flash('Ato criado com sucesso!', 'success')
+        return redirect(url_for('admin'))
 
     adm = db.session.query(User.nome, Trabalhador.protocolo, Trabalhador.sexo). \
         outerjoin(Trabalhador, User.matricula == Trabalhador.matricula). \
@@ -449,22 +464,60 @@ def admin_controle_lotacao(indice):
     return render_template('admin/controle/lotacao.html', adm=adm, data=consulta)
 
 
-@app.route("/admin/controle-lotacao/detalhe/<carfun>+<lot>+<obs>")
-def admin_controle_lotacao_detalhe(carfun, lot, obs):
-    if obs == '0':
-        consulta = db.session.query(CargoFuncao.car_cod, Lotacao.lot_cod, Cadastro.matr, Cadastro.nome) \
-            .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
-            .join(HistoricoLotacao, HistoricoFuncao.hmatr == HistoricoLotacao.hlt_matr) \
-            .join(Lotacao, HistoricoLotacao.hlt_lota == Lotacao.lot_cod) \
-            .join(Cadastro, HistoricoFuncao.hmatr == Cadastro.matr) \
-            .filter(
-            and_(CargoFuncao.car_cod == carfun,
-                 Lotacao.lot_cod == lot,
-                 CargoFuncao.car_ativo == 'S',
-                 HistoricoFuncao.hst == 'S')) \
-            .order_by(Cadastro.nome)
+@app.route("/admin/controle-lotacao/detalhe/<carfun>+<lot>", methods=["GET", "POST"])
+def admin_controle_lotacao_detalhe(carfun, lot):
+    consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desctot,
+                                Cadastro.matr, Cadastro.nome) \
+        .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
+        .join(HistoricoLotacao, HistoricoFuncao.hmatr == HistoricoLotacao.hlt_matr) \
+        .join(Lotacao, HistoricoLotacao.hlt_lota == Lotacao.lot_cod) \
+        .join(Cadastro, HistoricoFuncao.hmatr == Cadastro.matr) \
+        .filter(
+        and_(CargoFuncao.car_cod == carfun,
+             Lotacao.lot_cod == lot,
+             CargoFuncao.car_ativo == 'S',
+             HistoricoFuncao.hst == 'S')) \
+        .order_by(Cadastro.nome)
 
-        return render_template('admin/controle/detalhe.html', data=consulta)
+    if request.method == 'POST':
+        ato = request.form.get('ato')
+        data_ato = datetime.strptime(request.form.get('data'), '%Y-%m-%d')
+
+        template = os.path.join(basedir, 'static', 'ato_in.docx')
+
+        full_months = {1: 'janeiro', 2: 'fevereiro', 3: 'março', 4: 'abril',
+                       5: 'maio', 6: 'junho', 7: 'julho', 8: 'agosto',
+                       9: 'setembro', 10: 'outubro', 11: 'novembro', 12: 'dezembro'}
+
+        hoje = date.today()
+
+        input_data_1 = '{dia} de {mes} de {ano}'.format(dia=data_ato.day, mes=full_months[data_ato.month],
+                                                        ano=data_ato.year)
+        input_data_2 = '{dia} de {mes} de {ano}'.format(dia=hoje.day, mes=full_months[hoje.month], ano=hoje.year)
+
+        document = MailMerge(template)
+
+        document.merge(
+            Ato=ato,
+            lot_desctot=consulta.first().lot_desctot,
+            input_data_1=input_data_1,
+            input_data_2=input_data_2
+        )
+
+        funcionarios = []
+        car_desc = consulta.first().car_desc
+        for row in consulta:
+            funcionarios.append({'car_desc': car_desc, 'nome': row.nome})
+
+        document.merge_rows('car_desc', funcionarios)
+
+        document.write('generated_ato.docx')
+
+        return urlretrieve('http://example.com/file.ext', '/path/to/dir/filename.ext')
+
+        # return send_file(f, as_attachment=True, attachment_filename='ohey.docx')
+
+    return render_template('admin/controle/detalhe.html', data=consulta, carfun=carfun, lot=lot)
 
 
 @app.route("/admin/worker/<matricula>", methods=["GET", "POST"])

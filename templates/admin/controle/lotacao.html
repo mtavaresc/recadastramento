@@ -103,7 +103,7 @@
                 <tbody>
                 {% for row in data %}
                     <tr data-toggle="modal" data-target="#modal-iframe" style="cursor:pointer;"
-                        href="{{ url_for('admin_controle_lotacao_detalhe', carfun=row.car_cod, lot=row.lot_cod, obs=0) }}">
+                        href="{{ url_for('admin_controle_lotacao_detalhe', carfun=row.car_cod, lot=row.lot_cod) }}">
                         <td>{{ row.car_desc }}</td>
                         <td>{{ row.lot_cod }}</td>
                         <td>{{ row.lot_desc }}</td>

@@ -2,18 +2,22 @@
 {% block head %}
     <script>
         function togglePrint() {
-            const element = document.getElementById("ato");
+            const ato = document.getElementById("ato");
+            const data = document.getElementById("data");
             const button = document.getElementById("print");
 
-            element.disabled = !element.disabled;
-            if (element.disabled === true) {
-                button.setAttribute('type', 'button');
+            ato.disabled = !ato.disabled;
+            data.disabled = !data.disabled;
 
+            if (ato.disabled === true) {
+                button.setAttribute('type', 'button');
                 const att = document.createAttribute('onclick');
                 att.value = 'window.print();';
                 button.setAttributeNode(att);
             } else {
                 button.setAttribute('type', 'submit');
+                const att = document.createAttribute('onclick');
+                att.value = '/admin/controle-lotacao/detalhe/{{ carfun }}+{{ lot }}';
                 button.removeAttribute('onclick');
             }
         }
@@ -30,6 +34,10 @@
                 </label>Imprimir utilizando o nº do ato:
                 <label for="ato"></label>
                 <input id="ato" name="ato" class="form-control" required disabled>
+                <label for="data">Data do ato:</label>
+                <input type="date" id="data" name="data" class="form-control" required disabled>
+                <input type="hidden" name="carfun" value="{{ carfun }}" class="form-control">
+                <input type="hidden" name="lot" value="{{ lot }}" class="form-control">
             </div>
 
             <button id="print" type="button" class="btn btn-light float-right" onclick="window.print();">
@@ -53,7 +61,6 @@
             {% endfor %}
             </tbody>
         </table>
-        <br>
     </div>
 
     <!-- Right Panel -->
