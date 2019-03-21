@@ -10,12 +10,17 @@ from sqlalchemy.exc import IntegrityError
 from base import *
 from models.admin import *
 from models.formulario import *
-from urllib.request import urlretrieve
 
 
 def check_login():
     if session.get("logged_in") is None or session.get("matricula") is None:
         return render_template('login.html')
+
+
+@app.route('/download')
+def download():
+    return send_file(os.path.join(basedir, 'static', 'generated_ato.docx'), as_attachment=True,
+                     attachment_filename='Ato_Nomeacao_{:%d%m%Y_%H%M%S}.docx'.format(datetime.now()))
 
 
 @app.errorhandler(404)
@@ -511,11 +516,8 @@ def admin_controle_lotacao_detalhe(carfun, lot):
 
         document.merge_rows('car_desc', funcionarios)
 
-        document.write('generated_ato.docx')
-
-        return urlretrieve('http://example.com/file.ext', '/path/to/dir/filename.ext')
-
-        # return send_file(f, as_attachment=True, attachment_filename='ohey.docx')
+        f = 'generated_ato.docx'
+        document.write(os.path.join(basedir, 'static', f))
 
     return render_template('admin/controle/detalhe.html', data=consulta, carfun=carfun, lot=lot)
 
@@ -615,7 +617,7 @@ def admin_edit_worker(matricula):
         db.session.merge(c)
         db.session.commit()
 
-        # Dependetes
+        # Dependentes
         tp_dep = request.form.getlist("tpDep[]")
         nm_dep = request.form.getlist("nmDep[]")
         dep_dt_nascto = request.form.getlist("dep_dtNascto[]")

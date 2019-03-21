@@ -33,7 +33,7 @@
     <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoredPackages">
         <value>
-          <list size="22">
+          <list size="27">
             <item index="0" class="java.lang.String" itemvalue="Flask-Dropzone" />
             <item index="1" class="java.lang.String" itemvalue="nose" />
             <item index="2" class="java.lang.String" itemvalue="python-bsonjs" />
@@ -56,6 +56,11 @@
             <item index="19" class="java.lang.String" itemvalue="numpy" />
             <item index="20" class="java.lang.String" itemvalue="itsdangerous" />
             <item index="21" class="java.lang.String" itemvalue="Pillow" />
+            <item index="22" class="java.lang.String" itemvalue="booleano" />
+            <item index="23" class="java.lang.String" itemvalue="Shapely" />
+            <item index="24" class="java.lang.String" itemvalue="model" />
+            <item index="25" class="java.lang.String" itemvalue="mailmerge" />
+            <item index="26" class="java.lang.String" itemvalue="prettytable" />
           </list>
         </value>
       </option>
