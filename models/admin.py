@@ -3,15 +3,15 @@ from base import db
 
 class Cadastro(db.Model):
     __bind_key__ = 'prod'
-    __tablename__ = 'tv_cadastro'
+    __tablename__ = 'tb_cad'
     __table_args__ = {'schema': 'zeus'}
 
-    matr = db.Column(db.CHAR(6), primary_key=True)
-    nome = db.Column(db.String(70))
-    cpf = db.Column(db.String(11))
-    pispasep = db.Column(db.String(11))
-    dtnasc = db.Column(db.Date)
-    lotoriginal = db.Column(db.String(150))
+    cad_matr = db.Column(db.CHAR(6), primary_key=True)
+    cad_nome = db.Column(db.String(70))
+    cad_cpf = db.Column(db.String(11))
+    cad_pasep = db.Column(db.String(11))
+    cad_dtnasc = db.Column(db.Date)
+    cad_lotori = db.Column(db.String(7))
 
 
 class Lotacao(db.Model):

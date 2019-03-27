@@ -102,7 +102,102 @@
                 </thead>
                 <tbody>
                 {% for row in data %}
+                    {% if indice == 'prg' or indice == 'gt' %}
+                        {% if 'SECRETARIO' in row.car_desc %}
+                            {% if row.qtd_matr < 7 %}
+                                {% set category = 'warning' %}
+                            {% elif row.qtd_matr == 7 %}
+                                {% set category = 'success' %}
+                            {% else %}
+                                {% set category = 'danger' %}
+                            {% endif %}
+                        {% endif %}
+                        {% if 'MEMBRO' in row.car_desc %}
+                            {% if row.qtd_matr < 12 %}
+                                {% set category = 'warning' %}
+                            {% elif row.qtd_matr == 12 %}
+                                {% set category = 'success' %}
+                            {% else %}
+                                {% set category = 'danger' %}
+                            {% endif %}
+                        {% endif %}
+                        {% if 'ASSESSOR' in row.car_desc %}
+                            {% if row.qtd_matr < 16 %}
+                                {% set category = 'warning' %}
+                            {% elif row.qtd_matr == 16 %}
+                                {% set category = 'success' %}
+                            {% else %}
+                                {% set category = 'danger' %}
+                            {% endif %}
+                        {% endif %}
+                        {% if 'COORDENADOR' in row.car_desc %}
+                            {% if row.qtd_matr < 10 %}
+                                {% set category = 'warning' %}
+                            {% elif row.qtd_matr == 10 %}
+                                {% set category = 'success' %}
+                            {% else %}
+                                {% set category = 'danger' %}
+                            {% endif %}
+                        {% endif %}
+                        {% if 'SUPERVISOR' in row.car_desc %}
+                            {% if row.qtd_matr < 10 %}
+                                {% set category = 'warning' %}
+                            {% elif row.qtd_matr == 10 %}
+                                {% set category = 'success' %}
+                            {% else %}
+                                {% set category = 'danger' %}
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                        {% if 'SECRETARIO' in row.car_desc %}
+                            {% if row.qtd_matr < 3 %}
+                                {% set category = 'warning' %}
+                            {% elif row.qtd_matr == 3 %}
+                                {% set category = 'success' %}
+                            {% else %}
+                                {% set category = 'danger' %}
+                            {% endif %}
+                        {% endif %}
+                        {% if 'MEMBRO' in row.car_desc %}
+                            {% if row.qtd_matr < 4 %}
+                                {% set category = 'warning' %}
+                            {% elif row.qtd_matr == 4 %}
+                                {% set category = 'success' %}
+                            {% else %}
+                                {% set category = 'danger' %}
+                            {% endif %}
+                        {% endif %}
+                        {% if 'ASSESSOR' in row.car_desc %}
+                            {% if row.qtd_matr < 10 %}
+                                {% set category = 'warning' %}
+                            {% elif row.qtd_matr == 10 %}
+                                {% set category = 'success' %}
+                            {% else %}
+                                {% set category = 'danger' %}
+                            {% endif %}
+                        {% endif %}
+                        {% if 'COORDENADOR' in row.car_desc %}
+                            {% if row.qtd_matr < 7 %}
+                                {% set category = 'warning' %}
+                            {% elif row.qtd_matr == 7 %}
+                                {% set category = 'success' %}
+                            {% else %}
+                                {% set category = 'danger' %}
+                            {% endif %}
+                        {% endif %}
+                        {% if 'SUPERVISOR' in row.car_desc %}
+                            {% if row.qtd_matr < 5 %}
+                                {% set category = 'warning' %}
+                            {% elif row.qtd_matr == 5 %}
+                                {% set category = 'success' %}
+                            {% else %}
+                                {% set category = 'danger' %}
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+
                     <tr data-toggle="modal" data-target="#modal-iframe" style="cursor:pointer;"
+                        class="table-{{ category }}"
                         href="{{ url_for('admin_controle_lotacao_detalhe', carfun=row.car_cod, lot=row.lot_cod) }}">
                         <td>{{ row.car_desc }}</td>
                         <td>{{ row.lot_cod }}</td>

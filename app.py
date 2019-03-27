@@ -458,10 +458,10 @@ def admin_controle_lotacao(indice):
 
     if indice == 'gt':
         consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc,
-                                    func.count(HistoricoFuncao.hmatr).label('qtd_matr')) \
-            .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
-            .join(HistoricoLotacao, HistoricoFuncao.hmatr == HistoricoLotacao.hlt_matr) \
-            .join(Lotacao, HistoricoLotacao.hlt_lota == Lotacao.lot_cod) \
+                                    func.count(Cadastro.cad_matr).label('qtd_matr')) \
+            .join(HistoricoFuncao, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
+            .join(CargoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
+            .join(Lotacao, Lotacao.lot_cod == Cadastro.cad_lotori) \
             .filter(
             and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
                  Lotacao.lot_desc.like('{}%'.format(indice.upper())),
@@ -484,23 +484,22 @@ def admin_controle_lotacao(indice):
             .group_by(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc) \
             .order_by(CargoFuncao.car_desc, Lotacao.lot_desc)
 
-    return render_template('admin/controle/lotacao.html', adm=adm, data=consulta)
+    return render_template('admin/controle/lotacao.html', adm=adm, data=consulta, indice=indice)
 
 
 @app.route("/admin/controle-lotacao/detalhe/<carfun>+<lot>", methods=["GET", "POST"])
 def admin_controle_lotacao_detalhe(carfun, lot):
     consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desctot,
-                                Cadastro.matr, Cadastro.nome) \
-        .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
-        .join(HistoricoLotacao, HistoricoFuncao.hmatr == HistoricoLotacao.hlt_matr) \
-        .join(Lotacao, HistoricoLotacao.hlt_lota == Lotacao.lot_cod) \
-        .join(Cadastro, HistoricoFuncao.hmatr == Cadastro.matr) \
+                                Cadastro.cad_matr, Cadastro.cad_nome) \
+        .join(HistoricoFuncao, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
+        .join(CargoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
+        .join(Lotacao, Lotacao.lot_cod == Cadastro.cad_lotori) \
         .filter(
         and_(CargoFuncao.car_cod == carfun,
              Lotacao.lot_cod == lot,
              CargoFuncao.car_ativo == 'S',
              HistoricoFuncao.hst == 'S')) \
-        .order_by(Cadastro.nome)
+        .order_by(Cadastro.cad_nome)
 
     if request.method == 'POST':
         ato = request.form.get('ato')
