@@ -436,70 +436,125 @@ def admin():
                            date=date.today().strftime("%Y%m%d"))
 
 
-@app.route("/admin/controle-lotacao/<indice>", methods=['GET', 'POST'])
-def admin_controle_lotacao(indice):
+@app.route('/admin/controle-lotacao/<indice>', defaults={'competencia': False}, methods=['GET', 'POST'])
+@app.route("/admin/controle-lotacao/<indice>/<competencia>", methods=['GET', 'POST'])
+def admin_controle_lotacao(indice, competencia):
     check_login()
 
     if request.method == 'POST':
         ato = request.form.get('ato')
-        data_ato = request.form.get('data')
-        carfun = request.form.get('carfun')
-        lot = request.form.get('lot')
+        if ato is not None:
+            data_ato = request.form.get('data')
+            carfun = request.form.get('carfun')
+            lot = request.form.get('lot')
 
-        url = '{host}admin/controle-lotacao/detalhe/{car}+{lot}'.format(host=request.host_url, car=carfun, lot=lot)
-        requests.post(url, data={'ato': ato, 'data': data_ato})
+            url = '{host}admin/controle-lotacao/detalhe/{car}+{lot}'.format(host=request.host_url, car=carfun, lot=lot)
+            requests.post(url, data={'ato': ato, 'data': data_ato})
 
-        flash('Ato criado com sucesso!', 'success')
-        return redirect(url_for('admin'))
+            flash('Ato criado com sucesso!', 'success')
+            return redirect(url_for('admin'))
+        else:
+            mes = request.form.get('mes')
+            ano = request.form.get('ano')
+            competencia = '01{mes}{ano}'.format(mes=mes, ano=ano)
+
+            return redirect(url_for('admin_controle_lotacao', indice=indice, competencia=competencia))
 
     adm = db.session.query(User.nome, Trabalhador.protocolo, Trabalhador.sexo). \
         outerjoin(Trabalhador, User.matricula == Trabalhador.matricula). \
         filter(User.matricula == session.get("matricula")).first()
 
     if indice == 'gt':
-        consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc,
-                                    func.count(Cadastro.cad_matr).label('qtd_matr')) \
-            .join(HistoricoFuncao, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
-            .join(CargoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
+        if competencia:
+
+            consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc,
+                                        func.count(HistoricoFuncao.hmatr).label('qtd_matr')) \
+                .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
+                .join(HistoricoLotacao, HistoricoFuncao.hmatr == HistoricoLotacao.hlt_matr) \
+                .join(Lotacao, HistoricoLotacao.hlt_lota == Lotacao.lot_cod) \
+                .filter(
+                and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
+                     Lotacao.lot_desc.like('{}%'.format(indice.upper())),
+                     Lotacao.lot_cod.like('GT38%'),
+                     CargoFuncao.car_ativo == 'S',
+                     HistoricoFuncao.hst == 'S',
+                     HistoricoFuncao.hdtini == func.to_date(competencia, "DDMMYYYY"))) \
+                .group_by(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc) \
+                .order_by(CargoFuncao.car_desc, Lotacao.lot_desc)
+        else:
+            consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc,
+                                        func.count(HistoricoFuncao.hmatr).label('qtd_matr')) \
+                .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
+                .join(HistoricoLotacao, HistoricoFuncao.hmatr == HistoricoLotacao.hlt_matr) \
+                .join(Lotacao, HistoricoLotacao.hlt_lota == Lotacao.lot_cod) \
+                .filter(
+                and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
+                     Lotacao.lot_desc.like('{}%'.format(indice.upper())),
+                     Lotacao.lot_cod.like('GT38%'),
+                     CargoFuncao.car_ativo == 'S',
+                     HistoricoFuncao.hst == 'S')) \
+                .group_by(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc) \
+                .order_by(CargoFuncao.car_desc, Lotacao.lot_desc)
+    else:
+        if competencia:
+            consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc,
+                                        func.count(HistoricoFuncao.hmatr).label('qtd_matr')) \
+                .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
+                .join(HistoricoLotacao, HistoricoFuncao.hmatr == HistoricoLotacao.hlt_matr) \
+                .join(Lotacao, HistoricoLotacao.hlt_lota == Lotacao.lot_cod) \
+                .filter(
+                and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
+                     Lotacao.lot_desc.like('{}%'.format(indice.upper())),
+                     CargoFuncao.car_ativo == 'S',
+                     HistoricoFuncao.hst == 'S',
+                     HistoricoFuncao.hdtini == func.to_date(competencia, "DDMMYYYY"))) \
+                .group_by(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc) \
+                .order_by(CargoFuncao.car_desc, Lotacao.lot_desc)
+        else:
+            consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc,
+                                        func.count(HistoricoFuncao.hmatr).label('qtd_matr')) \
+                .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
+                .join(HistoricoLotacao, HistoricoFuncao.hmatr == HistoricoLotacao.hlt_matr) \
+                .join(Lotacao, HistoricoLotacao.hlt_lota == Lotacao.lot_cod) \
+                .filter(
+                and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
+                     Lotacao.lot_desc.like('{}%'.format(indice.upper())),
+                     CargoFuncao.car_ativo == 'S',
+                     HistoricoFuncao.hst == 'S')) \
+                .group_by(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc) \
+                .order_by(CargoFuncao.car_desc, Lotacao.lot_desc)
+
+    return render_template('admin/controle/lotacao.html', adm=adm, data=consulta, indice=indice, comp=date.today())
+
+
+@app.route("/admin/controle-lotacao/detalhe/<carfun>+<lot>", defaults={'competencia': False}, methods=["GET", "POST"])
+@app.route("/admin/controle-lotacao/detalhe/<carfun>+<lot>+<competencia>", methods=["GET", "POST"])
+def admin_controle_lotacao_detalhe(carfun, lot, competencia):
+    if competencia:
+        consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desctot,
+                                    Cadastro.cad_matr, Cadastro.cad_nome) \
+            .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
+            .join(Cadastro, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
             .join(Lotacao, Lotacao.lot_cod == Cadastro.cad_lotori) \
             .filter(
-            and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
-                 Lotacao.lot_desc.like('{}%'.format(indice.upper())),
-                 Lotacao.lot_cod.like('GT38%'),
+            and_(CargoFuncao.car_cod == carfun,
+                 Lotacao.lot_cod == lot,
                  CargoFuncao.car_ativo == 'S',
-                 HistoricoFuncao.hst == 'S')) \
-            .group_by(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc) \
-            .order_by(CargoFuncao.car_desc, Lotacao.lot_desc)
+                 HistoricoFuncao.hst == 'S',
+                 HistoricoFuncao.hdtini == func.to_date(competencia, "DDMMYYYY"))) \
+            .order_by(Cadastro.cad_nome)
     else:
-        consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc,
-                                    func.count(HistoricoFuncao.hmatr).label('qtd_matr')) \
+        consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desctot,
+                                    Cadastro.cad_matr, Cadastro.cad_nome) \
             .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
-            .join(HistoricoLotacao, HistoricoFuncao.hmatr == HistoricoLotacao.hlt_matr) \
-            .join(Lotacao, HistoricoLotacao.hlt_lota == Lotacao.lot_cod) \
+            .join(Cadastro, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
+            .join(Lotacao, Lotacao.lot_cod == Cadastro.cad_lotori) \
             .filter(
-            and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
-                 Lotacao.lot_desc.like('{}%'.format(indice.upper())),
+            and_(CargoFuncao.car_cod == carfun,
+                 Lotacao.lot_cod == lot,
                  CargoFuncao.car_ativo == 'S',
                  HistoricoFuncao.hst == 'S')) \
-            .group_by(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc) \
-            .order_by(CargoFuncao.car_desc, Lotacao.lot_desc)
-
-    return render_template('admin/controle/lotacao.html', adm=adm, data=consulta, indice=indice)
-
-
-@app.route("/admin/controle-lotacao/detalhe/<carfun>+<lot>", methods=["GET", "POST"])
-def admin_controle_lotacao_detalhe(carfun, lot):
-    consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desctot,
-                                Cadastro.cad_matr, Cadastro.cad_nome) \
-        .join(HistoricoFuncao, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
-        .join(CargoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
-        .join(Lotacao, Lotacao.lot_cod == Cadastro.cad_lotori) \
-        .filter(
-        and_(CargoFuncao.car_cod == carfun,
-             Lotacao.lot_cod == lot,
-             CargoFuncao.car_ativo == 'S',
-             HistoricoFuncao.hst == 'S')) \
-        .order_by(Cadastro.cad_nome)
+            .order_by(Cadastro.cad_nome)
 
     if request.method == 'POST':
         ato = request.form.get('ato')
@@ -529,7 +584,7 @@ def admin_controle_lotacao_detalhe(carfun, lot):
         funcionarios = []
         car_desc = consulta.first().car_desc
         for row in consulta:
-            funcionarios.append({'car_desc': car_desc, 'nome': row.nome})
+            funcionarios.append({'car_desc': car_desc, 'nome': row.cad_nome})
 
         document.merge_rows('car_desc', funcionarios)
 

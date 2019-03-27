@@ -75,5 +75,6 @@ class HistoricoFuncao(db.Model):
     __table_args__ = {'schema': 'zeus'}
 
     hmatr = db.Column(db.CHAR(6), primary_key=True)
+    hdtini = db.Column(db.Date)
     hcodcarfun = db.Column(db.CHAR(4))
     hst = db.Column(db.CHAR(1))
