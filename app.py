@@ -537,7 +537,7 @@ def admin_controle_lotacao(indice, competencia):
 def admin_controle_lotacao_detalhe(carfun, lot, competencia):
     if competencia != 'False':
         consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desctot,
-                                    Cadastro.cad_matr, Cadastro.cad_nome) \
+                                    Lotacao.lot_ato, Cadastro.cad_matr, Cadastro.cad_nome) \
             .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
             .join(Cadastro, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
             .join(Lotacao, Lotacao.lot_cod == Cadastro.cad_lotori) \
@@ -550,7 +550,7 @@ def admin_controle_lotacao_detalhe(carfun, lot, competencia):
             .order_by(Cadastro.cad_nome)
     else:
         consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desctot,
-                                    Cadastro.cad_matr, Cadastro.cad_nome) \
+                                    Lotacao.lot_ato, Cadastro.cad_matr, Cadastro.cad_nome) \
             .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
             .join(Cadastro, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
             .join(Lotacao, Lotacao.lot_cod == Cadastro.cad_lotori) \
@@ -575,12 +575,13 @@ def admin_controle_lotacao_detalhe(carfun, lot, competencia):
 
         input_data_1 = '{dia} de {mes} de {ano}'.format(dia=data_ato.day, mes=full_months[data_ato.month],
                                                         ano=data_ato.year)
-        input_data_2 = '{dia} de {mes} de {ano}'.format(dia=hoje.day, mes=full_months[hoje.month], ano=hoje.year)
+        input_data_2 = '{dia} dias do mês de {mes} de {ano}'.format(dia=hoje.day, mes=full_months[hoje.month], ano=hoje.year)
 
         document = MailMerge(template)
 
         document.merge(
             Ato=ato,
+            lot_ato=consulta.first().lot_ato,
             lot_desctot=consulta.first().lot_desctot,
             input_data_1=input_data_1,
             input_data_2=input_data_2
