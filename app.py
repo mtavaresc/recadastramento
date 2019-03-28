@@ -436,7 +436,7 @@ def admin():
                            date=date.today().strftime("%Y%m%d"))
 
 
-@app.route('/admin/controle-lotacao/<indice>', defaults={'competencia': 'False'}, methods=['GET', 'POST'])
+@app.route('/admin/controle-lotacao/<indice>/', defaults={'competencia': 'False'}, methods=['GET', 'POST'])
 @app.route("/admin/controle-lotacao/<indice>/<competencia>", methods=['GET', 'POST'])
 def admin_controle_lotacao(indice, competencia):
     check_login()
@@ -474,8 +474,8 @@ def admin_controle_lotacao(indice, competencia):
         if competencia != 'False':
             consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc,
                                         func.count(Cadastro.cad_matr).label('qtd_matr')) \
-                .join(HistoricoFuncao, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
-                .join(CargoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
+                .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
+                .join(Cadastro, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
                 .join(Lotacao, Lotacao.lot_cod == Cadastro.cad_lotori) \
                 .filter(
                 and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
@@ -489,8 +489,8 @@ def admin_controle_lotacao(indice, competencia):
         else:
             consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc,
                                         func.count(Cadastro.cad_matr).label('qtd_matr')) \
-                .join(HistoricoFuncao, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
-                .join(CargoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
+                .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
+                .join(Cadastro, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
                 .join(Lotacao, Lotacao.lot_cod == Cadastro.cad_lotori) \
                 .filter(
                 and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
@@ -504,8 +504,8 @@ def admin_controle_lotacao(indice, competencia):
         if competencia != 'False':
             consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc,
                                         func.count(Cadastro.cad_matr).label('qtd_matr')) \
-                .join(HistoricoFuncao, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
-                .join(CargoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
+                .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
+                .join(Cadastro, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
                 .join(Lotacao, Lotacao.lot_cod == Cadastro.cad_lotori) \
                 .filter(
                 and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
@@ -518,8 +518,8 @@ def admin_controle_lotacao(indice, competencia):
         else:
             consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc,
                                         func.count(Cadastro.cad_matr).label('qtd_matr')) \
-                .join(HistoricoFuncao, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
-                .join(CargoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
+                .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
+                .join(Cadastro, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
                 .join(Lotacao, Lotacao.lot_cod == Cadastro.cad_lotori) \
                 .filter(
                 and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
@@ -575,7 +575,8 @@ def admin_controle_lotacao_detalhe(carfun, lot, competencia):
 
         input_data_1 = '{dia} de {mes} de {ano}'.format(dia=data_ato.day, mes=full_months[data_ato.month],
                                                         ano=data_ato.year)
-        input_data_2 = '{dia} dias do mês de {mes} de {ano}'.format(dia=hoje.day, mes=full_months[hoje.month], ano=hoje.year)
+        input_data_2 = '{dia} dias do mês de {mes} de {ano}'.format(dia=hoje.day, mes=full_months[hoje.month],
+                                                                    ano=hoje.year)
 
         document = MailMerge(template)
 
