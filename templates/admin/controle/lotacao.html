@@ -92,8 +92,8 @@
                     <div class="form-row align-items-center">
                         <div class="col-auto">
                             <label for="mes">Competência:</label>
-                            <input id="mes" name="mes" class="form-control mb-2" placeholder="{{ comp.month }}"
-                                   pattern="^[0-9]{2}$" minlength="2" maxlength="2" required>
+                            <input id="mes" name="mes" class="form-control mb-2" pattern="^[0-9]{2}$" minlength="2"
+                                   maxlength="2" required>
                         </div>
                         <div class="col-auto">
                             <label for="ano"></label>
@@ -101,13 +101,12 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">/</div>
                                 </div>
-                                <input id="ano" name="ano" class="form-control" placeholder="{{ comp.year }}"
-                                       pattern="^[0-9]{4}$" minlength="4" maxlength="4" required>
+                                <input id="ano" name="ano" class="form-control" pattern="^[0-9]{4}$" minlength="4"
+                                       maxlength="4" required>
                             </div>
                         </div>
                     </div>
                     <input type="submit" class="btn btn-secondary float-left" value="Filtrar">
-
                 </div>
 
             </form>
@@ -125,7 +124,11 @@
                 </tr>
                 </thead>
                 <tbody>
-
+                {% if request.url[-8:]|int %}
+                    {% set competencia = request.url[-8:] %}
+                {% else %}
+                    {% set competencia = 'False' %}
+                {% endif %}
                 {% for row in data %}
                     {% if indice == 'prg' or indice == 'gt' %}
                         {% if 'SECRETARIO' in row.car_desc %}
@@ -222,7 +225,7 @@
                     {% endif %}
                     <tr data-toggle="modal" data-target="#modal-iframe" style="cursor:pointer;"
                         class="table-{{ category }}"
-                        href="{{ url_for('admin_controle_lotacao_detalhe', carfun=row.car_cod, lot=row.lot_cod, competencia=request.url[-8:]) }}">
+                        href="{{ url_for('admin_controle_lotacao_detalhe', carfun=row.car_cod, lot=row.lot_cod, competencia=competencia) }}">
                         <td>{{ row.car_desc }}</td>
                         <td>{{ row.lot_cod }}</td>
                         <td>{{ row.lot_desc }}</td>
