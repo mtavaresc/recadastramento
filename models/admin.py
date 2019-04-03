@@ -78,3 +78,13 @@ class HistoricoFuncao(db.Model):
     hdtini = db.Column(db.Date)
     hcodcarfun = db.Column(db.CHAR(4))
     hst = db.Column(db.CHAR(1))
+
+
+class Financeiro(db.Model):
+    __bind_key__ = 'prod'
+    __tablename__ = 'tb_fin'
+    __table_args__ = {'schema': 'zeus'}
+
+    fin_matr = db.Column(db.CHAR(6), primary_key=True)
+    fin_dtent = db.Column(db.Date)
+    fin_sit = db.Column(db.CHAR(1))

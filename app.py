@@ -477,12 +477,14 @@ def admin_controle_lotacao(indice, competencia):
                 .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
                 .join(Cadastro, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
                 .join(Lotacao, Lotacao.lot_cod == Cadastro.cad_lotori) \
+                .join(Financeiro, Cadastro.cad_matr == Financeiro.fin_matr) \
                 .filter(
                 and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
                      Lotacao.lot_desc.like('{}%'.format(indice.upper())),
                      Lotacao.lot_cod.like('GT38%'),
                      CargoFuncao.car_ativo == 'S',
                      HistoricoFuncao.hst == 'S',
+                     Financeiro.fin_sit == 1,
                      HistoricoFuncao.hdtini == func.to_date(competencia, "DDMMYYYY"))) \
                 .group_by(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc) \
                 .order_by(CargoFuncao.car_desc, Lotacao.lot_desc)
@@ -492,11 +494,13 @@ def admin_controle_lotacao(indice, competencia):
                 .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
                 .join(Cadastro, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
                 .join(Lotacao, Lotacao.lot_cod == Cadastro.cad_lotori) \
+                .join(Financeiro, Cadastro.cad_matr == Financeiro.fin_matr) \
                 .filter(
                 and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
                      Lotacao.lot_desc.like('{}%'.format(indice.upper())),
                      Lotacao.lot_cod.like('GT38%'),
                      CargoFuncao.car_ativo == 'S',
+                     Financeiro.fin_sit == 1,
                      HistoricoFuncao.hst == 'S')) \
                 .group_by(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc) \
                 .order_by(CargoFuncao.car_desc, Lotacao.lot_desc)
@@ -507,11 +511,13 @@ def admin_controle_lotacao(indice, competencia):
                 .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
                 .join(Cadastro, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
                 .join(Lotacao, Lotacao.lot_cod == Cadastro.cad_lotori) \
+                .join(Financeiro, Cadastro.cad_matr == Financeiro.fin_matr) \
                 .filter(
                 and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
                      Lotacao.lot_desc.like('{}%'.format(indice.upper())),
                      CargoFuncao.car_ativo == 'S',
                      HistoricoFuncao.hst == 'S',
+                     Financeiro.fin_sit == 1,
                      HistoricoFuncao.hdtini == func.to_date(competencia, "DDMMYYYY"))) \
                 .group_by(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc) \
                 .order_by(CargoFuncao.car_desc, Lotacao.lot_desc)
@@ -521,10 +527,12 @@ def admin_controle_lotacao(indice, competencia):
                 .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
                 .join(Cadastro, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
                 .join(Lotacao, Lotacao.lot_cod == Cadastro.cad_lotori) \
+                .join(Financeiro, Cadastro.cad_matr == Financeiro.fin_matr) \
                 .filter(
                 and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
                      Lotacao.lot_desc.like('{}%'.format(indice.upper())),
                      CargoFuncao.car_ativo == 'S',
+                     Financeiro.fin_sit == 1,
                      HistoricoFuncao.hst == 'S')) \
                 .group_by(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc) \
                 .order_by(CargoFuncao.car_desc, Lotacao.lot_desc)
@@ -541,11 +549,13 @@ def admin_controle_lotacao_detalhe(carfun, lot, competencia):
             .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
             .join(Cadastro, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
             .join(Lotacao, Lotacao.lot_cod == Cadastro.cad_lotori) \
+            .join(Financeiro, Cadastro.cad_matr == Financeiro.fin_matr) \
             .filter(
             and_(CargoFuncao.car_cod == carfun,
                  Lotacao.lot_cod == lot,
                  CargoFuncao.car_ativo == 'S',
                  HistoricoFuncao.hst == 'S',
+                 Financeiro.fin_sit == 1,
                  HistoricoFuncao.hdtini == func.to_date(competencia, "DDMMYYYY"))) \
             .order_by(Cadastro.cad_nome)
     else:
@@ -554,10 +564,12 @@ def admin_controle_lotacao_detalhe(carfun, lot, competencia):
             .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
             .join(Cadastro, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
             .join(Lotacao, Lotacao.lot_cod == Cadastro.cad_lotori) \
+            .join(Financeiro, Cadastro.cad_matr == Financeiro.fin_matr) \
             .filter(
             and_(CargoFuncao.car_cod == carfun,
                  Lotacao.lot_cod == lot,
                  CargoFuncao.car_ativo == 'S',
+                 Financeiro.fin_sit == 1,
                  HistoricoFuncao.hst == 'S')) \
             .order_by(Cadastro.cad_nome)
 
