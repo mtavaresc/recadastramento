@@ -88,3 +88,22 @@ class Financeiro(db.Model):
     fin_matr = db.Column(db.CHAR(6), primary_key=True)
     fin_dtent = db.Column(db.Date)
     fin_sit = db.Column(db.CHAR(1))
+
+
+class FichaFinanceira(db.Model):
+    __bind_key__ = 'prod'
+    __tablename__ = 'tb_ficfin'
+    __table_args__ = {'schema': 'zeus'}
+
+    fic_codfp = db.Column(db.Integer)
+    fic_matr = db.Column(db.CHAR(6))
+    fic_folha = db.Column(db.CHAR(2))
+    fic_cod = db.Column(db.CHAR(3))
+    fic_valor = db.Column(db.DECIMAL(11, 2))
+    fic_refer = db.Column(db.String(15))
+    fic_regra = db.Column(db.Integer)
+    usuario = db.Column(db.String(70))
+    dtusu = db.Column(db.Date)
+    trans = db.Column(db.CHAR(1))
+
+    db.PrimaryKeyConstraint(fic_codfp, fic_matr, fic_cod, name='pk_ff')
