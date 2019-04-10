@@ -482,6 +482,7 @@ def admin_controle_lotacao(indice, competencia):
                 and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
                      Lotacao.lot_desc.like('{}%'.format(indice.upper())),
                      Lotacao.lot_cod.like('GT38%'),
+                     Financeiro.fin_folha == '03',
                      CargoFuncao.car_ativo == 'S',
                      HistoricoFuncao.hst == 'S',
                      Financeiro.fin_sit == 1,
@@ -499,6 +500,7 @@ def admin_controle_lotacao(indice, competencia):
                 and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
                      Lotacao.lot_desc.like('{}%'.format(indice.upper())),
                      Lotacao.lot_cod.like('GT38%'),
+                     Financeiro.fin_folha == '03',
                      CargoFuncao.car_ativo == 'S',
                      Financeiro.fin_sit == 1,
                      HistoricoFuncao.hst == 'S')) \
@@ -515,6 +517,7 @@ def admin_controle_lotacao(indice, competencia):
                 .filter(
                 and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
                      Lotacao.lot_desc.like('{}%'.format(indice.upper())),
+                     Financeiro.fin_folha == '03',
                      CargoFuncao.car_ativo == 'S',
                      HistoricoFuncao.hst == 'S',
                      Financeiro.fin_sit == 1,
@@ -531,6 +534,7 @@ def admin_controle_lotacao(indice, competencia):
                 .filter(
                 and_(CargoFuncao.car_cod.in_(['G001', 'G002', 'G004', 'G005', 'G006']),
                      Lotacao.lot_desc.like('{}%'.format(indice.upper())),
+                     Financeiro.fin_folha == '03',
                      CargoFuncao.car_ativo == 'S',
                      Financeiro.fin_sit == 1,
                      HistoricoFuncao.hst == 'S')) \
@@ -543,31 +547,44 @@ def admin_controle_lotacao(indice, competencia):
 @app.route("/admin/controle-lotacao/detalhe/<carfun>+<lot>", defaults={'competencia': 'False'}, methods=["GET", "POST"])
 @app.route("/admin/controle-lotacao/detalhe/<carfun>+<lot>+<competencia>", methods=["GET", "POST"])
 def admin_controle_lotacao_detalhe(carfun, lot, competencia):
+    ff2 = db.session.query(FichaFinanceira.fic_matr, func.max(FichaFinanceira.fic_codfp).label('ultima')) \
+        .group_by(FichaFinanceira.fic_matr).subquery()
+
+    ff1 = db.session.query(FichaFinanceira.fic_matr, FichaFinanceira.fic_valor) \
+        .join(ff2, and_(ff2.c.fic_matr == FichaFinanceira.fic_matr, ff2.c.ultima == FichaFinanceira.fic_codfp)) \
+        .filter(FichaFinanceira.fic_cod.in_(['109', '139'])).subquery()
+
     if competencia != 'False':
-        consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desctot,
-                                    Lotacao.lot_ato, Cadastro.cad_matr, Cadastro.cad_nome) \
+        consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc,
+                                    Lotacao.lot_desctot, Lotacao.lot_ato, Cadastro.cad_matr, Cadastro.cad_nome,
+                                    ff1.c.fic_valor) \
             .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
             .join(Cadastro, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
             .join(Lotacao, Lotacao.lot_cod == Cadastro.cad_lotori) \
             .join(Financeiro, Cadastro.cad_matr == Financeiro.fin_matr) \
+            .join(ff1, ff1.c.fic_matr == Cadastro.cad_matr) \
             .filter(
             and_(CargoFuncao.car_cod == carfun,
                  Lotacao.lot_cod == lot,
+                 Financeiro.fin_folha == '03',
                  CargoFuncao.car_ativo == 'S',
                  HistoricoFuncao.hst == 'S',
                  Financeiro.fin_sit == 1,
                  HistoricoFuncao.hdtini == func.to_date(competencia, "DDMMYYYY"))) \
             .order_by(Cadastro.cad_nome)
     else:
-        consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desctot,
-                                    Lotacao.lot_ato, Cadastro.cad_matr, Cadastro.cad_nome) \
+        consulta = db.session.query(CargoFuncao.car_cod, CargoFuncao.car_desc, Lotacao.lot_cod, Lotacao.lot_desc,
+                                    Lotacao.lot_desctot, Lotacao.lot_ato, Cadastro.cad_matr, Cadastro.cad_nome,
+                                    ff1.c.fic_valor) \
             .join(HistoricoFuncao, CargoFuncao.car_cod == HistoricoFuncao.hcodcarfun) \
             .join(Cadastro, Cadastro.cad_matr == HistoricoFuncao.hmatr) \
             .join(Lotacao, Lotacao.lot_cod == Cadastro.cad_lotori) \
             .join(Financeiro, Cadastro.cad_matr == Financeiro.fin_matr) \
+            .join(ff1, ff1.c.fic_matr == Cadastro.cad_matr) \
             .filter(
             and_(CargoFuncao.car_cod == carfun,
                  Lotacao.lot_cod == lot,
+                 Financeiro.fin_folha == '03',
                  CargoFuncao.car_ativo == 'S',
                  Financeiro.fin_sit == 1,
                  HistoricoFuncao.hst == 'S')) \
@@ -610,7 +627,8 @@ def admin_controle_lotacao_detalhe(carfun, lot, competencia):
         f = 'ato_gerado.docx'
         document.write(os.path.join(basedir, 'static', f))
 
-    return render_template('admin/controle/detalhe.html', data=consulta, carfun=carfun, lot=lot)
+    return render_template('admin/controle/detalhe.html', data=consulta, carfun=carfun, lot=lot,
+                           desc=consulta.first().lot_desc)
 
 
 @app.route("/admin/worker/<matricula>", methods=["GET", "POST"])
