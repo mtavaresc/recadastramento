@@ -17,11 +17,11 @@ def check_login():
         return render_template('login.html')
 
 
-@app.route('/download_ato')
-def download_ato():
+@app.route('/download_ato/<ato>')
+def download_ato(ato):
     try:
         return send_file(os.path.join(app.static_folder, 'ato_gerado.docx'), cache_timeout=-1, as_attachment=True,
-                         attachment_filename='Ato_Nomeacao_{:%d%m%Y_%H%M%S}.docx'.format(datetime.now()))
+                         attachment_filename='{}_Ato_Nomeacao_{:%d%m%Y_%H%M%S}.docx'.format(ato, datetime.now()))
     except Exception as e:
         return format(e)
 
@@ -457,7 +457,7 @@ def admin_controle_lotacao(indice, competencia):
                                                                                 lot=lot)
             requests.post(url, data={'ato': ato, 'data': data_ato})
 
-            flash('Ato criado com sucesso!', 'success')
+            flash('Ato {} criado com sucesso!'.format(ato), 'success')
             return redirect(url_for('admin'))
         else:
             mes = request.form.get('mes')

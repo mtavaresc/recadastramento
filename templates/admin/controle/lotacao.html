@@ -120,6 +120,7 @@
                     <th>Cód. Lotação</th>
                     <th>Lotação</th>
                     <th>Qtde. Matrícula</th>
+                    <th>Check</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -229,6 +230,10 @@
                         <td>{{ row.lot_cod }}</td>
                         <td>{{ row.lot_desc }}</td>
                         <td>{{ row.qtd_matr }}</td>
+                        <td align="center">
+                            <label for="check"></label>
+                            <input id="check" type="checkbox">
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
