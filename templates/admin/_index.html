@@ -95,7 +95,8 @@
                         </button>
                         {{ message }}
                         {% set nato = message.split(' ')[1] %}
-                        <a href="{{ url_for('download_ato', ato=nato) }}" target="blank">
+                        {% set tipo = message.split(' ')[3] %}
+                        <a href="{{ url_for('download_ato', ato=nato, tipo=tipo) }}" target="blank">
                             <button class="btn btn-default">Clique aqui para fazer o download!</button>
                         </a>
                     </div>
