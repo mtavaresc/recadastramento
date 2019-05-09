@@ -43,7 +43,16 @@
             </div><!-- /.navbar-collapse -->
         </nav>
     </aside><!-- /#left-panel -->
-
+    {% if request.url[-8:]|int %}
+        {% set competencia = request.url[-8:] %}
+    {% else %}
+        {% set competencia = 'False' %}
+    {% endif %}
+    {% if request.url.split('/')[6]|length == 1 %}
+        {% set sit = request.url.split('/')[6] %}
+    {% else %}
+        {% set sit = 1 %}
+    {% endif %}
     <!-- Right Panel -->
     <div id="right-panel" class="right-panel">
         <!-- Header-->
@@ -117,11 +126,12 @@
 
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" id="ativo" name="fin_sit" class="custom-control-input" value=1
-                                       checked>
+                                        {% if sit == 1 %}checked{% endif %}>
                                 <label class="custom-control-label" for="ativo">Ativo</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="inativo" name="fin_sit" class="custom-control-input" value=0>
+                                <input type="radio" id="inativo" name="fin_sit" class="custom-control-input" value=0
+                                        {% if sit == 0 %}checked{% endif %}>
                                 <label class="custom-control-label" for="inativo">Não ativo</label>
                             </div>
                         </div>
@@ -146,16 +156,6 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% if request.url[-8:]|int %}
-                    {% set competencia = request.url[-8:] %}
-                {% else %}
-                    {% set competencia = 'False' %}
-                {% endif %}
-                {% if request.url.split('/')[6]|length == 1 %}
-                    {% set sit = request.url.split('/')[6] %}
-                {% else %}
-                    {% set sit = 1 %}
-                {% endif %}
                 {% for row in data %}
                     {% if indice == 'prg' or indice == 'gt' %}
                         {% if 'SECRETARIO' in row.car_desc %}
