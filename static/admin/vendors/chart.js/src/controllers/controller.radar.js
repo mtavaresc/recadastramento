@@ -143,7 +143,7 @@ module.exports = function(Chart) {
 			// Point
 			var dataset = this.chart.data.datasets[point._datasetIndex];
 			var custom = point.custom || {};
-			var index = point._index;
+			var index = point.dashboard;
 			var model = point._model;
 
 			model.radius = custom.hoverRadius ? custom.hoverRadius : helpers.valueAtIndexOrDefault(dataset.pointHoverRadius, index, this.chart.options.elements.point.hoverRadius);
@@ -155,7 +155,7 @@ module.exports = function(Chart) {
 		removeHoverStyle: function(point) {
 			var dataset = this.chart.data.datasets[point._datasetIndex];
 			var custom = point.custom || {};
-			var index = point._index;
+			var index = point.dashboard;
 			var model = point._model;
 			var pointElementOptions = this.chart.options.elements.point;
 

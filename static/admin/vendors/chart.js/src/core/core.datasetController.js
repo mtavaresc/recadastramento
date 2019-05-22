@@ -240,7 +240,7 @@ module.exports = function(Chart) {
 
 		removeHoverStyle: function(element, elementOpts) {
 			var dataset = this.chart.data.datasets[element._datasetIndex];
-			var index = element._index;
+			var index = element.dashboard;
 			var custom = element.custom || {};
 			var valueOrDefault = helpers.valueAtIndexOrDefault;
 			var model = element._model;
@@ -252,7 +252,7 @@ module.exports = function(Chart) {
 
 		setHoverStyle: function(element) {
 			var dataset = this.chart.data.datasets[element._datasetIndex];
-			var index = element._index;
+			var index = element.dashboard;
 			var custom = element.custom || {};
 			var valueOrDefault = helpers.valueAtIndexOrDefault;
 			var getHoverColor = helpers.getHoverColor;

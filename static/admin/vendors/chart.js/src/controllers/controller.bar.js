@@ -464,7 +464,7 @@ module.exports = function(Chart) {
 
 		setHoverStyle: function(rectangle) {
 			var dataset = this.chart.data.datasets[rectangle._datasetIndex];
-			var index = rectangle._index;
+			var index = rectangle.dashboard;
 			var custom = rectangle.custom || {};
 			var model = rectangle._model;
 
@@ -475,7 +475,7 @@ module.exports = function(Chart) {
 
 		removeHoverStyle: function(rectangle) {
 			var dataset = this.chart.data.datasets[rectangle._datasetIndex];
-			var index = rectangle._index;
+			var index = rectangle.dashboard;
 			var custom = rectangle.custom || {};
 			var model = rectangle._model;
 			var rectangleElementOptions = this.chart.options.elements.rectangle;

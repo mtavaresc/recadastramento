@@ -6392,7 +6392,7 @@ module.exports = function(Chart) {
 
         setHoverStyle: function(rectangle) {
             var dataset = this.chart.data.datasets[rectangle._datasetIndex];
-            var index = rectangle._index;
+            var index = rectangle.dashboard;
 
             var custom = rectangle.custom || {};
             var model = rectangle._model;
@@ -6403,7 +6403,7 @@ module.exports = function(Chart) {
 
         removeHoverStyle: function(rectangle) {
             var dataset = this.chart.data.datasets[rectangle._datasetIndex];
-            var index = rectangle._index;
+            var index = rectangle.dashboard;
             var custom = rectangle.custom || {};
             var model = rectangle._model;
             var rectangleElementOptions = this.chart.options.elements.rectangle;
@@ -6795,7 +6795,7 @@ module.exports = function(Chart) {
 
             // Radius
             var dataset = me.chart.data.datasets[point._datasetIndex];
-            var index = point._index;
+            var index = point.dashboard;
             var custom = point.custom || {};
             var model = point._model;
             model.radius = custom.hoverRadius ? custom.hoverRadius : (helpers.getValueAtIndexOrDefault(dataset.hoverRadius, index, me.chart.options.elements.point.hoverRadius)) + me.getRadius(dataset.data[index]);
@@ -6805,7 +6805,7 @@ module.exports = function(Chart) {
             var me = this;
             Chart.DatasetController.prototype.removeHoverStyle.call(me, point, me.chart.options.elements.point);
 
-            var dataVal = me.chart.data.datasets[point._datasetIndex].data[point._index];
+            var dataVal = me.chart.data.datasets[point._datasetIndex].data[point.dashboard];
             var custom = point.custom || {};
             var model = point._model;
 
@@ -7428,7 +7428,7 @@ module.exports = function(Chart) {
         setHoverStyle: function(point) {
             // Point
             var dataset = this.chart.data.datasets[point._datasetIndex];
-            var index = point._index;
+            var index = point.dashboard;
             var custom = point.custom || {};
             var model = point._model;
 
@@ -7441,7 +7441,7 @@ module.exports = function(Chart) {
         removeHoverStyle: function(point) {
             var me = this;
             var dataset = me.chart.data.datasets[point._datasetIndex];
-            var index = point._index;
+            var index = point.dashboard;
             var custom = point.custom || {};
             var model = point._model;
 
@@ -7834,7 +7834,7 @@ module.exports = function(Chart) {
             // Point
             var dataset = this.chart.data.datasets[point._datasetIndex];
             var custom = point.custom || {};
-            var index = point._index;
+            var index = point.dashboard;
             var model = point._model;
 
             model.radius = custom.hoverRadius ? custom.hoverRadius : helpers.getValueAtIndexOrDefault(dataset.pointHoverRadius, index, this.chart.options.elements.point.hoverRadius);
@@ -7846,7 +7846,7 @@ module.exports = function(Chart) {
         removeHoverStyle: function(point) {
             var dataset = this.chart.data.datasets[point._datasetIndex];
             var custom = point.custom || {};
-            var index = point._index;
+            var index = point.dashboard;
             var model = point._model;
             var pointElementOptions = this.chart.options.elements.point;
 
@@ -9132,7 +9132,7 @@ module.exports = function(Chart) {
 
         removeHoverStyle: function(element, elementOpts) {
             var dataset = this.chart.data.datasets[element._datasetIndex],
-                index = element._index,
+                index = element.dashboard,
                 custom = element.custom || {},
                 valueOrDefault = helpers.getValueAtIndexOrDefault,
                 model = element._model;
@@ -9144,7 +9144,7 @@ module.exports = function(Chart) {
 
         setHoverStyle: function(element) {
             var dataset = this.chart.data.datasets[element._datasetIndex],
-                index = element._index,
+                index = element.dashboard,
                 custom = element.custom || {},
                 valueOrDefault = helpers.getValueAtIndexOrDefault,
                 getHoverColor = helpers.getHoverColor,
@@ -10476,7 +10476,7 @@ module.exports = function(Chart) {
         chart.data.datasets.forEach(function(dataset, datasetIndex) {
             if (chart.isDatasetVisible(datasetIndex)) {
                 var meta = chart.getDatasetMeta(datasetIndex),
-                    element = meta.data[items[0]._index];
+                    element = meta.data[items[0].dashboard];
 
                 // don't count items that are skipped (null data)
                 if (element && !element._view.skip) {
@@ -13027,7 +13027,7 @@ module.exports = function(Chart) {
     function createTooltipItem(element) {
         var xScale = element._xScale;
         var yScale = element._yScale || element._scale; // handle radar || polarArea charts
-        var index = element._index,
+        var index = element.dashboard,
             datasetIndex = element._datasetIndex;
 
         return {

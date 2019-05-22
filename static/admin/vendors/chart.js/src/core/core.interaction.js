@@ -124,7 +124,7 @@ function indexMode(chart, e, options) {
 	chart.data.datasets.forEach(function(dataset, datasetIndex) {
 		if (chart.isDatasetVisible(datasetIndex)) {
 			var meta = chart.getDatasetMeta(datasetIndex);
-			var element = meta.data[items[0]._index];
+			var element = meta.data[items[0].dashboard];
 
 			// don't count items that are skipped (null data)
 			if (element && !element._view.skip) {

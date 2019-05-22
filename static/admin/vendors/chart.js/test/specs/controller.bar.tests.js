@@ -735,7 +735,7 @@ describe('Chart.controllers.bar', function() {
 			{x: 217, y: 0}
 		].forEach(function(expected, i) {
 			expect(meta.data[i]._datasetIndex).toBe(1);
-			expect(meta.data[i]._index).toBe(i);
+			expect(meta.data[i].dashboard).toBe(i);
 			expect(meta.data[i]._xScale).toBe(chart.scales.firstXScaleID);
 			expect(meta.data[i]._yScale).toBe(chart.scales.firstYScaleID);
 			expect(meta.data[i]._model.x).toBeCloseToPixel(expected.x);

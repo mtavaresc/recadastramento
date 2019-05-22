@@ -126,7 +126,7 @@ module.exports = function(Chart) {
 	function createTooltipItem(element) {
 		var xScale = element._xScale;
 		var yScale = element._yScale || element._scale; // handle radar || polarArea charts
-		var index = element._index;
+		var index = element.dashboard;
 		var datasetIndex = element._datasetIndex;
 
 		return {

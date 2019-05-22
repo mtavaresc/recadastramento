@@ -302,7 +302,7 @@ module.exports = function(Chart) {
 		setHoverStyle: function(point) {
 			// Point
 			var dataset = this.chart.data.datasets[point._datasetIndex];
-			var index = point._index;
+			var index = point.dashboard;
 			var custom = point.custom || {};
 			var model = point._model;
 
@@ -315,7 +315,7 @@ module.exports = function(Chart) {
 		removeHoverStyle: function(point) {
 			var me = this;
 			var dataset = me.chart.data.datasets[point._datasetIndex];
-			var index = point._index;
+			var index = point.dashboard;
 			var custom = point.custom || {};
 			var model = point._model;
 
