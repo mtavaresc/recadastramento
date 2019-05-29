@@ -20,7 +20,7 @@
                     <h3 class="menu-title">Controle Cadastro</h3><!-- /.menu-title -->
                     <li>
                         <a href="{{ url_for('admin_controle_cadastro') }}">
-                            <i class="menu-icon fa fa-users-cog"></i> Recadastramento
+                            <i class="menu-icon fa fa-user-cog"></i> Recadastramento
                         </a>
                     </li>
                     <h3 class="menu-title">Controle Lotação</h3><!-- /.menu-title -->
@@ -179,9 +179,7 @@
 
         <script type="text/javascript">
             $(function () {
-                const table = $('#bootstrap-data-table').DataTable();
-                table.column(0).visible(false);
-
+                $('#bootstrap-data-table').DataTable();
             });
 
             $(function () {

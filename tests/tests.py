@@ -1,5 +1,5 @@
 import unittest
-from teste import fatorial
+from teste_lotacao import fatorial
 
 
 class TestFatorial(unittest.TestCase):
