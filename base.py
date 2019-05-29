@@ -15,19 +15,21 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=3000)
 oracle_connection_string = 'oracle+cx_oracle://{username}:{password}@{tnsname}/{sid}'.format(
     username='esocial',
     password='teste1423',
-    tnsname='10.85.100.59',
-    # tnsname='localhost',
-    sid='PROD'
-    # sid='XE'
+    # tnsname='10.85.100.59',
+    tnsname='localhost',
+    # sid='PROD'
+    sid='XE'
 )
 
 oracle_connection_prod = 'oracle+cx_oracle://{username}:{password}@{tnsname}/{sid}'.format(
-    username='dionisio',
-    password='baco',
-    tnsname='10.85.100.3',
-    # tnsname='localhost',
-    sid='PROD'
-    # sid='XE'
+    # username='dionisio',
+    username='zeus',
+    # password='baco',
+    password='123456',
+    # tnsname='10.85.100.3',
+    tnsname='localhost',
+    # sid='PROD'
+    sid='XE'
 )
 
 # SQLAlchemy settings
