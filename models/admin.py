@@ -89,6 +89,7 @@ class Financeiro(db.Model):
     fin_folha = db.Column(db.CHAR(2))
     fin_dtent = db.Column(db.Date)
     fin_sit = db.Column(db.CHAR(1))
+    fin_dtsai = db.Column(db.Date)
 
 
 class FichaFinanceira(db.Model):
