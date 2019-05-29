@@ -8,3 +8,4 @@ model==0.6.0
 prettytable==7
 Shapely==1.6.4.post2
 SQLAlchemy==1.3.1
+cx-Oracle==7.1.3

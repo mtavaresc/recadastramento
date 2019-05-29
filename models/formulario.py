@@ -10,6 +10,13 @@ class Pegaso(db.Model):
     pispasep = db.Column(db.String(11))
     dtnasc = db.Column(db.Date)
 
+    def __init__(self, matr, nome, cpf, pispasep, dtnasc):
+        self.matr = matr
+        self.nome = nome.upper()
+        self.cpf = cpf
+        self.pispasep = pispasep
+        self.dtnasc = dtnasc
+
 
 class User(db.Model):
     __tablename__ = "form_login"
@@ -21,6 +28,12 @@ class User(db.Model):
 
     def __repr__(self):
         return '<user %r>' % self.matricula
+
+    def __init__(self, matricula, nome, senha, adm=0):
+        self.matricula = matricula
+        self.nome = nome.upper()
+        self.senha = senha
+        self.adm = adm
 
 
 class Trabalhador(db.Model):
@@ -226,12 +239,20 @@ class Paises(db.Model):
     codigo = db.Column(db.String(3), primary_key=True)
     nome = db.Column(db.String(100))
 
+    def __init__(self, codigo, nome):
+        self.codigo = codigo
+        self.nome = nome
+
 
 class Estados(db.Model):
     __tablename__ = "estados"
 
     uf = db.Column(db.CHAR(2), primary_key=True)
     nome = db.Column(db.String(50))
+
+    def __init__(self, uf, nome):
+        self.uf = uf
+        self.nome = nome
 
 
 class Municipios(db.Model):
@@ -240,6 +261,11 @@ class Municipios(db.Model):
     codigo = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(255))
     uf = db.Column(db.CHAR(2))
+
+    def __init__(self, codigo, nome, uf):
+        self.codigo = codigo
+        self.nome = nome
+        self.uf = uf
 
 
 class Bairros(db.Model):
@@ -250,9 +276,19 @@ class Bairros(db.Model):
     municipio = db.Column(db.String(70))
     uf = db.Column(db.CHAR(2))
 
+    def __init__(self, codigo, nome, municipio, uf):
+        self.codigo = codigo
+        self.nome = nome
+        self.municipio = municipio
+        self.uf = uf
+
 
 class TiposLogradouro(db.Model):
     __tablename__ = "tipos_logradouro"
 
     codigo = db.Column(db.CHAR(4), primary_key=True)
     nome = db.Column(db.String(30))
+
+    def __init__(self, codigo, nome):
+        self.codigo = codigo
+        self.nome = nome
