@@ -3,7 +3,7 @@ requests==2.21.0
 Flask_Dropzone==1.5.3
 booleano==1.1a2
 flask_sqlalchemy==2.3.2
-mailmerge==1.8
+docx-mailmerge==0.4.0
 model==0.6.0
 prettytable==7
 Shapely==1.6.4.post2
