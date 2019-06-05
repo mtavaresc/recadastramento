@@ -110,6 +110,15 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
+        <div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dados do Recadastramento</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="content mt-3">
             <div class="col-xl-4">
                 <div class="card text-white bg-flat-color-4">
@@ -159,6 +168,243 @@
                 </div>
             </div> <!-- .content -->
         </div><!-- /#right-panel -->
+        <div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Programas</h1>
+                    </div>
+                </div>
+            </div>
+        </div><!-- PRG -->
+        <div class="content mt-3">
+            <div class="col-xl-4">
+                <div class="card text-white bg-flat-color-4">
+                    <div class="card-body pb-0">
+                        <h4 class="mb-0">
+                            <span class="count">{{ t.prg_ex }}</span>
+                        </h4>
+                        <p class="text-light">Lotações excedidas</p>
+                    </div>
+                </div>
+            </div>
+            <!--/.col-->
+            <div class="col-xl-4">
+                <div class="card text-white bg-flat-color-3">
+                    <div class="card-body pb-0">
+                        <h4 class="mb-0">
+                            <span class="count">{{ t.prg_np }}</span>
+                        </h4>
+                        <p class="text-light">Lotações não preenchidas</p>
+                    </div>
+                </div>
+            </div>
+            <!--/.col-->
+            <div class="col-xl-4">
+                <div class="card text-white bg-flat-color-2">
+                    <div class="card-body pb-0">
+                        <h4 class="mb-0">
+                            <span class="count">{{ t.prg_pr }}</span>
+                        </h4>
+                        <p class="text-light">Lotações preenchidas</p>
+                    </div>
+                </div>
+            </div>
+            <!--/.col-->
+            <div class="col-sm-12">
+
+                <br><br>
+            </div>
+
+            <div class="modal fade" id="modal-iframe" tabindex="-1" role="dialog"
+                 aria-labelledby="scrollmodalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        Carregando ...
+                    </div>
+                </div>
+            </div> <!-- .content -->
+        </div><!-- /PRG -->
+
+        <div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Grupos de Trabalho</h1>
+                    </div>
+                </div>
+            </div>
+        </div><!-- GT -->
+        <div class="content mt-3">
+            <div class="col-xl-4">
+                <div class="card text-white bg-flat-color-4">
+                    <div class="card-body pb-0">
+                        <h4 class="mb-0">
+                            <span class="count">{{ t.gt_ex }}</span>
+                        </h4>
+                        <p class="text-light">Lotações excedidas</p>
+                    </div>
+                </div>
+            </div>
+            <!--/.col-->
+            <div class="col-xl-4">
+                <div class="card text-white bg-flat-color-3">
+                    <div class="card-body pb-0">
+                        <h4 class="mb-0">
+                            <span class="count">{{ t.gt_np }}</span>
+                        </h4>
+                        <p class="text-light">Lotações não preenchidas</p>
+                    </div>
+                </div>
+            </div>
+            <!--/.col-->
+            <div class="col-xl-4">
+                <div class="card text-white bg-flat-color-2">
+                    <div class="card-body pb-0">
+                        <h4 class="mb-0">
+                            <span class="count">{{ t.gt_pr }}</span>
+                        </h4>
+                        <p class="text-light">Lotações preenchidas</p>
+                    </div>
+                </div>
+            </div>
+            <!--/.col-->
+            <div class="col-sm-12">
+
+                <br><br>
+            </div>
+
+            <div class="modal fade" id="modal-iframe" tabindex="-1" role="dialog"
+                 aria-labelledby="scrollmodalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        Carregando ...
+                    </div>
+                </div>
+            </div> <!-- .content -->
+        </div><!-- /GT -->
+
+        <div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Subgrupos dos GTs</h1>
+                    </div>
+                </div>
+            </div>
+        </div><!-- SG -->
+        <div class="content mt-3">
+            <div class="col-xl-4">
+                <div class="card text-white bg-flat-color-4">
+                    <div class="card-body pb-0">
+                        <h4 class="mb-0">
+                            <span class="count">{{ t.sg_ex }}</span>
+                        </h4>
+                        <p class="text-light">Lotações excedidas</p>
+                    </div>
+                </div>
+            </div>
+            <!--/.col-->
+            <div class="col-xl-4">
+                <div class="card text-white bg-flat-color-3">
+                    <div class="card-body pb-0">
+                        <h4 class="mb-0">
+                            <span class="count">{{ t.sg_np }}</span>
+                        </h4>
+                        <p class="text-light">Lotações não preenchidas</p>
+                    </div>
+                </div>
+            </div>
+            <!--/.col-->
+            <div class="col-xl-4">
+                <div class="card text-white bg-flat-color-2">
+                    <div class="card-body pb-0">
+                        <h4 class="mb-0">
+                            <span class="count">{{ t.sg_pr }}</span>
+                        </h4>
+                        <p class="text-light">Lotações preenchidas</p>
+                    </div>
+                </div>
+            </div>
+            <!--/.col-->
+            <div class="col-sm-12">
+
+                <br><br>
+            </div>
+
+            <div class="modal fade" id="modal-iframe" tabindex="-1" role="dialog"
+                 aria-labelledby="scrollmodalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        Carregando ...
+                    </div>
+                </div>
+            </div> <!-- .content -->
+        </div><!-- /SG -->
+
+        <div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Subprogramas</h1>
+                    </div>
+                </div>
+            </div>
+        </div><!-- SUBPRG -->
+        <div class="content mt-3">
+            <div class="col-xl-4">
+                <div class="card text-white bg-flat-color-4">
+                    <div class="card-body pb-0">
+                        <h4 class="mb-0">
+                            <span class="count">{{ t.subprg_ex }}</span>
+                        </h4>
+                        <p class="text-light">Lotações excedidas</p>
+                    </div>
+                </div>
+            </div>
+            <!--/.col-->
+            <div class="col-xl-4">
+                <div class="card text-white bg-flat-color-3">
+                    <div class="card-body pb-0">
+                        <h4 class="mb-0">
+                            <span class="count">{{ t.subprg_np }}</span>
+                        </h4>
+                        <p class="text-light">Lotações não preenchidas</p>
+                    </div>
+                </div>
+            </div>
+            <!--/.col-->
+            <div class="col-xl-4">
+                <div class="card text-white bg-flat-color-2">
+                    <div class="card-body pb-0">
+                        <h4 class="mb-0">
+                            <span class="count">{{ t.subprg_pr }}</span>
+                        </h4>
+                        <p class="text-light">Lotações preenchidas</p>
+                    </div>
+                </div>
+            </div>
+            <!--/.col-->
+            <div class="col-sm-12">
+
+                <br><br>
+            </div>
+
+            <div class="modal fade" id="modal-iframe" tabindex="-1" role="dialog"
+                 aria-labelledby="scrollmodalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        Carregando ...
+                    </div>
+                </div>
+            </div> <!-- .content -->
+        </div><!-- /SUBPRG -->
+
+
         <!-- Right Panel -->
     </div>
 
