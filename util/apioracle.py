@@ -4,8 +4,8 @@ from json import dumps
 
 class Acts:
     def __init__(self):
-        self.key = '$2y$14$mssekBgJ/dhLafs6/H8xpufALWgvpujtWz2m/DNbjs9PhM2KeMlD2'
         self.base = 'http://apioracle.al.ce.gov.br/'
+        self.key = '$2y$14$mssekBgJ/dhLafs6/H8xpufALWgvpujtWz2m/DNbjs9PhM2KeMlD2'
 
     def create(self):
         pass
@@ -24,7 +24,7 @@ class Acts:
         elif response.text == 'false':
             rs = 'Não existem números de ATOS cadastrados!'
         else:
-            rs = eval(response.text)
+            rs = eval(response.text.replace('null', '\"\"'))
             code = True
 
         data = {'code': code, 'result': rs}
@@ -41,8 +41,7 @@ if __name__ == '__main__':
     if acts['code']:
         for act in acts['result']:
             if act['ATO_MATR'] in registrations:
-                # print(dumps(act, indent=4))
-                list_of_acts.append('{num}/{ano}'.format(num=act['ATO_NUM'], ano=act['ATO_ANO']))
+                print(dumps(act, indent=4))
+                list_of_acts.append('{num}/{ano}'.format(num=act['ATO_NUM'].zfill(4), ano=act['ATO_ANO']))
 
-        print(list_of_acts)
-        print('\nQuantidade:', len(list_of_acts))
+        print('\n{} ({})'.format(list_of_acts, len(list_of_acts)))
