@@ -1,12 +1,12 @@
 {% extends "admin/layout.html" %}
 {% block head %}
-    {#    {% if adm.nome is undefined %}#}
-    {#        <script>#}
-    {#            window.setTimeout(function () {#}
-    {#                window.location.href = "{{ url_for('login') }}";#}
-    {#            }, 5000);#}
-    {#        </script>#}
-    {#    {% endif %}#}
+    {% if adm.nome is undefined %}
+        <script>
+            window.setTimeout(function () {
+                window.location.href = "{{ url_for('login') }}";
+            }, 5000);
+        </script>
+    {% endif %}
 {% endblock %}
 {% block body %}
     <!-- Left Panel -->
@@ -271,7 +271,7 @@
                     {% endif %}
                     <tr data-toggle="modal" data-target="#modal-iframe" style="cursor:pointer;"
                         class="table-{{ category }}"
-                        href="{{ url_for('admin_controle_lotacao_detalhe', carfun=row.car_cod, lot=row.lot_cod, competencia=competencia, sit=sit) }}">
+                        href="{{ url_for('admin_controle_lotacao_detalhe', matr=adm.matricula, carfun=row.car_cod, lot=row.lot_cod, competencia=competencia, sit=sit) }}">
                         {% if category == 'warning' %}
                             <td>amarelo</td>
                         {% elif category == 'success' %}
