@@ -41,14 +41,14 @@ class Acts:
 
 if __name__ == '__main__':
     # Create Act
-    create = Acts().create(register='025164')
+    # create = Acts().create(register='031669')
 
-    if create:
+    # if create:
         # List Acts
         acts = Acts().list()
         list_of_acts = []
         # Registrations of DRH people
-        registrations = ['025164', '030108', '004018', '002968']
+        registrations = ['025164', '030108', '004018', '002968', '031669']
 
         if acts['code']:
             for act in acts['result']:
@@ -58,3 +58,5 @@ if __name__ == '__main__':
 
             print('\n{} ({})'.format(list_of_acts, len(list_of_acts)))
             print(max(list_of_acts))
+    # else:
+    #     print(create[1])
