@@ -20,7 +20,7 @@
                     <h3 class="menu-title">Controle Cadastro</h3><!-- /.menu-title -->
                     <li>
                         <a href="{{ url_for('admin_controle_cadastro') }}">
-                            <i class="menu-icon fa fa-user-cog"></i> Recadastramento
+                            <i class="menu-icon fa fa-user"></i> Recadastramento
                         </a>
                     </li>
                     <h3 class="menu-title">Controle Lotação</h3><!-- /.menu-title -->
@@ -44,7 +44,11 @@
                             <i class="menu-icon fa fa-line-chart"></i> Subprogramas
                         </a>
                     </li>
-
+                    <li>
+                        <a href="{{ url_for('admin_search') }}">
+                            <i class="menu-icon fa fa-search"></i> Busca por matrícula
+                        </a>
+                    </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>

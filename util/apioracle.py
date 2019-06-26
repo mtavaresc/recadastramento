@@ -44,19 +44,18 @@ if __name__ == '__main__':
     # create = Acts().create(register='031669')
 
     # if create:
-        # List Acts
-        acts = Acts().list()
-        list_of_acts = []
-        # Registrations of DRH people
-        registrations = ['025164', '030108', '004018', '002968', '031669']
+    # List Acts
+    acts = Acts().list()
+    list_of_acts = []
+    # Registrations of DRH people
+    registrations = ['025164', '030108', '004018', '002968', '031669']
 
-        if acts['code']:
-            for act in acts['result']:
-                if act['ATO_MATR'] in registrations:
-                    print(dumps(act, indent=4))
-                    list_of_acts.append('{num}/{ano}'.format(num=act['ATO_NUM'].zfill(4), ano=act['ATO_ANO']))
+    if acts['code']:
+        for act in acts['result']:
+            if act['ATO_MATR'] in registrations:
+                print(dumps(act, indent=4))
+                list_of_acts.append('{num}/{ano}'.format(num=act['ATO_NUM'].zfill(4), ano=act['ATO_ANO']))
 
-            print('\n{} ({})'.format(list_of_acts, len(list_of_acts)))
-            print(max(list_of_acts))
+        print('\n{} ({})'.format(list_of_acts, len(list_of_acts), max(list_of_acts)))
     # else:
     #     print(create[1])
