@@ -1,5 +1,5 @@
 Flask==1.0.3
-requests==2.21.0
+requests==2.31.0
 Flask_Dropzone==1.5.3
 booleano==1.1a2
 flask_sqlalchemy==2.4.0
